@@ -110,7 +110,6 @@
 		<module>nicefish-auth-shiro</module>
 		<module>nicefish-staff-org</module>
 		<module>nicefish-cms</module>
-		<!--<module>nicefish-web-thymeleaf</module>-->
 	</modules>
 
     <packaging>pom</packaging>

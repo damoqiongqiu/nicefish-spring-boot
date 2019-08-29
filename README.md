@@ -107,6 +107,15 @@ http://118.25.136.164
 | nicefish-springboot  | 用来示范前后端分离模式下，前端代码与后端服务的对接方式，https://gitee.com/mumu-osc/nicefish-spring-boot 。|
 | nicefish-springcloug  | 用来示范前后端分离模式下，前端代码与分布式后端服务的对接方式，即将完成，代码最近放出。|
 
+## 主要依赖
+
+- JDK > 8.0
+- spring-boot 2.1.1
+- apache shiro > 1.4.0
+- druid 1.1.14
+- jpa
+- redis
+
 ## 开源许可证
 
 MIT
