@@ -25,6 +25,10 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 - 修改 application.yml 配置文件，把 MySQL 和 Redis 改成你本地的配置
 - 启动 nicefish-cms
 
+## 前后端分离模式下的开发方式
+
+【补充完整】
+
 ## 开源许可证
 
 MIT
