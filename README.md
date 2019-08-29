@@ -31,7 +31,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 前后端分离模式下的开发方式
 
-<img width="390" src="./docs/imgs/front-end-back-end.png">
+<img src="./docs/imgs/front-end-back-end.png">
 
 在前后端分离开发、分离部署的模式下，与传统的开发环境有一些区别。为了让 cookie 和 session 机制能生效，我们必须对 nginx 做一些配置。
 
@@ -76,7 +76,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 然后在 VS Code 里面用这种方式来实时编译 Angular 代码：
 
-<img width="390" src="./docs/imgs/vscode-angular.png">
+<img src="./docs/imgs/vscode-angular.png">
 
 对应的前端代码在这里： http://git.oschina.net/mumu-osc/NiceFish/
 
