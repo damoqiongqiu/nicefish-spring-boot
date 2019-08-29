@@ -1,0 +1,58 @@
+package com.nicefish.cms.service.impl;
+
+import com.nicefish.cms.jpa.entity.CommentEntity;
+import com.nicefish.cms.jpa.repository.ICommentRepository;
+import com.nicefish.cms.service.ICommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+
+@Transactional
+@Service
+public class CommentServiceImpl implements ICommentService {
+    @Autowired
+    private ICommentRepository commentRepository;
+
+    @Override
+    @Cacheable(value = "comments",key = "#postId.toString().concat('-comments')")
+    public Page<CommentEntity> findByPostId(Long postId, Pageable pageable) {
+        return commentRepository.findAllByPostId(postId,pageable);
+    }
+
+    @Override
+    @CacheEvict(value = "comments",allEntries = true)
+    public CommentEntity saveComment(CommentEntity commentEntity) {
+        return commentRepository.save(commentEntity);
+    }
+
+    @Override
+    public Page<CommentEntity> findAllByUserIdAndPaging(Long userId, Pageable pageable) {
+        return commentRepository.findAllByUserId(userId,pageable);
+    }
+
+    @Override
+    public Long countByUserId(Long userId) {
+        return this.commentRepository.countByUserId(userId);
+    }
+
+    @Override
+    @CacheEvict(value = "comments",allEntries = true)
+    public Integer deleteById(Long commentId) {
+        return this.commentRepository.deleteById(commentId);
+    }
+
+    @Override
+    public Integer deletetByPostId(Long postId) {
+        return this.commentRepository.deleteByPostId(postId);
+    }
+
+    @Override
+    public Integer deleteByUserId(Long userId) {
+        return this.commentRepository.deleteByUserId(userId);
+    }
+}

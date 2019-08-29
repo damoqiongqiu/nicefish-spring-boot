@@ -1,0 +1,96 @@
+nicefish:
+  name: nicefish
+  version: 1.1.0
+  copyrightYear: 2019
+  demoEnabled: true
+  profile: D:/nicefish/uploadPath
+  addressEnabled: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  use-forward-headers: true
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 800
+    min-spare-threads: 30
+
+logging:
+  level:
+    com.nicefish: debug
+    org.springframework: debug
+
+user:
+  password:
+    maxRetryCount: 5
+
+spring:
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    cache: false
+  messages:
+    basename: static/i18n/messages
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles: 
+    active: druid
+  servlet:
+     multipart:
+       max-file-size:  10MB
+       max-request-size:  20MB
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    expireTime: 5000
+
+mybatis:
+    typeAliasesPackage: com.nicefish
+    mapperLocations: classpath*:mapper/**/*Mapper.xml
+    configLocation: classpath:mybatis/mybatis-config.xml
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql 
+
+shiro:
+  user:
+    loginUrl: /nicefish/auth/shiro/login
+    unauthorizedUrl: /nicefish/auth/shiro/unauth
+    indexUrl: /index
+    captchaEnabled: true
+    captchaType: math
+  cookie:
+    domain:
+    path: /
+    httpOnly: false
+    maxAge: 72 #Hours，利用 cookie 免登录。
+    secure: false
+  session:
+    expireTime: 72 #Hours
+    dbSyncPeriod: 1
+    validationInterval: 10
+    maxSession: -1
+    kickoutAfter: false
+
+xss:
+  enabled: true
+  excludes: /system/notice/*
+  urlPatterns: /system/*,/monitor/*,/tool/*
