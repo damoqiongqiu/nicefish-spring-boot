@@ -29,6 +29,15 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 - 修改 application.yml 配置文件，把 MySQL 和 Redis 改成你本地的用户名和端口
 - 启动 nicefish-cms
 
+## Maven 模块依赖关系
+
+<img src="./docs/imgs/maven-modules.png">
+
+- nicefish-core: 提供通用的工具
+- nicefish-auth-shiro: 提供基于Shiro的通用认证和鉴权服务
+- nicefish-staff-org: 提供经典的树形组织机构和员工管理
+- nicefish-cms: 基于以上基础模块的内容管理应用
+
 ## 前后端分离模式下的开发方式
 
 <img src="./docs/imgs/front-end-back-end.png">
