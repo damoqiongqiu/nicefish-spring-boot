@@ -20,10 +20,10 @@ import javax.servlet.http.HttpSession;
 /**
  * @author 大漠穷秋
  */
-@Api("Blog-评论接口")
+@Api("cms-评论接口")
 @Slf4j
 @RestController
-@RequestMapping("/nicefish/blog/comment")
+@RequestMapping("/nicefish/cms/comment")
 public class CommentController {
 	@Autowired
 	private ICommentService commentService;

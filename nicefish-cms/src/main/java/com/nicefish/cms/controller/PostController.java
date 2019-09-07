@@ -19,10 +19,10 @@ import javax.servlet.http.HttpSession;
 /**
  * @author 大漠穷秋
  */
-@Api("Blog-文章接口")
+@Api("cms-文章接口")
 @Slf4j
 @RestController
-@RequestMapping("/nicefish/blog/post")
+@RequestMapping("/nicefish/cms/post")
 public class PostController {
 
     @Autowired

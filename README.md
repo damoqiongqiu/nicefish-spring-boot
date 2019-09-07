@@ -95,6 +95,12 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 http://118.25.136.164
 
+## Swagger 接口
+
+<img src="./docs/imgs/swagger.png">
+
+- 项目起来之后访问 http://localhost:8080/swagger-ui.html
+
 ## 界面截图
 
 <img src="./docs/imgs/1.png">

@@ -31,8 +31,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("NiceFish Blog 接口文档")
-                .description("NiceFish Blog 的业务接口。")
+                .title("nicefish-cms 接口文档")
+                .description("nicefish-cms 的业务接口。")
                 .contact(new Contact("damoqiongqiu@126.com", null, null))
                 .version("版本号:1.1")
                 .build();

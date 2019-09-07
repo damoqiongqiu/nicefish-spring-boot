@@ -43,7 +43,7 @@ public class NiceFishCMSApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         System.setProperty("spring.devtools.restart.enabled", "true");
         SpringApplication.run(NiceFishCMSApplication.class, args);
-        System.out.println("====== NiceFish Blog started ======");
+        System.out.println("====== NiceFish CMS started ======");
     }
 
 }
