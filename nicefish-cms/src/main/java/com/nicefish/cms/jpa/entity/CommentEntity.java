@@ -11,7 +11,7 @@ import java.util.Date;
  * @version 创建时间：2018-12-31 17:00
  */
 @Entity
-@Table(name="blog_comment")
+@Table(name="cms_comment")
 public class CommentEntity implements Serializable {
     @Id
     @Column(name="CommentId")
