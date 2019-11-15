@@ -1,7 +1,6 @@
 package com.nicefish.auth.service.impl;
 
 import com.nicefish.auth.constant.FishAuthConstants;
-import com.nicefish.auth.constant.UserConstants;
 import com.nicefish.auth.exception.*;
 import com.nicefish.auth.jpa.entity.RoleEntity;
 import com.nicefish.auth.jpa.entity.UserEntity;
@@ -263,20 +262,20 @@ public class UserServiceImpl implements IUserService {
         if (!org.springframework.util.StringUtils.isEmpty(ServletUtil.getRequest().getAttribute(FishAuthConstants.CURRENT_CAPTCHA))) {
             throw new CaptchaException();
         }
-        if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
-                || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
+        if (password.length() < FishAuthConstants.PASSWORD_MIN_LENGTH
+                || password.length() > FishAuthConstants.PASSWORD_MAX_LENGTH) {
             throw new UserPasswordNotMatchException();
         }
-        if (userName.length() < UserConstants.USERNAME_MIN_LENGTH
-                || userName.length() > UserConstants.USERNAME_MAX_LENGTH) {
+        if (userName.length() < FishAuthConstants.USERNAME_MIN_LENGTH
+                || userName.length() > FishAuthConstants.USERNAME_MAX_LENGTH) {
             throw new UserPasswordNotMatchException();
         }
 
         UserEntity userEntity = null;
 
-        if(userName.matches(UserConstants.EMAIL_PATTERN)){
+        if(userName.matches(FishAuthConstants.EMAIL_PATTERN)){
             userEntity = this.getUserByEmail(userName);
-        }else if(userName.matches(UserConstants.MOBILE_PHONE_NUMBER_PATTERN)){
+        }else if(userName.matches(FishAuthConstants.MOBILE_PHONE_NUMBER_PATTERN)){
             userEntity=this.getUserByCellphone(userName);
         }else{
             userEntity=this.getUserByUserName(userName);
