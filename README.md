@@ -19,12 +19,14 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 - 开发工具 IDEA
 - 构建工具 Maven
 - MySQL >=5 or MariaDB >=10
+- Redis(Windows安装配置请参考：https://github.com/tporadowski/redis/releases ， 其它平台请参考 Redis 官网：https://redis.io)
 
 ## 3.用法
 
 - git clone 本项目
 - 用 IDEA 导入根目录下的 pom.xml 
 - 在 MySQL 中执行 docs/nicefish_springboot.sql 脚本
+- 修改 application.yml 配置文件，把 MySQL 和 Redis 改成你本地的用户名和端口
 - 配置 Maven ，使用阿里云的源
 - 启动 nicefish-cms 模块下的 NiceFishApplication.java
 
