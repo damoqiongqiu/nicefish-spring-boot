@@ -9,8 +9,9 @@ import com.nicefish.auth.service.IRoleService;
 import com.nicefish.auth.service.IUserService;
 import com.nicefish.core.web.AjaxResult;
 import com.nicefish.core.web.ServletUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,8 +31,9 @@ import java.util.List;
  * @author 大漠穷秋
  */
 @Service
-@Slf4j
 public class UserServiceImpl implements IUserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private IUserRepository userRepository;
 
@@ -90,7 +92,7 @@ public class UserServiceImpl implements IUserService {
         AjaxResult ajaxResult =null;
         if(!isSuccess){
             ajaxResult =new AjaxResult(false,msg);
-            log.info("用户信息校验失败，"+ ajaxResult.toString());
+            logger.info("用户信息校验失败，"+ ajaxResult.toString());
             return ajaxResult;
         }
 
@@ -101,7 +103,7 @@ public class UserServiceImpl implements IUserService {
         this.roleService2.addAuthUsers(2L,new Long[]{userEntity.getUserId()});
 
         ajaxResult =new AjaxResult(true,userEntity);
-        log.info(ajaxResult.toString());
+        logger.info(ajaxResult.toString());
         return ajaxResult;
     }
     
@@ -218,21 +220,21 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean isUserNameUnique(String userName) {
-        log.debug(userName);
+        logger.debug(userName);
         UserEntity userEntity=this.userRepository.findDistinctByUserName(userName);
         return userEntity==null?true:false;
     }
 
     @Override
     public boolean isPhoneUnique(String cellphone) {
-        log.debug(cellphone);
+        logger.debug(cellphone);
         UserEntity userEntity=this.userRepository.findDistinctByCellphone(cellphone);
         return userEntity==null?true:false;
     }
 
     @Override
     public boolean isEmailUnique(String email) {
-        log.debug(email);
+        logger.debug(email);
         UserEntity userEntity=this.userRepository.findDistinctByEmail(email);
         return userEntity==null?true:false;
     }

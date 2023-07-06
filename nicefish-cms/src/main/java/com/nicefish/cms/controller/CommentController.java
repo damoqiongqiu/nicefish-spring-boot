@@ -7,7 +7,6 @@ import com.nicefish.cms.service.ICommentService;
 import com.nicefish.core.web.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpSession;
  * @author 大漠穷秋
  */
 @Api("cms-评论接口")
-@Slf4j
 @RestController
 @RequestMapping("/nicefish/cms/comment")
 public class CommentController {

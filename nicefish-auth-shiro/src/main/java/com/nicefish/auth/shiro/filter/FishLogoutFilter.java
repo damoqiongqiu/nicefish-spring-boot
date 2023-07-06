@@ -1,10 +1,12 @@
 package com.nicefish.auth.shiro.filter;
 
-import lombok.extern.slf4j.Slf4j;
+import com.nicefish.auth.shiro.realm.FishUserRealm;
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -17,8 +19,9 @@ import java.util.Locale;
  * 在前后端分离模式下，前端自己跳转，后端不用管。
  * @author 大漠穷秋
  */
-@Slf4j
 public class FishLogoutFilter extends LogoutFilter {
+    private static final Logger logger = LoggerFactory.getLogger(FishLogoutFilter.class);
+
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest=WebUtils.toHttp(request);
@@ -47,7 +50,7 @@ public class FishLogoutFilter extends LogoutFilter {
         try {
             subject.logout();
         } catch (SessionException ise) {
-            log.debug("Encountered session exception during logout.  This can generally safely be ignored.", ise);
+            logger.debug("Encountered session exception during logout.  This can generally safely be ignored.", ise);
         }
         return false;
     }

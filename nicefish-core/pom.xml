@@ -164,13 +164,5 @@
             <artifactId>spring-webmvc</artifactId>
             <version>5.1.4.RELEASE</version>
         </dependency>
-
-		<!-- lombok提供了使用注解的方式使用log -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.4</version>
-			<scope>provided</scope>
-		</dependency>
     </dependencies>
 </project>

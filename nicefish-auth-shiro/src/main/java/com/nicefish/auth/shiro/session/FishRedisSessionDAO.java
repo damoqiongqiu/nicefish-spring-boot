@@ -1,9 +1,11 @@
 package com.nicefish.auth.shiro.session;
 
-import lombok.extern.slf4j.Slf4j;
+import com.nicefish.auth.shiro.realm.FishUserRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,8 +22,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @author 大漠穷秋
  */
-@Slf4j
 public class FishRedisSessionDAO extends AbstractSessionDAO{
+    private static final Logger logger = LoggerFactory.getLogger(FishUserRealm.class);
+
     //Session过期时间，单位：小时
     @Value("${shiro.session.expireTime}")
     private int expireTime;
@@ -57,7 +60,7 @@ public class FishRedisSessionDAO extends AbstractSessionDAO{
             return null;
         }
         Session session=(Session) temp;
-        log.debug(session.toString());
+        logger.debug(session.toString());
         return session;
     }
 

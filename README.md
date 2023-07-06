@@ -12,18 +12,16 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 开发环境
 
+- JDK >= 1.8
 - 开发工具 IDEA
-- VS Code
-- MySQL 5 以上版本，MariaDB 10 以上版本
-- Redis
+- MySQL >=5 or MariaDB >=10
+- Redis(Windows安装配置请参考：https://github.com/tporadowski/redis/releases ， 其它平台请参考 Redis 官网：https://redis.io)
 - Nginx
 
 ## 用法
 
 - git clone 本项目
 - 用 IDEA 导入根目录下的 pom.xml
-- 在 IDEA 中安装lombok插件（需要安装lombok插件，方便使用注解的方式写日志）
-  <img width="390" src="./docs/imgs/lombok.png">
 - 在 MySQL 中导入 docs/nicefish_springboot.sql 脚本
 - 配置 Maven ，使用阿里云的源
 - 修改 application.yml 配置文件，把 MySQL 和 Redis 改成你本地的用户名和端口

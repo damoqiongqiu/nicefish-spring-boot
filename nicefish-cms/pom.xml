@@ -37,14 +37,6 @@
             <artifactId>nicefish-staff-org</artifactId>
             <version>${nicefish.version}</version>
         </dependency>
-
-        <!-- lombok提供了使用注解的方式使用log -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>

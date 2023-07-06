@@ -7,7 +7,6 @@ import com.nicefish.auth.jpa.repository.IPermissionRepository;
 import com.nicefish.auth.jpa.repository.IRoleRepository;
 import com.nicefish.auth.service.IPermissionService;
 import com.nicefish.core.web.AjaxResult;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +29,6 @@ import java.util.List;
  * @author 大漠穷秋
  */
 @Service
-@Slf4j
 public class PermissionServiceImpl implements IPermissionService {
     @Autowired
     private IPermissionRepository permissionRepository;
