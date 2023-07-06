@@ -159,20 +159,5 @@
             <artifactId>nicefish-core</artifactId>
             <version>${nicefish.version}</version>
         </dependency>
-
-        <!-- redis，注意这里的jar包配置，和老版本不一样了 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-        </dependency>
     </dependencies>
 </project>

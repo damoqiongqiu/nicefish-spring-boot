@@ -52,12 +52,6 @@ spring:
           auto: validate
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
-  redis:
-    database: 0
-    host: 127.0.0.1
-    port: 6379
-    password:
-    expireTime: 5000
 
 mybatis:
     typeAliasesPackage: com.nicefish

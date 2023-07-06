@@ -5,7 +5,6 @@ import com.nicefish.auth.shiro.filter.FishCaptchaValidateFilter;
 import com.nicefish.auth.shiro.filter.FishLogoutFilter;
 import com.nicefish.auth.shiro.filter.FishUserFilter;
 import com.nicefish.auth.shiro.realm.FishUserRealm;
-import com.nicefish.auth.shiro.session.FishRedisSessionDAO;
 import com.nicefish.auth.shiro.session.FishSessionFactory;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -124,13 +123,6 @@ public class ShiroConfig {
         return fishUserRealm;
     }
 
-    //这里的名称sessionDAO不能改，在其它地方有Autowired
-    @Bean
-    public FishRedisSessionDAO sessionDAO() {
-        FishRedisSessionDAO sessionDAO = new FishRedisSessionDAO();
-        return sessionDAO;
-    }
-
     @Bean
     public FishSessionFactory sessionFactory() {
         FishSessionFactory sessionFactory = new FishSessionFactory();
@@ -144,7 +136,6 @@ public class ShiroConfig {
         manager.setGlobalSessionTimeout(expireTime * 60 * 60 *1000);
         manager.setSessionIdUrlRewritingEnabled(false);
         manager.setSessionValidationSchedulerEnabled(true);
-        manager.setSessionDAO(sessionDAO());
         manager.setSessionFactory(sessionFactory());
         return manager;
     }
