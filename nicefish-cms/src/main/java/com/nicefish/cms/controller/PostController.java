@@ -1,9 +1,9 @@
 package com.nicefish.cms.controller;
 
-import com.nicefish.auth.shiro.util.ShiroUtil;
+import com.nicefish.rbac.shiro.util.ShiroUtil;
 import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.service.IPostService;
-import com.nicefish.core.web.AjaxResult;
+import com.nicefish.core.utils.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

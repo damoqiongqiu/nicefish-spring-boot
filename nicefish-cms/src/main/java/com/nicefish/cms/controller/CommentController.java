@@ -1,10 +1,10 @@
 package com.nicefish.cms.controller;
 
-import com.nicefish.auth.jpa.entity.UserEntity;
-import com.nicefish.auth.shiro.util.ShiroUtil;
+import com.nicefish.rbac.jpa.entity.UserEntity;
+import com.nicefish.rbac.shiro.util.ShiroUtil;
 import com.nicefish.cms.jpa.entity.CommentEntity;
 import com.nicefish.cms.service.ICommentService;
-import com.nicefish.core.web.AjaxResult;
+import com.nicefish.core.utils.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
