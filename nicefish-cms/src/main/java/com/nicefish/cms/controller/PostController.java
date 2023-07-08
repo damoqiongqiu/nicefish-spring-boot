@@ -1,12 +1,11 @@
 package com.nicefish.cms.controller;
 
-import com.nicefish.auth.shiro.util.ShiroUtil;
+import com.nicefish.rbac.shiro.util.ShiroUtil;
 import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.service.IPostService;
-import com.nicefish.core.web.AjaxResult;
+import com.nicefish.core.utils.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpSession;
  * @author 大漠穷秋
  */
 @Api("cms-文章接口")
-@Slf4j
 @RestController
 @RequestMapping("/nicefish/cms/post")
 public class PostController {

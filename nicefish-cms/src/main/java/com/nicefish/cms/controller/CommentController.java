@@ -1,13 +1,12 @@
 package com.nicefish.cms.controller;
 
-import com.nicefish.auth.jpa.entity.UserEntity;
-import com.nicefish.auth.shiro.util.ShiroUtil;
+import com.nicefish.rbac.jpa.entity.UserEntity;
+import com.nicefish.rbac.shiro.util.ShiroUtil;
 import com.nicefish.cms.jpa.entity.CommentEntity;
 import com.nicefish.cms.service.ICommentService;
-import com.nicefish.core.web.AjaxResult;
+import com.nicefish.core.utils.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpSession;
  * @author 大漠穷秋
  */
 @Api("cms-评论接口")
-@Slf4j
 @RestController
 @RequestMapping("/nicefish/cms/comment")
 public class CommentController {

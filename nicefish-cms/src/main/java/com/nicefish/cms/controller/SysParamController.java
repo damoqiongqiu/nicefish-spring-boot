@@ -4,7 +4,6 @@ import com.nicefish.cms.jpa.entity.SysParamEntity;
 import com.nicefish.cms.service.ISysParamService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +20,6 @@ import java.util.Map;
  * @author 大漠穷秋
  */
 @Api("cms-系统配置参数接口")
-@Slf4j
 @RestController
 @RequestMapping("/nicefish/cms/param")
 public class SysParamController {
