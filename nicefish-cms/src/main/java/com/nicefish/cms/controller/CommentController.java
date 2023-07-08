@@ -1,7 +1,7 @@
 package com.nicefish.cms.controller;
 
 import com.nicefish.rbac.jpa.entity.UserEntity;
-import com.nicefish.rbac.shiro.util.ShiroUtil;
+import com.nicefish.rbac.shiro.util.NiceFishShiroUtil;
 import com.nicefish.cms.jpa.entity.CommentEntity;
 import com.nicefish.cms.service.ICommentService;
 import com.nicefish.core.utils.AjaxResult;
@@ -37,7 +37,7 @@ public class CommentController {
     @ApiOperation("发表评论")
 	@RequestMapping(value="/write-comment",method = RequestMethod.POST)
 	public AjaxResult writeComment(@RequestBody CommentEntity commentEntity, HttpSession session){
-        UserEntity user=ShiroUtil.getSysUser();
+        UserEntity user= NiceFishShiroUtil.getSysUser();
         commentEntity.setUserId(user.getUserId());
         commentEntity.setUserName(user.getUserName());
         commentEntity.setNickName(user.getNickName());
@@ -50,7 +50,7 @@ public class CommentController {
 	@RequestMapping(value = "/manage/comment-table/{page}", method = RequestMethod.GET)
 	public Page<CommentEntity> getCommentListByUserId(@PathVariable(value="page",required = true) Integer page) {
         Pageable pageable= PageRequest.of(page-1,10);
-        Long userId=ShiroUtil.getUserId();
+        Long userId= NiceFishShiroUtil.getUserId();
         return this.commentService.findAllByUserIdAndPaging(userId,pageable);
 	}
 

@@ -2,7 +2,7 @@ package com.nicefish.rbac.controller;
 
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
-import com.nicefish.rbac.shiro.util.ShiroUtil;
+import com.nicefish.rbac.shiro.util.NiceFishShiroUtil;
 import com.nicefish.core.utils.AjaxResult;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +32,13 @@ public class UserController {
     @GetMapping("/getSessionUser")
     @ResponseBody
     public UserEntity getSessionUser(){
-        return ShiroUtil.getSysUser();
+        return NiceFishShiroUtil.getSysUser();
     }
 
     @PostMapping("/register")
     @ResponseBody
     public AjaxResult register(@RequestBody UserEntity userEntity) {
-        userEntity.setSalt(ShiroUtil.randomSalt());
+        userEntity.setSalt(NiceFishShiroUtil.randomSalt());
         userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
         return userService.createUser(userEntity);
     }
@@ -86,7 +86,7 @@ public class UserController {
     @PostMapping("/resetPwd")
     @ResponseBody
     public AjaxResult resetPwd(UserEntity userEntity) {
-        userEntity.setSalt(ShiroUtil.randomSalt());
+        userEntity.setSalt(NiceFishShiroUtil.randomSalt());
         userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
         userService.resetPwd(userEntity);
         return AjaxResult.failure();

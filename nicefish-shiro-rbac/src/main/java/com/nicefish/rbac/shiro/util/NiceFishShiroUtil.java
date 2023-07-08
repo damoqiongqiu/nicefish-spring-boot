@@ -10,10 +10,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 
 /**
- *
  * @author 大漠穷秋
  */
-public class ShiroUtil {
+public class NiceFishShiroUtil {
     public static UserEntity getSysUser() {
         UserEntity userEntity = null;
         Object obj = SecurityUtils.getSubject().getPrincipal();

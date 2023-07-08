@@ -11,14 +11,14 @@ import org.apache.shiro.web.session.mgt.WebSessionContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 比父类默认多一些处理步骤，把一些额外的属性设置到 Session 的 attributes 里面。
- * 业务代码可以利用这些属性进行一些统计。
+ * 创建 Session 的工厂类，用来创建自定义的 Session 数据结构。
+ * NiceFishSessionFactory 会把一些额外的属性设置到 Session 的 attributes 里面，业务代码可以利用这些属性实现一些特殊的功能。
  * @author 大漠穷秋
  */
 public class NiceFishSessionFactory extends SimpleSessionFactory {
     @Override
     public Session createSession(SessionContext initData) {
-        Session session=super.createSession(initData);
+        Session session=super.createSession(initData);//FIXME:使用自定义的 NiceFishSession
         if (initData != null && initData instanceof WebSessionContext) {
             WebSessionContext sessionContext = (WebSessionContext) initData;
             HttpServletRequest request = (HttpServletRequest) sessionContext.getServletRequest();

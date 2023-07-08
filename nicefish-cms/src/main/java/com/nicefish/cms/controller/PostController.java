@@ -1,6 +1,6 @@
 package com.nicefish.cms.controller;
 
-import com.nicefish.rbac.shiro.util.ShiroUtil;
+import com.nicefish.rbac.shiro.util.NiceFishShiroUtil;
 import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.service.IPostService;
 import com.nicefish.core.utils.AjaxResult;
@@ -42,9 +42,9 @@ public class PostController {
     }
 
     private PostEntity setUserInfoToPostEntity(PostEntity postEntity, HttpSession session){
-        Long userId=ShiroUtil.getSysUser().getUserId();
-        String nickName=ShiroUtil.getSysUser().getNickName();
-        String email=ShiroUtil.getSysUser().getEmail();
+        Long userId= NiceFishShiroUtil.getSysUser().getUserId();
+        String nickName= NiceFishShiroUtil.getSysUser().getNickName();
+        String email= NiceFishShiroUtil.getSysUser().getEmail();
 
         postEntity.setUserId(userId);
         postEntity.setNickName(nickName);
@@ -71,7 +71,7 @@ public class PostController {
     @RequestMapping(value = "/manage/post-table/{page}", method = RequestMethod.GET)
     public Page<PostEntity> getPostListByUserId(@PathVariable(value="page",required = true) Integer page) {
         Pageable pageable= PageRequest.of(page-1,10);
-        Long userId=ShiroUtil.getUserId();
+        Long userId= NiceFishShiroUtil.getUserId();
         return this.postService.getPostsByUserIdAndPaging(userId,pageable);
     }
 

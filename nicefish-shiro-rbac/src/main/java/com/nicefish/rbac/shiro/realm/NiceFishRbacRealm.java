@@ -3,7 +3,7 @@ package com.nicefish.rbac.shiro.realm;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
-import com.nicefish.rbac.shiro.util.ShiroUtil;
+import com.nicefish.rbac.shiro.util.NiceFishShiroUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -65,7 +65,7 @@ public class NiceFishRbacRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-        UserEntity userEntity = ShiroUtil.getSysUser();
+        UserEntity userEntity = NiceFishShiroUtil.getSysUser();
         Set<String> roles = new HashSet<String>();
         Set<String> menus = new HashSet<String>();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

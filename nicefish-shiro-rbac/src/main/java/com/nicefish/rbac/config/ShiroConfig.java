@@ -5,7 +5,7 @@ import com.nicefish.rbac.shiro.filter.NiceFishCaptchaValidateFilter;
 import com.nicefish.rbac.shiro.filter.NiceFishLogoutFilter;
 import com.nicefish.rbac.shiro.filter.NiceFishUserFilter;
 import com.nicefish.rbac.shiro.realm.NiceFishRbacRealm;
-import com.nicefish.rbac.shiro.session.NiceFishRedisSessionDAO;
+import com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO;
 import com.nicefish.rbac.shiro.session.NiceFishSessionFactory;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -67,7 +67,7 @@ public class ShiroConfig {
     private String unauthorizedUrl;
 
     /**
-     * Shiro 的核心配置
+     * Shiro 的过滤器配置。
      * @see <a href="https://shiro.apache.org/documentation.html">Shiro Docs</a>
      * @param securityManager
      * @return
@@ -124,10 +124,9 @@ public class ShiroConfig {
         return niceFishRbacRealm;
     }
 
-    //这里的方法名称 sessionDAO 不能改，在其它地方有 Autowired
     @Bean
-    public NiceFishRedisSessionDAO sessionDAO() {
-        NiceFishRedisSessionDAO sessionDAO = new NiceFishRedisSessionDAO();
+    public NiceFishMySQLSessionDAO sessionDAO() {
+        NiceFishMySQLSessionDAO sessionDAO = new NiceFishMySQLSessionDAO();
         return sessionDAO;
     }
 
@@ -140,6 +139,7 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        //TODO:启用 Ehcache 缓存
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setGlobalSessionTimeout(expireTime * 60 * 60 *1000);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
@@ -155,6 +155,7 @@ public class ShiroConfig {
         securityManager.setRealm(userRealm());
         securityManager.setRememberMeManager(rememberMeManager());
         securityManager.setSessionManager(sessionManager());
+        //TODO:启用 Ehcache 缓存
         return securityManager;
     }
 
