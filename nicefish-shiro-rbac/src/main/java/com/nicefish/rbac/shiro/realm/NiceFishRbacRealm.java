@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
+ * NiceFish 版本的 Authorization 和 Authentication ，实现基于 RBAC 的认证和授权。
  * @author 大漠穷秋
  */
 public class NiceFishRbacRealm extends AuthorizingRealm {
