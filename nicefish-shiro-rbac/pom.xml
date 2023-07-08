@@ -161,6 +161,16 @@
             <artifactId>shiro-ehcache</artifactId>
             <version>${shiro.version}</version>
         </dependency>
+        <!-- 
+            用来监控 ehcache ，生产环境需要删掉 
+            监控工具看起来有点老，需要一款新的工具来替代
+            https://www.ehcache.org/documentation/2.7/operations/monitor.html
+        -->
+        <dependency>
+            <groupId>org.terracotta</groupId>
+            <artifactId>ehcache-probe</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
         <!-- redis，注意这里的jar包配置，和老版本不一样了 -->
         <dependency>

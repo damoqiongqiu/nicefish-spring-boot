@@ -43,6 +43,7 @@
             overflowToDisk="false"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
+            statistics="true"
     />
 
     <!-- Session 缓存 -->
@@ -53,7 +54,8 @@
             timeToLiveSeconds="0"
             timeToIdleSeconds="0"
             diskPersistent="true"
-            diskExpiryThreadIntervalSeconds="600"/>
+            diskExpiryThreadIntervalSeconds="600"
+            statistics="true"/>
 
     <!-- 授权缓存 -->
     <cache name="authorizationCache"
@@ -74,4 +76,11 @@
            overflowToDisk="false"
            statistics="true">
     </cache>
+    
+    <!-- 
+        用来监控 ehcache ，生产环境需要删掉 
+        监控工具看起来有点老，需要一款新的工具来替代
+        https://www.ehcache.org/documentation/2.7/operations/monitor.html
+    -->
+    <cacheManagerPeerListenerFactory class="org.terracotta.ehcachedx.monitor.probe.ProbePeerListenerFactory" properties="monitorAddress=localhost, monitorPort=9889" />
 </ehcache>
