@@ -4,7 +4,7 @@ package com.nicefish.rbac.constant;
  *
  * @author 大漠穷秋
  */
-public interface FishAuthConstants {
+public interface NiceFishAuthConstants {
      int USERNAME_MIN_LENGTH = 2;
      int USERNAME_MAX_LENGTH = 20;
      int PASSWORD_MIN_LENGTH = 5;

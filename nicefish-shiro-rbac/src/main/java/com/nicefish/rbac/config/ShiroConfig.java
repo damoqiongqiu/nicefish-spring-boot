@@ -1,12 +1,12 @@
 package com.nicefish.rbac.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.nicefish.rbac.shiro.filter.FishCaptchaValidateFilter;
-import com.nicefish.rbac.shiro.filter.FishLogoutFilter;
-import com.nicefish.rbac.shiro.filter.FishUserFilter;
-import com.nicefish.rbac.shiro.realm.FishUserRealm;
-import com.nicefish.rbac.shiro.session.FishRedisSessionDAO;
-import com.nicefish.rbac.shiro.session.FishSessionFactory;
+import com.nicefish.rbac.shiro.filter.NiceFishCaptchaValidateFilter;
+import com.nicefish.rbac.shiro.filter.NiceFishLogoutFilter;
+import com.nicefish.rbac.shiro.filter.NiceFishUserFilter;
+import com.nicefish.rbac.shiro.realm.NiceFishRbacRealm;
+import com.nicefish.rbac.shiro.session.NiceFishRedisSessionDAO;
+import com.nicefish.rbac.shiro.session.NiceFishSessionFactory;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -119,21 +119,21 @@ public class ShiroConfig {
     }
 
     @Bean
-    public FishUserRealm userRealm() {
-        FishUserRealm fishUserRealm = new FishUserRealm();
-        return fishUserRealm;
+    public NiceFishRbacRealm userRealm() {
+        NiceFishRbacRealm niceFishRbacRealm = new NiceFishRbacRealm();
+        return niceFishRbacRealm;
     }
 
     //这里的方法名称 sessionDAO 不能改，在其它地方有 Autowired
     @Bean
-    public FishRedisSessionDAO sessionDAO() {
-        FishRedisSessionDAO sessionDAO = new FishRedisSessionDAO();
+    public NiceFishRedisSessionDAO sessionDAO() {
+        NiceFishRedisSessionDAO sessionDAO = new NiceFishRedisSessionDAO();
         return sessionDAO;
     }
 
     @Bean
-    public FishSessionFactory sessionFactory() {
-        FishSessionFactory sessionFactory = new FishSessionFactory();
+    public NiceFishSessionFactory sessionFactory() {
+        NiceFishSessionFactory sessionFactory = new NiceFishSessionFactory();
         return sessionFactory;
     }
 
@@ -158,21 +158,21 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    public FishCaptchaValidateFilter captchaValidateFilter() {
-        FishCaptchaValidateFilter fishCaptchaValidateFilter = new FishCaptchaValidateFilter();
-        fishCaptchaValidateFilter.setCaptchaEnabled(captchaEnabled);
-        fishCaptchaValidateFilter.setCaptchaType(captchaType);
-        return fishCaptchaValidateFilter;
+    public NiceFishCaptchaValidateFilter captchaValidateFilter() {
+        NiceFishCaptchaValidateFilter niceFishCaptchaValidateFilter = new NiceFishCaptchaValidateFilter();
+        niceFishCaptchaValidateFilter.setCaptchaEnabled(captchaEnabled);
+        niceFishCaptchaValidateFilter.setCaptchaType(captchaType);
+        return niceFishCaptchaValidateFilter;
     }
 
-    public FishLogoutFilter logoutFilter(){
-        FishLogoutFilter fishLogoutFilter=new FishLogoutFilter();
-        return fishLogoutFilter;
+    public NiceFishLogoutFilter logoutFilter(){
+        NiceFishLogoutFilter niceFishLogoutFilter =new NiceFishLogoutFilter();
+        return niceFishLogoutFilter;
     }
 
-    public FishUserFilter userFilter(){
-        FishUserFilter fishUserFilter=new FishUserFilter();
-        return fishUserFilter;
+    public NiceFishUserFilter userFilter(){
+        NiceFishUserFilter niceFishUserFilter =new NiceFishUserFilter();
+        return niceFishUserFilter;
     }
 
     public SimpleCookie rememberMeCookie() {

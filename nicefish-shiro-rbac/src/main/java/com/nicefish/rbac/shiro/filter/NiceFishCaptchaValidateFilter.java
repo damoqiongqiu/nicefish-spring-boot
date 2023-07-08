@@ -1,7 +1,7 @@
 package com.nicefish.rbac.shiro.filter;
 
 import com.google.code.kaptcha.Constants;
-import com.nicefish.rbac.constant.FishAuthConstants;
+import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.springframework.util.ObjectUtils;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * 验证码
  * @author 大漠穷秋
  */
-public class FishCaptchaValidateFilter extends AccessControlFilter {
+public class NiceFishCaptchaValidateFilter extends AccessControlFilter {
     private boolean captchaEnabled = true;
 
     private String captchaType = "math";
@@ -30,8 +30,8 @@ public class FishCaptchaValidateFilter extends AccessControlFilter {
 
     @Override
     public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-        request.setAttribute(FishAuthConstants.CURRENT_ENABLED, captchaEnabled);
-        request.setAttribute(FishAuthConstants.CURRENT_TYPE, captchaType);
+        request.setAttribute(NiceFishAuthConstants.CURRENT_ENABLED, captchaEnabled);
+        request.setAttribute(NiceFishAuthConstants.CURRENT_TYPE, captchaType);
         return super.onPreHandle(request, response, mappedValue);
     }
 
@@ -47,7 +47,7 @@ public class FishCaptchaValidateFilter extends AccessControlFilter {
             return false;
         }else{
             String code = String.valueOf(obj);
-            String validateCode=httpServletRequest.getParameter(FishAuthConstants.CURRENT_VALIDATECODE);
+            String validateCode=httpServletRequest.getParameter(NiceFishAuthConstants.CURRENT_VALIDATECODE);
             if (StringUtils.isEmpty(validateCode) || !validateCode.equalsIgnoreCase(code)) {
                 return false;
             }
@@ -57,7 +57,7 @@ public class FishCaptchaValidateFilter extends AccessControlFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        request.setAttribute(FishAuthConstants.CURRENT_CAPTCHA, FishAuthConstants.CAPTCHA_ERROR);
+        request.setAttribute(NiceFishAuthConstants.CURRENT_CAPTCHA, NiceFishAuthConstants.CAPTCHA_ERROR);
         return true;
     }
 }

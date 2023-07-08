@@ -1,6 +1,6 @@
 package com.nicefish.rbac.shiro.session;
 
-import com.nicefish.rbac.shiro.realm.FishUserRealm;
+import com.nicefish.rbac.shiro.realm.NiceFishRbacRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author 大漠穷秋
  */
-public class FishRedisSessionDAO extends AbstractSessionDAO{
-    private static final Logger logger = LoggerFactory.getLogger(FishUserRealm.class);
+public class NiceFishRedisSessionDAO extends AbstractSessionDAO{
+    private static final Logger logger = LoggerFactory.getLogger(NiceFishRbacRealm.class);
     
     @Value("${shiro.session.expireTime}")//单位：小时
     private int expireTime;

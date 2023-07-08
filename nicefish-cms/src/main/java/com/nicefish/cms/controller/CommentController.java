@@ -31,7 +31,7 @@ public class CommentController {
 	@RequestMapping(value = "/post-id/{postId}/page/{page}", method = RequestMethod.GET)
 	public Page<CommentEntity> getCommentList(@PathVariable(value="postId",required = true) Long postId, @PathVariable(value="page",required = true) Integer page) {
         PageRequest pageRequest= PageRequest.of(page-1,10, new Sort(Sort.Direction.DESC,"id"));
-	    return commentService.findByPostId(postId,pageRequest);
+        return commentService.findByPostId(postId,pageRequest);
 	}
 
     @ApiOperation("发表评论")

@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
  * Debug用，没有修改父类上的实现。
  * @author 大漠穷秋
  */
-public class FishUserFilter extends UserFilter {
+public class NiceFishUserFilter extends UserFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginRequest(request, response)) {

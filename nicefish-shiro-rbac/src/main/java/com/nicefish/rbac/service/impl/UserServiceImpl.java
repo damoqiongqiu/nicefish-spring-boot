@@ -1,6 +1,6 @@
 package com.nicefish.rbac.service.impl;
 
-import com.nicefish.rbac.constant.FishAuthConstants;
+import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
@@ -256,28 +256,28 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserEntity checkUser(String userName, String password) throws UserNotExistsException,
-            CaptchaException,UserPasswordNotMatchException,
-            UserDeleteException,UserBlockedException{
+            CaptchaException, UserPasswordNotMatchException,
+            UserDeleteException, UserBlockedException {
         if (org.springframework.util.StringUtils.isEmpty(userName) || org.springframework.util.StringUtils.isEmpty(password)) {
             throw new UserNotExistsException();
         }
-        if (!org.springframework.util.StringUtils.isEmpty(ServletUtil.getRequest().getAttribute(FishAuthConstants.CURRENT_CAPTCHA))) {
+        if (!org.springframework.util.StringUtils.isEmpty(ServletUtil.getRequest().getAttribute(NiceFishAuthConstants.CURRENT_CAPTCHA))) {
             throw new CaptchaException();
         }
-        if (password.length() < FishAuthConstants.PASSWORD_MIN_LENGTH
-                || password.length() > FishAuthConstants.PASSWORD_MAX_LENGTH) {
+        if (password.length() < NiceFishAuthConstants.PASSWORD_MIN_LENGTH
+                || password.length() > NiceFishAuthConstants.PASSWORD_MAX_LENGTH) {
             throw new UserPasswordNotMatchException();
         }
-        if (userName.length() < FishAuthConstants.USERNAME_MIN_LENGTH
-                || userName.length() > FishAuthConstants.USERNAME_MAX_LENGTH) {
+        if (userName.length() < NiceFishAuthConstants.USERNAME_MIN_LENGTH
+                || userName.length() > NiceFishAuthConstants.USERNAME_MAX_LENGTH) {
             throw new UserPasswordNotMatchException();
         }
 
         UserEntity userEntity = null;
 
-        if(userName.matches(FishAuthConstants.EMAIL_PATTERN)){
+        if(userName.matches(NiceFishAuthConstants.EMAIL_PATTERN)){
             userEntity = this.getUserByEmail(userName);
-        }else if(userName.matches(FishAuthConstants.MOBILE_PHONE_NUMBER_PATTERN)){
+        }else if(userName.matches(NiceFishAuthConstants.MOBILE_PHONE_NUMBER_PATTERN)){
             userEntity=this.getUserByCellphone(userName);
         }else{
             userEntity=this.getUserByUserName(userName);

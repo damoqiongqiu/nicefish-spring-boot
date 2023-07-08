@@ -18,8 +18,8 @@ import java.util.Locale;
  * 在前后端分离模式下，前端自己跳转，后端不用管。
  * @author 大漠穷秋
  */
-public class FishLogoutFilter extends LogoutFilter {
-    private static final Logger logger = LoggerFactory.getLogger(FishLogoutFilter.class);
+public class NiceFishLogoutFilter extends LogoutFilter {
+    private static final Logger logger = LoggerFactory.getLogger(NiceFishLogoutFilter.class);
 
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {

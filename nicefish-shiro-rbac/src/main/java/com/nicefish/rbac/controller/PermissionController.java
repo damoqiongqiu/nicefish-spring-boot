@@ -24,7 +24,7 @@ public class PermissionController {
     private IPermissionService permissionService;
 
     @ApiOperation("获取权限列表，带分页")
-    @RequestMapping(value = "/list2/{page}",method = RequestMethod.POST)
+    @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
     @ResponseBody
     public Page<PermissionEntity> getPermissionList(@RequestBody PermissionEntity permissionEntity, @PathVariable(name="page",required = true) Integer page){
         Pageable pageable= PageRequest.of(page-1,10);
@@ -46,7 +46,7 @@ public class PermissionController {
     }
 
     @ApiOperation("创建新权限点")
-    @RequestMapping(value = "/create2",method = RequestMethod.POST)
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ResponseBody
     public AjaxResult createPermission(@RequestBody PermissionEntity permissionEntity){
         AjaxResult ajaxResult =this.permissionService.createPermission(permissionEntity);
@@ -54,14 +54,14 @@ public class PermissionController {
     }
 
     @ApiOperation("编辑权限点")
-    @RequestMapping(value = "/edit2",method = RequestMethod.POST)
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
     public AjaxResult editRole(@RequestBody PermissionEntity permissionEntity){
         return this.permissionService.editPermission(permissionEntity);
     }
 
     @ApiOperation("删除权限点")
-    @RequestMapping(value = "/delete2/{permissionId}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{permissionId}",method = RequestMethod.DELETE)
     @ResponseBody
     public AjaxResult deletePermission(@PathVariable(value="permissionId",required = true)Long permissionId){
         int affected= this.permissionService.deletePermission(permissionId);

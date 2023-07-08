@@ -20,8 +20,8 @@ import java.util.Set;
  *
  * @author 大漠穷秋
  */
-public class FishUserRealm extends AuthorizingRealm {
-    private static final Logger logger = LoggerFactory.getLogger(FishUserRealm.class);
+public class NiceFishRbacRealm extends AuthorizingRealm {
+    private static final Logger logger = LoggerFactory.getLogger(NiceFishRbacRealm.class);
 
     @Autowired
     private IUserService userService2;

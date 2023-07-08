@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/nicefish/auth/shiro")
 public class ShiroAuthController {
     @Autowired
-    protected IUserService userService2;
+    protected IUserService userService;
 
     @PostMapping("/login")
     @ResponseBody
@@ -37,7 +37,7 @@ public class ShiroAuthController {
             SecurityUtils.getSubject().login(token);
 
             //TODO:重新整合数据模型，全部统一到UserEntity
-            UserEntity userInDB=this.userService2.getUserByUserName(userName);
+            UserEntity userInDB=this.userService.getUserByUserName(userName);
             if(!ObjectUtils.isEmpty(userInDB)){
                 BeanUtils.copyProperties(userInDB,userEntity);
             }

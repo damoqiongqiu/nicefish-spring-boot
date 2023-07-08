@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * 业务代码可以利用这些属性进行一些统计。
  * @author 大漠穷秋
  */
-public class FishSessionFactory extends SimpleSessionFactory {
+public class NiceFishSessionFactory extends SimpleSessionFactory {
     @Override
     public Session createSession(SessionContext initData) {
         Session session=super.createSession(initData);
