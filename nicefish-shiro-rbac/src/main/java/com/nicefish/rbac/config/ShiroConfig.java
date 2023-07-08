@@ -7,6 +7,8 @@ import com.nicefish.rbac.shiro.filter.NiceFishUserFilter;
 import com.nicefish.rbac.shiro.realm.NiceFishRbacRealm;
 import com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO;
 import com.nicefish.rbac.shiro.session.NiceFishSessionFactory;
+
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -119,27 +121,51 @@ public class ShiroConfig {
     }
 
     @Bean
-    public NiceFishRbacRealm userRealm() {
+    public NiceFishRbacRealm nicefishRbacRealm() {
         NiceFishRbacRealm niceFishRbacRealm = new NiceFishRbacRealm();
+        niceFishRbacRealm.setCachingEnabled(true);
+        niceFishRbacRealm.setAuthenticationCachingEnabled(true);
+        niceFishRbacRealm.setAuthenticationCacheName("authenticationCache");
+        niceFishRbacRealm.setAuthorizationCachingEnabled(true);
+        niceFishRbacRealm.setAuthorizationCacheName("authorizationCache");
         return niceFishRbacRealm;
     }
 
+    /**
+     * 使用自定义的 NiceFishMySQLSessionDAO ，把 Session 持久化到数据库。
+     * @return
+     */
     @Bean
     public NiceFishMySQLSessionDAO sessionDAO() {
         NiceFishMySQLSessionDAO sessionDAO = new NiceFishMySQLSessionDAO();
+        sessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");
         return sessionDAO;
     }
 
+    /**
+     * 使用自定义的 NiceFishSessionFactory ，使得在创建 Session 的时候可以使用我们自定义的 NiceFishSession 。
+     * @return
+     */
     @Bean
     public NiceFishSessionFactory sessionFactory() {
         NiceFishSessionFactory sessionFactory = new NiceFishSessionFactory();
         return sessionFactory;
     }
 
+    /**
+     * 使用 EhCache 作为缓存。
+     */
+    @Bean
+    public EhCacheManager ehCacheManager(){
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");//FIXME:重构这里的配置文件路径
+        return cacheManager;
+    }
+
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        //TODO:启用 Ehcache 缓存
+        sessionManager.setCacheManager(ehCacheManager());
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setGlobalSessionTimeout(expireTime * 60 * 60 *1000);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
@@ -152,10 +178,10 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager(){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(userRealm());
+        securityManager.setRealm(nicefishRbacRealm());
         securityManager.setRememberMeManager(rememberMeManager());
         securityManager.setSessionManager(sessionManager());
-        //TODO:启用 Ehcache 缓存
+        securityManager.setCacheManager(ehCacheManager());
         return securityManager;
     }
 
