@@ -3,7 +3,6 @@ package com.nicefish.rbac.shiro.realm;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
-import com.nicefish.rbac.shiro.util.NiceFishShiroUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -12,9 +11,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * NiceFish 版本的 Authorization 和 Authentication ，实现基于 RBAC 的认证和授权。
@@ -72,10 +68,13 @@ public class NiceFishRbacRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        UserEntity userEntity = NiceFishShiroUtil.getSysUser();
-        Set<String> roles = new HashSet<String>();
-        Set<String> menus = new HashSet<String>();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        //addRole
+        //addStringPermission
+
+        // UserEntity userEntity = NiceFishSecurityUtils.getUserEntity();
+        // Set<String> roles = new HashSet<String>();
+        // Set<String> menus = new HashSet<String>();
 //        if (user.isAdmin()) {
 //            info.addRole("admin");
 //            info.addStringPermission("*:*:*");
