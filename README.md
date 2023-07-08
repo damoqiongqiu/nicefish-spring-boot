@@ -24,7 +24,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 - git clone 本项目
 - 用 IDEA 导入根目录下的 pom.xml 
-- 在 MySQL 中执行 docs/nicefish_springboot.sql 脚本
+- 在 MySQL 中执行 docs/nicefish-spring-boot.sql 脚本
 - 修改 application.yml 配置文件，把 MySQL 改成你自己的配置
 - 配置 Maven ，使用阿里云的源
 - 启动 nicefish-cms 模块下的 NiceFishApplication.java
