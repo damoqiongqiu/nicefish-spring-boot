@@ -143,7 +143,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 使用自定义的 NiceFishSessionFactory ，使得在创建 Session 的时候可以使用我们自定义的 NiceFishSession 。
+     * 使用自定义的 NiceFishSessionFactory
      * @return
      */
     @Bean

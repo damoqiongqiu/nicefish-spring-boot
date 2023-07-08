@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2023/7/8 11:33:28                            */
+/* Created on:     2023/7/8 22:23:22                            */
 /*==============================================================*/
 
 
@@ -21,6 +21,8 @@ drop table if exists nicefish_rbac_role;
 drop table if exists nicefish_rbac_role_api;
 
 drop table if exists nicefish_rbac_role_component;
+
+drop table if exists nicefish_rbac_session;
 
 drop table if exists nicefish_rbac_user;
 
@@ -57,7 +59,7 @@ create table nicefish_cms_file_upload
    up_id                int(11) not null,
    up_time              datetime default current_timestamp,
    file_name            varchar(128) default null comment '与物理保存的文件名一致',
-   file_type            varchar(16) default '1' comment '1、图片；\n            2、附件；',
+   file_type            varchar(32) default '1' comment '1、图片；\n            2、附件；',
    file_size            float default 0,
    file_width           int(11) default 0,
    file_height          int(11) default 0,
@@ -118,7 +120,7 @@ alter table nicefish_cms_sys_params comment '系统参数配置表';
 create table nicefish_rbac_api
 (
    api_id               int(11) not null auto_increment,
-   api_name             varchar(32) not null,
+   api_name             varchar(64) not null,
    url                  varchar(64) comment 'URL 的匹配模式和 @RequestMapping 中的定义模式完全相同。',
    permission           varchar(64) not null default '*' comment '权限定义，按照 Apache Shiro 的权限定义规则进行定义。
             为了避免重复和歧义，权限字符串必须是不同的。',
@@ -137,8 +139,8 @@ create table nicefish_rbac_component
 (
    component_id         int(11) not null auto_increment,
    p_id                 int(11),
-   component_name       varchar(30) not null,
-   icon                 varchar(30),
+   component_name       varchar(64) not null,
+   icon                 varchar(64),
    url                  varchar(64) comment '组件对应的 URL 路径，可以定义成系统外部的链接 URL',
    display_order        int(11) not null default 1 comment '组件在前端屏幕上的显示顺序，按数值从小到达排列，数值越小越靠屏幕顶部。',
    permission           varchar(64) not null default '*' comment '权限定义，按照 Apache Shiro 的权限定义规则进行定义。
@@ -160,7 +162,7 @@ component 可以是菜单、按钮，甚至可以细致到一个 HTML 元素。
 create table nicefish_rbac_role
 (
    role_id              int(11) not null auto_increment,
-   role_name            varchar(30) not null,
+   role_name            varchar(64) not null,
    role_key             varchar(100) not null,
    status               int(1) not null default 0 comment '-1 特权角色，不能删除 0正常 1停用 2删除',
    remark               varchar(500) default '',
@@ -192,19 +194,41 @@ create table nicefish_rbac_role_component
 alter table nicefish_rbac_role_component comment '角色与菜单的关联关系';
 
 /*==============================================================*/
+/* Table: nicefish_rbac_session                                 */
+/*==============================================================*/
+create table nicefish_rbac_session
+(
+   session_id           varchar(64) not null default '',
+   user_id              int(11) comment '如果用户没有登录，此列可为空',
+   user_name            varchar(64),
+   start_time           datetime,
+   stop_time            datetime,
+   last_access_time     datetime,
+   timeout              int(11) comment '过期时间',
+   expired              char(1) comment '是否已经过期',
+   host                 varchar(64) default '' comment 'IP地址',
+   os                   varchar(64) default '',
+   browser              varchar(64) default '',
+   user_agent           varchar(255) comment '浏览器发送过来的 UserAgent 字符串',
+   primary key (session_id)
+);
+
+alter table nicefish_rbac_session comment '用来持久化 Session ，应用端可以利用此表实现 SSO 。';
+
+/*==============================================================*/
 /* Table: nicefish_rbac_user                                    */
 /*==============================================================*/
 create table nicefish_rbac_user
 (
    user_id              int(11) not null auto_increment,
-   user_name            varchar(30) not null,
-   nick_name            varchar(30) not null,
-   password             varchar(50) default '',
-   email                varchar(50) default '',
+   user_name            varchar(64) not null,
+   nick_name            varchar(64) not null,
+   password             varchar(64) default '',
+   email                varchar(64) default '',
    cellphone            varchar(32) default '',
    gender               char(1) default '0' comment '0男 1女 2未知',
-   avatar               varchar(100) default '',
-   salt                 varchar(20) default '',
+   avatar_url           varchar(64) default '' comment '用户头像 URL',
+   salt                 varchar(32) default '',
    create_time          datetime not null default current_timestamp,
    status               char(1) default '0' comment '-1 特权用户不能删除 0正常 1禁用 2删除',
    remark               varchar(500) default '',
