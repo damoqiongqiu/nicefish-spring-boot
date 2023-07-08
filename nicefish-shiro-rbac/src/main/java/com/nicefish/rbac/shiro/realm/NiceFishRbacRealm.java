@@ -26,6 +26,9 @@ public class NiceFishRbacRealm extends AuthorizingRealm {
     @Autowired
     private IUserService userService2;
 
+    /**
+     * 实现父类中的认证逻辑。
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
@@ -59,12 +62,16 @@ public class NiceFishRbacRealm extends AuthorizingRealm {
             logger.info(username + "登录失败{}", e.getMessage());
             throw new AuthenticationException(e.getMessage(), e);
         }
+
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userEntity, password, getName());
         return info;
     }
 
+    /**
+     * TODO:实现父类中的授权逻辑。
+     */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         UserEntity userEntity = NiceFishShiroUtil.getSysUser();
         Set<String> roles = new HashSet<String>();
         Set<String> menus = new HashSet<String>();
