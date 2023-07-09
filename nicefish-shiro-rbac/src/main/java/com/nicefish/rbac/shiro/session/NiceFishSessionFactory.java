@@ -35,6 +35,7 @@ public class NiceFishSessionFactory extends SimpleSessionFactory {
             session.setAttribute("userAgent",userAgent);
 
             //TODO:加入 userId, userName
+
         }
         return session;
     }

@@ -38,6 +38,7 @@ public class CaptchaController {
         ServletOutputStream out = null;
         try {
             //获取验证码的请求默认开启一个HttpSession，后续的login和其它操作都会复用这个HttpSession
+            //在与 Shiro 整合时，这里获得的 session 实例是被 Shiro 包装过的 ShiroHttpSession 类型。
             HttpSession session = request.getSession();
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
