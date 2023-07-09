@@ -17,7 +17,6 @@ import java.util.UUID;
 @DynamicUpdate
 @Table(name = "nicefish_rbac_session")
 public class NiceFishSessionEntity {
-    //FIXME:自动生成 UUID
     @Id
     @Column(name = "session_id")
     private String sessionId= UUID.randomUUID().toString();
