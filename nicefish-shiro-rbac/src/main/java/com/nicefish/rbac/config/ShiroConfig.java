@@ -170,7 +170,6 @@ public class ShiroConfig {
      * web 应用和 spring 本身没有 SessionDAO 的概念，
      * 这里创建 Shiro 提供的 DefaultWebSessionManager 实例，从而可以自定义 Session 的数据格式，
      * 然后利用自定义的 NiceFishMySQLSessionDAO 对 Session 进行操作。
-     * @see https://shiro.apache.org/session-management.html
      * @return
      */
     @Bean
@@ -184,12 +183,13 @@ public class ShiroConfig {
         sessionManager.setCacheManager(ehCacheManager());
 
         sessionManager.setDeleteInvalidSessions(true);
-        sessionManager.setGlobalSessionTimeout(timeout * 60 * 60 *1000);
+        sessionManager.setGlobalSessionTimeout(timeout);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         
         //启用定时调度器，用来清理 Session ，Shiro 默认采用内置的 ExecutorServiceSessionValidationScheduler 进行调度。
         sessionManager.setSessionValidationSchedulerEnabled(true);
-        
+        sessionManager.setSessionValidationInterval(validationInterval);
+
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setSessionFactory(sessionFactory());
         return sessionManager;
