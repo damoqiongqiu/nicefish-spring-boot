@@ -6,35 +6,49 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "fish_auth_role")
-public class RoleEntity extends BaseEntity {
+@Table(name = "nicefish_rbac_role")
+public class RoleEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="role_id")
-    private Long roleId;
+    private Integer roleId;
+    
     @Column(name="role_name")
     private String roleName;
+    
     @Column(name="role_key")
     private String roleKey;
+    
     @Column(name="status",columnDefinition = "int default 0",nullable = false)
     private Integer status;
+    
     @Column(name="remark")
     private String remark;
+    
     @ManyToMany(mappedBy = "roleEntities",fetch = FetchType.LAZY)
     private List<UserEntity> userEntities;
 
     @JoinTable(
-        name="fish_auth_role_permission",
+        name="nicefish_rbac_role_api",
         joinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")},
-        inverseJoinColumns={@JoinColumn(name="permission_id",referencedColumnName="permission_id")}
+        inverseJoinColumns={@JoinColumn(name="api_id",referencedColumnName="api_id")}
     )
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<PermissionEntity> permissionEntities;
+    private List<ApiEntity> apiEntities;
+
+    @JoinTable(
+        name="nicefish_rbac_role_component",
+        joinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")},
+        inverseJoinColumns={@JoinColumn(name="component_id",referencedColumnName="component_id")}
+    )
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<ComponentEntity> componentEntities;
 
     public List<UserEntity> getUserEntities() {
         return userEntities;
@@ -44,11 +58,11 @@ public class RoleEntity extends BaseEntity {
         this.userEntities = userEntities;
     }
 
-    public Long getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
@@ -85,12 +99,22 @@ public class RoleEntity extends BaseEntity {
     }
 
     @JsonIgnore
-    public List<PermissionEntity> getPermissionEntities() {
-        return permissionEntities;
+    public List<ApiEntity> getApiEntities() {
+        return apiEntities;
     }
 
-    @JsonProperty(value = "permissionEntities")
-    public void setPermissionEntities(List<PermissionEntity> permissionEntities) {
-        this.permissionEntities = permissionEntities;
+    @JsonProperty(value = "apiEntities")
+    public void setApiEntities(List<ApiEntity> apiEntities) {
+        this.apiEntities = apiEntities;
+    }
+
+    @JsonIgnore
+    public List<ComponentEntity> getComponentEntities() {
+        return componentEntities;
+    }
+
+    @JsonProperty(value = "componentEntities")
+    public void setComponentEntities(List<ComponentEntity> componentEntities) {
+        this.componentEntities = componentEntities;
     }
 }

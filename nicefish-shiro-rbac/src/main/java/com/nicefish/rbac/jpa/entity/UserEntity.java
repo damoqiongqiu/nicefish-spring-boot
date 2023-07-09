@@ -7,18 +7,19 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "fish_auth_user")
-public class UserEntity extends BaseEntity {
+@Table(name = "nicefish_rbac_user")
+public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
-    private Long userId;
+    private Integer userId;
 
     @Column(name="user_name",nullable = false)
     private String userName;
@@ -36,27 +37,27 @@ public class UserEntity extends BaseEntity {
     private String cellphone;
 
     @Column(name="gender")
-    private Integer gender;
+    private String gender;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="CreateTime")
+    @Column(name="create_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    @Column(name="avatar")
-    private String avatar;
+    @Column(name="avatar_url")
+    private String avatarURL;
 
     @Column(name="salt")
     private String salt;
 
-    @Column(name="status",columnDefinition = "int default 0",nullable = false)
-    private Integer status;
+    @Column(name="status")
+    private String status;
 
     @Column(name="remark")
     private String remark;
 
     @JoinTable(
-        name="fish_auth_user_role",
+        name="nicefish_rbac_user_role",
         joinColumns={@JoinColumn(name="user_id",referencedColumnName="user_id")},
         inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")}
     )
@@ -73,11 +74,11 @@ public class UserEntity extends BaseEntity {
         this.roleEntities = roleEntities;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -121,20 +122,20 @@ public class UserEntity extends BaseEntity {
         this.cellphone = cellphone;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarURL() {
+        return avatarURL;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
     }
 
     public String getSalt() {
@@ -145,11 +146,11 @@ public class UserEntity extends BaseEntity {
         this.salt = salt;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

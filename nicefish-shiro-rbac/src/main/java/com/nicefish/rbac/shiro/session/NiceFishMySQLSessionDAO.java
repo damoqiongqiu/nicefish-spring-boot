@@ -68,20 +68,20 @@ public class NiceFishMySQLSessionDAO extends EnterpriseCacheSessionDAO {
         //把 session 上的数据拷贝给 entity ，然后借助于 entity 进行更新，TODO: 有更好的工具？
         NiceFishSessionEntity entity =new NiceFishSessionEntity();
         entity.setSessionId(session.getId().toString());
+        entity.setHost(session.getHost());
+        entity.setCreationTime(session.getStartTimestamp());
+        entity.setLastAccessTime(session.getLastAccessTime());
+        entity.setTimeout(session.getTimeout());
+        entity.setExpired(((SimpleSession)session).isExpired()?"Y":"N");
         entity.setAppName((String)session.getAttribute("appName"));
         entity.setUserId((Integer)session.getAttribute("userId"));
         entity.setUserName((String)session.getAttribute("userName"));
         entity.setExpiryTime((Date)session.getAttribute("exprityTime"));
         entity.setMaxInactiveInteval((Integer)session.getAttribute("maxInactiveInterval"));
-        entity.setExpired(((SimpleSession)session).isExpired()?"Y":"N");
         entity.setOs((String)session.getAttribute("os"));
         entity.setBrowser((String)session.getAttribute("browser"));
         entity.setUserAgent((String)session.getAttribute("userAgent"));
         entity.setSessionData((String)session.getAttribute("sessionData"));
-        entity.setHost(session.getHost());
-        entity.setCreationTime(session.getStartTimestamp());
-        entity.setLastAccessTime(session.getLastAccessTime());
-        entity.setTimeout(session.getTimeout());
 
         this.sessionService.saveSession(entity);
     }

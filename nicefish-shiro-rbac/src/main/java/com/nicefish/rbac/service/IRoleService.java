@@ -1,6 +1,7 @@
 package com.nicefish.rbac.service;
 
-import com.nicefish.rbac.jpa.entity.PermissionEntity;
+import com.nicefish.rbac.jpa.entity.ApiEntity;
+import com.nicefish.rbac.jpa.entity.ComponentEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.core.utils.AjaxResult;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface IRoleService {
     AjaxResult createRole(RoleEntity roleEntity);
 
-    int deleteRole(Long roleId);
+    int deleteRole(Integer roleId);
 
     AjaxResult deleteRoleByIds(String ids);
 
@@ -23,33 +24,42 @@ public interface IRoleService {
 
     Page<RoleEntity> getRoleListPaging(RoleEntity roleEntity, Pageable pageable);
 
-    RoleEntity getRoleById(Long roleId);
+    RoleEntity getRoleById(Integer roleId);
 
-    Page<UserEntity> getAuthUsersByRoleId(Long roleId,Pageable pageable);
+    Page<UserEntity> getAuthUsersByRoleId(Integer roleId,Pageable pageable);
 
     AjaxResult deleteAuthUsers(RoleEntity roleEntity);
 
-    AjaxResult deleteAuthUsers(Long roleId);
+    AjaxResult deleteAuthUsers(Integer roleId);
 
-    AjaxResult deleteAuthUsers(Long roleId, Long[] userIds);
+    AjaxResult deleteAuthUsers(Integer roleId, Integer[] userIds);
 
-    AjaxResult addAuthUsers(Long roleId, Long[] userIds);
+    AjaxResult addAuthUsers(Integer roleId, Integer[] userIds);
 
-    AjaxResult addAuthUsers(Long roleId, List<UserEntity> userEntities);
+    AjaxResult addAuthUsers(Integer roleId, List<UserEntity> userEntities);
 
     boolean isRoleKeyUnique(String roleKey);
 
     boolean isRoleNameUnique(String roleName);
 
-    Iterable<PermissionEntity> getAllPermissionsByRoleId(Long roleId);
+    //根据 roleId 获取此角色的所有权限字符串
+    Iterable<String> getAllPermissionsByRoleId(Integer roleId);
 
-    AjaxResult addPermissions(Long roleId, Long[] permissionIds);
+    AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity);
 
-    AjaxResult addPermissions(RoleEntity roleEntity, List<PermissionEntity> permissionEntities);
+    AjaxResult addComponentPermissions(RoleEntity roleEntity, List<ComponentEntity> componentEntities);
+    
+    AjaxResult addApiPermission(RoleEntity roleEntity, ApiEntity apiEntity);
 
-    AjaxResult deletePermissions(Long roleId, Long[] permissionIds);
+    AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiEntity> apiEntities);
+    
+    AjaxResult deleteAllPermissionsByRoleId(Integer roleId);
+    
+    AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity);
 
-    AjaxResult deleteAllPermissionsByRoleId(Long roleId);
+    AjaxResult deleteComponentPermissions(Integer roleId, Integer[] componentIds);
 
-    AjaxResult deletePermission(Long roleId, Long permissionId);
+    AjaxResult deleteApiPermission(RoleEntity roleEntity, ApiEntity apiEntity);
+
+    AjaxResult deleteApiPermissions(Integer roleId, Integer[] componentIds);
 }

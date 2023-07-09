@@ -8,14 +8,14 @@ import java.io.Serializable;
  * @version 创建时间：2018-12-31 17:00
  */
 @Entity
-@Table(name="cms_params")
+@Table(name="nicefish_cms_sys_params")
 public class SysParamEntity implements Serializable {
     @Id
-    @Column(name = "ParamKey")
+    @Column(name = "param_key")
     private String paramKey;
-    @Column(name = "ParamValue")
+    @Column(name = "param_value")
     private String paramValue;
-    @Column(name = "ParamDesc")
+    @Column(name = "param_desc")
     private String paramDesc;
 
     public String getParamKey() {

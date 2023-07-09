@@ -53,7 +53,7 @@ public class UserController {
 
     @RequestMapping(value = "/delete/{userId}",method = RequestMethod.DELETE)
     @ResponseBody
-    public AjaxResult deleteUser(@PathVariable(value="userId",required = true)Long userId){
+    public AjaxResult deleteUser(@PathVariable(value="userId",required = true)Integer userId){
         int affected=userService.deleteByUserId(userId);
         //TODO:消息国际化
         if(affected==0){
@@ -76,7 +76,7 @@ public class UserController {
 
     @RequestMapping(value = "/detail/{userId}",method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult getUserDetail(@PathVariable(value = "userId",required = true) Long userId){
+    public AjaxResult getUserDetail(@PathVariable(value = "userId",required = true) Integer userId){
         UserEntity userEntity=userService.getUserByUserId(userId);
         AjaxResult ajaxResult =new AjaxResult(true,userEntity);
         return ajaxResult;
@@ -94,7 +94,7 @@ public class UserController {
 
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult delUser(Long[] ids) {
+    public AjaxResult delUser(Integer[] ids) {
         try {
             return AjaxResult.success(userService.deleteByIds(ids));
         } catch (Exception e) {

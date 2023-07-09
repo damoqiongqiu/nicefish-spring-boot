@@ -15,7 +15,7 @@ public interface IUserService {
 
     AjaxResult createUser(UserEntity userEntity);
 
-    AjaxResult resetPwd(Long userId);
+    AjaxResult resetPwd(Integer userId);
 
     UserEntity setUserStatus(UserEntity userEntity);
 
@@ -33,11 +33,11 @@ public interface IUserService {
 
     UserEntity getUserByEmail(String email);
 
-    UserEntity getUserByUserId(Long userId);
+    UserEntity getUserByUserId(Integer userId);
 
-    int deleteByUserId(Long userId);
+    int deleteByUserId(Integer userId);
 
-    int deleteByIds(Long[] ids);
+    int deleteByIds(Integer[] ids);
 
     UserEntity saveUser(UserEntity userEntity);
 
@@ -49,7 +49,7 @@ public interface IUserService {
 
     boolean isEmailUnique(String email);
 
-    String getRoleList(Long userId);
+    String getRoleList(Integer userId);
 
     boolean matches(UserEntity userEntity, String newPassword);
 

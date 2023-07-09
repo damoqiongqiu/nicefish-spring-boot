@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2023/7/8 22:23:22                            */
+/* Created on:     2023/7/9 23:14:27                            */
 /*==============================================================*/
 
 
@@ -86,15 +86,15 @@ create table nicefish_cms_post
    thumb_img_url        varchar(256) default null comment '缩略图链接',
    header_img_url       varchar(256),
    post_time            datetime not null default current_timestamp,
-   udpate_time          datetime default current_timestamp,
-   post_type            char(1) not null default '0' comment '文章的类型，0原创1翻译',
+   update_time          datetime default current_timestamp,
+   post_type            varchar(32) not null default '0' comment '文章的类型，0原创1翻译',
    read_times           int(11) not null default 1 comment '阅读数',
    liked_times          int(11) not null default 0 comment '点赞数',
    comment_times        int(11) not null default 0 comment '评论数',
    user_id              int(11) not null,
    email                varchar(64) default null,
    nick_name            varchar(64) default null comment '冗余字段，对应 nicefish_rbac_user 表中的 NICK_NAME 字段，用来避免表关联。',
-   enable_comment       char(1) not null default '1' comment '是否可评论\n            0不可\n            1可',
+   enable_comment       varchar(32) not null default '1' comment '是否可评论\n            0不可\n            1可',
    status               int(11) not null default 4 comment '状态：\n            1、已删除\n            2、已归档，已归档的内容禁止评论，文章不可删除\n            3、草稿\n            4、已发布\n            5、精华-->精华文章不可删除\n            6、已推至首页\n            ',
    primary key (post_id)
 );
@@ -147,7 +147,7 @@ create table nicefish_rbac_component
             为了避免重复和歧义，权限字符串必须是不同的。',
    create_time          datetime default current_timestamp,
    update_time          datetime,
-   visiable             char(1) not null default 'Y' comment '菜单是否可见，只能是 N 和 Y 两个取值，字母大写。',
+   visiable             varchar(32) not null default 'Y' comment '菜单是否可见，只能是 N 和 Y 两个取值，字母大写。',
    remark               varchar(500),
    primary key (component_id)
 );
@@ -187,8 +187,8 @@ alter table nicefish_rbac_role_api comment '角色与 API  接口之间的关联
 create table nicefish_rbac_role_component
 (
    role_id              int(11) not null,
-   menu_id              int(11) not null,
-   primary key (role_id, menu_id)
+   component_id         int(11) not null,
+   primary key (role_id, component_id)
 );
 
 alter table nicefish_rbac_role_component comment '角色与菜单的关联关系';
@@ -199,21 +199,25 @@ alter table nicefish_rbac_role_component comment '角色与菜单的关联关系
 create table nicefish_rbac_session
 (
    session_id           varchar(64) not null default '',
+   app_name             varchar(64) comment '应用名称',
    user_id              int(11) comment '如果用户没有登录，此列可为空',
    user_name            varchar(64),
-   start_time           datetime,
-   stop_time            datetime,
+   creation_time        datetime,
+   expiry_time          datetime,
    last_access_time     datetime,
-   timeout              int(11) comment '过期时间',
-   expired              char(1) comment '是否已经过期',
+   max_inactive_interval int(11),
+   timeout              bigint comment '过期时间',
+   expired              varchar(32) default 'N' comment 'Session 是否已经过期，N 表示未过期，Y 表示已过期。',
    host                 varchar(64) default '' comment 'IP地址',
    os                   varchar(64) default '',
    browser              varchar(64) default '',
    user_agent           varchar(255) comment '浏览器发送过来的 UserAgent 字符串',
+   session_data         text comment 'Session 中的所有 Attribute ，格式是 JSON 。',
    primary key (session_id)
 );
 
-alter table nicefish_rbac_session comment '用来持久化 Session ，应用端可以利用此表实现 SSO 。';
+alter table nicefish_rbac_session comment '用来持久化 Session ，应用端可以利用此表实现 SSO 。
+此表中的 SESSION_DATA 是 J';
 
 /*==============================================================*/
 /* Table: nicefish_rbac_user                                    */
@@ -226,11 +230,11 @@ create table nicefish_rbac_user
    password             varchar(64) default '',
    email                varchar(64) default '',
    cellphone            varchar(32) default '',
-   gender               char(1) default '0' comment '0男 1女 2未知',
+   gender               varchar(32) default '0' comment '0男 1女 2未知',
    avatar_url           varchar(64) default '' comment '用户头像 URL',
    salt                 varchar(32) default '',
    create_time          datetime not null default current_timestamp,
-   status               char(1) default '0' comment '-1 特权用户不能删除 0正常 1禁用 2删除',
+   status               varchar(32) default '0' comment '-1 特权用户不能删除 0正常 1禁用 2删除',
    remark               varchar(500) default '',
    primary key (user_id)
 );

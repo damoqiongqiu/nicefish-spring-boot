@@ -8,8 +8,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @see <a href="https://docs.spring.io/spring-data/jpa/docs/2.1.10.RELEASE/reference/html/">JPA DOC</a>
  * @author 大漠穷秋
  */
-public interface IUserRoleRepository extends PagingAndSortingRepository<UserRoleEntity, Long>, JpaSpecificationExecutor {
-    void deleteByRoleIdAndUserIdIsIn(Long roleId,Long[] userIds);
-    void deleteAllByUserIdIsIn(Long[] userIds);
-    void deleteAllByRoleId(Long roleId);
+public interface IUserRoleRepository extends PagingAndSortingRepository<UserRoleEntity, Integer>, JpaSpecificationExecutor {
+    void deleteByRoleIdAndUserIdIsIn(Integer roleId,Integer[] userIds);
+    void deleteAllByUserIdIsIn(Integer[] userIds);
+    void deleteAllByRoleId(Integer roleId);
 }

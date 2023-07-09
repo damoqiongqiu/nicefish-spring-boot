@@ -1,8 +1,10 @@
 package com.nicefish.rbac.service.impl;
 
 import com.nicefish.rbac.jpa.entity.*;
-import com.nicefish.rbac.jpa.repository.IPermissionRepository;
-import com.nicefish.rbac.jpa.repository.IRolePermissionRepository;
+import com.nicefish.rbac.jpa.repository.IApiRepository;
+import com.nicefish.rbac.jpa.repository.IComponentRepository;
+import com.nicefish.rbac.jpa.repository.IRoleApiRepository;
+import com.nicefish.rbac.jpa.repository.IRoleComponentRepository;
 import com.nicefish.rbac.jpa.repository.IRoleRepository;
 import com.nicefish.rbac.jpa.repository.IUserRoleRepository;
 import com.nicefish.rbac.service.IRoleService;
@@ -36,10 +38,10 @@ public class RoleServiceImpl implements IRoleService {
     private IUserRoleRepository userRoleRepository;
 
     @Autowired
-    private IRolePermissionRepository rolePermissionRepository;
+    private IRoleComponentRepository roleComponentRepository;
 
     @Autowired
-    private IPermissionRepository permissionRepository;
+    private IRoleApiRepository roleApiRepository;
 
     @Override
     @Transactional
@@ -53,7 +55,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public int deleteRole(Long roleId) {
+    public int deleteRole(Integer roleId) {
         RoleEntity roleEntity= this.roleRepository.findDistinctByRoleId(roleId);
         //特权角色状态位-1，不准删除
         if(roleEntity.getStatus()==-1){
@@ -68,9 +70,9 @@ public class RoleServiceImpl implements IRoleService {
         //TODO:已经关联的角色不能删除
         //TODO:系统内置的角色不能删除
         String[] roleIds=ids.split(",");
-        Long[] longIds=new Long[roleIds.length];
+        Integer[] longIds=new Integer[roleIds.length];
         for (int i = 0; i < roleIds.length; i++) {
-            longIds[i]=Long.parseLong(roleIds[i]);
+            longIds[i]=Integer.parseInt(roleIds[i]);
         }
         this.roleRepository.deleteAllByRoleIdIn(longIds);
         return new AjaxResult(true,"删除成功");
@@ -83,19 +85,21 @@ public class RoleServiceImpl implements IRoleService {
         BeanUtils.copyProperties(roleEntity,oldEntity);
         this.roleRepository.save(oldEntity);
 
-        this.rolePermissionRepository.deleteAllByRoleId(oldEntity.getRoleId());
+        // this.roleComponentRepository.deleteAllByRoleId(oldEntity.getRoleId());
+        // this.roleApiRepository.deleteAllByRoleId(oldEntity.getRoleId());
 
-        List<PermissionEntity> permissionEntities=oldEntity.getPermissionEntities();
-        if(!CollectionUtils.isEmpty(permissionEntities)){
-            List<RolePermissionEntity> rolePermissionEntities=new ArrayList<RolePermissionEntity>();
-            for (PermissionEntity permissionEntity : permissionEntities) {
-                RolePermissionEntity rolePermissionEntity=new RolePermissionEntity();
-                rolePermissionEntity.setRoleId(oldEntity.getRoleId());
-                rolePermissionEntity.setPermissionId(permissionEntity.getPermissionId());
-                rolePermissionEntities.add(rolePermissionEntity);
-            }
-            this.rolePermissionRepository.saveAll(rolePermissionEntities);
-        }
+        // List<PermissionEntity> list=oldEntity.getPermissionEntities();
+        // if(!CollectionUtils.isEmpty(list)){
+        //     List<RolePermissionEntity> rolePermissionEntities=new ArrayList<RolePermissionEntity>();
+        //     for (PermissionEntity permissionEntity : list) {
+        //         RolePermissionEntity rolePermissionEntity=new RolePermissionEntity();
+        //         rolePermissionEntity.setRoleId(oldEntity.getRoleId());
+        //         rolePermissionEntity.setPermissionId(permissionEntity.getPermissionId());
+        //         rolePermissionEntities.add(rolePermissionEntity);
+        //     }
+        //     this.rolePermissionRepository.saveAll(rolePermissionEntities);
+        // }
+
         return new AjaxResult(true,"保存成功");
     }
 
@@ -120,12 +124,12 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public RoleEntity getRoleById(Long roleId) {
+    public RoleEntity getRoleById(Integer roleId) {
         return this.roleRepository.findDistinctByRoleId(roleId);
     }
 
     @Override
-    public Page<UserEntity> getAuthUsersByRoleId(Long roleId, Pageable pageable) {
+    public Page<UserEntity> getAuthUsersByRoleId(Integer roleId, Pageable pageable) {
         return this.roleRepository.findUserEntitiesByRoleId(roleId,pageable);
     }
 
@@ -138,43 +142,43 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public AjaxResult deleteAuthUsers(Long roleId) {
+    public AjaxResult deleteAuthUsers(Integer roleId) {
         this.userRoleRepository.deleteAllByRoleId(roleId);
         return new AjaxResult(true,"删除成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult deleteAuthUsers(Long roleId, Long[] userIds) {
+    public AjaxResult deleteAuthUsers(Integer roleId, Integer[] userIds) {
         this.userRoleRepository.deleteByRoleIdAndUserIdIsIn(roleId,userIds);
         return new AjaxResult(true,"删除成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult addAuthUsers(Long roleId, Long[] userIds) {
-        List<UserRoleEntity> userRoleEntityList=new ArrayList<>();
+    public AjaxResult addAuthUsers(Integer roleId, Integer[] userIds) {
+        List<UserRoleEntity> list=new ArrayList<>();
         for(int i=0;i<userIds.length;i++){
             UserRoleEntity userRoleEntity=new UserRoleEntity();
             userRoleEntity.setRoleId(roleId);
             userRoleEntity.setUserId(userIds[i]);
-            userRoleEntityList.add(userRoleEntity);
+            list.add(userRoleEntity);
         }
-        this.userRoleRepository.saveAll(userRoleEntityList);
+        this.userRoleRepository.saveAll(list);
         return new AjaxResult(true,"保存成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult addAuthUsers(Long roleId, List<UserEntity> userEntities) {
-        List<UserRoleEntity> userRoleEntityList=new ArrayList<>();
+    public AjaxResult addAuthUsers(Integer roleId, List<UserEntity> userEntities) {
+        List<UserRoleEntity> list=new ArrayList<>();
         userEntities.forEach(userEntity -> {
             UserRoleEntity userRoleEntity=new UserRoleEntity();
             userRoleEntity.setRoleId(roleId);
             userRoleEntity.setUserId(userEntity.getUserId());
-            userRoleEntityList.add(userRoleEntity);
+            list.add(userRoleEntity);
         });
-        this.userRoleRepository.saveAll(userRoleEntityList);
+        this.userRoleRepository.saveAll(list);
         return new AjaxResult(true,"保存成功");
     }
 
@@ -189,58 +193,90 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public Iterable<PermissionEntity> getAllPermissionsByRoleId(Long roleId) {
-        Iterable<RoleEntity> roleEntities= this.roleRepository.findAllByRoleId(roleId);
-        Iterable<PermissionEntity> permissionEntities=this.permissionRepository.findPermissionEntitiesByRoleEntitiesIn(roleEntities);
-        return permissionEntities;
-    }
-
-    @Override
     @Transactional
-    public AjaxResult addPermissions(Long roleId, Long[] permissionIds) {
-        List<RolePermissionEntity> rolePermissionEntities=new ArrayList<>();
-        for (int i = 0; i < permissionIds.length; i++) {
-            RolePermissionEntity rolePermissionEntity=new RolePermissionEntity();
-            rolePermissionEntity.setRoleId(roleId);
-            rolePermissionEntity.setPermissionId(permissionIds[i]);
-            rolePermissionEntities.add(rolePermissionEntity);
-        }
-        this.rolePermissionRepository.saveAll(rolePermissionEntities);
+    public AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity) {
+        RoleComponentEntity roleComponentEntity=new RoleComponentEntity();
+        roleComponentEntity.setRoleId(roleEntity.getRoleId());
+        roleComponentEntity.setComponentId(componentEntity.getComponentId());
+        this.roleComponentRepository.save(roleComponentEntity);
         return new AjaxResult(true,"保存成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult addPermissions(RoleEntity roleEntity, List<PermissionEntity> permissionEntities) {
-        List<RolePermissionEntity> rolePermissionEntities=new ArrayList<>();
-        permissionEntities.forEach(permissionEntity -> {
-            RolePermissionEntity rolePermissionEntity=new RolePermissionEntity();
-            rolePermissionEntity.setRoleId(roleEntity.getRoleId());
-            rolePermissionEntity.setPermissionId(permissionEntity.getPermissionId());
-            rolePermissionEntities.add(rolePermissionEntity);
+    public AjaxResult addComponentPermissions(RoleEntity roleEntity, List<ComponentEntity> componentEntities) {
+        List<RoleComponentEntity> list=new ArrayList<>();
+        list.forEach(componentEntity -> {
+            RoleComponentEntity roleComponentEntity=new RoleComponentEntity();
+            roleComponentEntity.setRoleId(roleEntity.getRoleId());
+            roleComponentEntity.setComponentId(componentEntity.getComponentId());
+            list.add(roleComponentEntity);
         });
-        this.rolePermissionRepository.saveAll(rolePermissionEntities);
+        this.roleComponentRepository.saveAll(list);
         return new AjaxResult(true,"保存成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult deletePermissions(Long roleId, Long[] permissionIds) {
-        this.rolePermissionRepository.deleteByRoleIdAndPermissionIdIsIn(roleId,permissionIds);
+    public AjaxResult addApiPermission(RoleEntity roleEntity, ApiEntity apiEntity) {
+        RoleApiEntity list=new RoleApiEntity();
+        list.setRoleId(roleEntity.getRoleId());
+        list.setApiId(apiEntity.getApiId());
+        this.roleApiRepository.save(list);
+        return new AjaxResult(true,"保存成功");
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiEntity> apiEntities) {
+        List<RoleApiEntity> list=new ArrayList<>();
+        list.forEach(apiEntity -> {
+            RoleApiEntity roleApiEntity=new RoleApiEntity();
+            roleApiEntity.setRoleId(roleEntity.getRoleId());
+            roleApiEntity.setApiId(apiEntity.getApiId());
+            list.add(roleApiEntity);
+        });
+        this.roleApiRepository.saveAll(list);
+        return new AjaxResult(true,"保存成功");
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity) {
+        this.roleComponentRepository.deleteByRoleIdAndComponentId(roleEntity.getRoleId(),componentEntity.getComponentId());
         return new AjaxResult(true,"删除成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult deleteAllPermissionsByRoleId(Long roleId) {
-        this.rolePermissionRepository.deleteAllByRoleId(roleId);
+    public AjaxResult deleteComponentPermissions(Integer roleId, Integer[] componentIds) {
+        this.roleComponentRepository.deleteByRoleIdAndComponentIdIsIn(roleId,componentIds);
         return new AjaxResult(true,"删除成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult deletePermission(Long roleId, Long permissionId) {
-        this.rolePermissionRepository.deleteByRoleIdAndPermissionId(roleId,permissionId);
+    public AjaxResult deleteApiPermission(RoleEntity roleEntity, ApiEntity apiEntity) {
+        this.roleApiRepository.deleteByRoleIdAndApiId(roleEntity.getRoleId(),apiEntity.getApiId());
         return new AjaxResult(true,"删除成功");
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult deleteApiPermissions(Integer roleId, Integer[] componentIds) {
+        this.roleApiRepository.deleteByRoleIdAndApiIdIsIn(roleId,componentIds);
+        return new AjaxResult(true,"删除成功");
+    }
+
+    @Override
+    public Iterable<String> getAllPermissionsByRoleId(Integer roleId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllPermissionsByRoleId'");
+    }
+
+    @Override
+    public AjaxResult deleteAllPermissionsByRoleId(Integer roleId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteAllPermissionsByRoleId'");
     }
 }

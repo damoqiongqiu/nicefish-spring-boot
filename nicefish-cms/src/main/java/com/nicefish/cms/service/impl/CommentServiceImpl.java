@@ -20,7 +20,7 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     @Cacheable(value = "comments",key = "#postId.toString().concat('-comments')")
-    public Page<CommentEntity> findByPostId(Long postId, Pageable pageable) {
+    public Page<CommentEntity> findByPostId(Integer postId, Pageable pageable) {
         return commentRepository.findAllByPostId(postId,pageable);
     }
 
@@ -31,28 +31,28 @@ public class CommentServiceImpl implements ICommentService {
     }
 
     @Override
-    public Page<CommentEntity> findAllByUserIdAndPaging(Long userId, Pageable pageable) {
+    public Page<CommentEntity> findAllByUserIdAndPaging(Integer userId, Pageable pageable) {
         return commentRepository.findAllByUserId(userId,pageable);
     }
 
     @Override
-    public Long countByUserId(Long userId) {
+    public Integer countByUserId(Integer userId) {
         return this.commentRepository.countByUserId(userId);
     }
 
     @Override
     @CacheEvict(value = "comments",allEntries = true)
-    public Integer deleteById(Long commentId) {
-        return this.commentRepository.deleteById(commentId);
+    public void deleteById(Integer commentId) {
+        this.commentRepository.deleteById(commentId);
     }
 
     @Override
-    public Integer deletetByPostId(Long postId) {
+    public Integer deletetByPostId(Integer postId) {
         return this.commentRepository.deleteByPostId(postId);
     }
 
     @Override
-    public Integer deleteByUserId(Long userId) {
+    public Integer deleteByUserId(Integer userId) {
         return this.commentRepository.deleteByUserId(userId);
     }
 }

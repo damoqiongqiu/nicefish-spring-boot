@@ -11,34 +11,44 @@ import java.util.Date;
  * @version 创建时间：2018-12-31 17:00
  */
 @Entity
-@Table(name="cms_comment")
+@Table(name="nicefish_cms_comment")
 public class CommentEntity implements Serializable {
     @Id
-    @Column(name="CommentId")
+    @Column(name="comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name="PostId")
-    private Long postId;
+    private Integer id;
+    
+    @Column(name="post_id")
+    private Integer postId;
+    
     @Lob
-    @Column(name = "Content",columnDefinition="text")
+    @Column(name = "content",columnDefinition="text")
     private String content;
+    
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CommentTime")
+    @Column(name = "comment_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date time;
-    @Column(name="CommentIp")
+    private Date time=new Date();
+    
+    @Column(name="comment_ip")
     private String ip;
+    
     @Column(name="p_id")
-    private Long pId;
-    @Column(name = "UserId")
-    private Long userId;
-    @Column(name = "UserName")
+    private Integer pId;
+    
+    @Column(name = "user_id")
+    private Integer userId;
+    
+    @Column(name = "user_name")
     private String userName;
-    @Column(name = "NickName")
+    
+    @Column(name = "nick_name")
     private String nickName;
-    @Column(name = "Email")
+    
+    @Column(name = "email")
     private String email;
-    @Column(name = "Status")
+    
+    @Column(name = "status")
     private Integer status;
 
     public String getContent() {
@@ -97,35 +107,35 @@ public class CommentEntity implements Serializable {
         this.status = status;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
-    public Long getpId() {
+    public Integer getpId() {
         return pId;
     }
 
-    public void setpId(Long pId) {
+    public void setpId(Integer pId) {
         this.pId = pId;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

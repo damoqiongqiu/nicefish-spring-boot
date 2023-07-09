@@ -13,15 +13,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICommentRepository extends JpaRepository<CommentEntity, Integer> {
 
-    Page<CommentEntity> findAllByPostId(Long postId, Pageable pageable);
+    Page<CommentEntity> findAllByPostId(Integer postId, Pageable pageable);
 
-    Page<CommentEntity> findAllByUserId(Long userId,Pageable pageable);
+    Page<CommentEntity> findAllByUserId(Integer userId,Pageable pageable);
 
-    Long countByUserId(Long userId);
+    Integer countByUserId(Integer userId);
 
-    Integer deleteById(Long commentId);
+    void deleteById(Integer commentId);
 
-    Integer deleteByPostId(Long postId);
+    Integer deleteByPostId(Integer postId);
 
-    Integer deleteByUserId(Long userId);
+    Integer deleteByUserId(Integer userId);
 }

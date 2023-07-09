@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface IPostService {
     Page<PostEntity> getPostsPaging(Pageable pageable);
-    PostEntity getOne(Long id);
+    PostEntity getOne(Integer id);
     PostEntity savePost(PostEntity postEntity);
-    Integer delPost(Long id);
-    Long countByUserId(Long userId);
-    Page<PostEntity> getPostsByUserIdAndPaging(Long userId,Pageable pageable);
+    Integer delPost(Integer id);
+    Integer countByUserId(Integer userId);
+    Page<PostEntity> getPostsByUserIdAndPaging(Integer userId,Pageable pageable);
 }

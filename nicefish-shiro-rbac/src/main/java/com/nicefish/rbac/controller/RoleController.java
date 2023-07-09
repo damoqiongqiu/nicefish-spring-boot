@@ -1,6 +1,5 @@
 package com.nicefish.rbac.controller;
 
-import com.nicefish.rbac.jpa.entity.PermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IRoleService;
 import com.nicefish.rbac.service.IUserService;
@@ -43,7 +42,7 @@ public class RoleController {
 
     @RequestMapping(value = "/delete/{roleId}",method = RequestMethod.DELETE)
     @ResponseBody
-    public AjaxResult deleteRole(@PathVariable(value="roleId",required = true)Long roleId){
+    public AjaxResult deleteRole(@PathVariable(value="roleId",required = true)Integer roleId){
         int affected= this.roleService.deleteRole(roleId);
         if(affected==0){
             return AjaxResult.failure("删除失败，系统内置角色或者正在使用中。");
@@ -60,21 +59,21 @@ public class RoleController {
 
     @RequestMapping(value = "/detail/{roleId}",method = RequestMethod.GET)
     @ResponseBody
-    public RoleEntity getRoleDetail(@PathVariable(value = "roleId",required = true) Long roleId){
+    public RoleEntity getRoleDetail(@PathVariable(value = "roleId",required = true) Integer roleId){
         return this.roleService.getRoleById(roleId);
     }
 
-    @RequestMapping(value = "/get-all-permissions/{roleId}",method = RequestMethod.GET)
-    @ResponseBody
-    public Iterable<PermissionEntity> getAllPermissions(@PathVariable(value="roleId",required = true) Long roleId) {
-        return this.roleService.getAllPermissionsByRoleId(roleId);
-    }
+    // @RequestMapping(value = "/get-all-permissions/{roleId}",method = RequestMethod.GET)
+    // @ResponseBody
+    // public Iterable<PermissionEntity> getAllPermissions(@PathVariable(value="roleId",required = true) Integer roleId) {
+    //     return this.roleService.getAllPermissionsByRoleId(roleId);
+    // }
 
     @RequestMapping(value = "/add-auth-users/{roleId}/{userIds}",method = RequestMethod.POST)
     @ResponseBody
     public AjaxResult addAuthUsers(
-            @PathVariable(value = "roleId",required = true) Long roleId,
-            @PathVariable(value = "userIds",required = true) Long[] userIds
+            @PathVariable(value = "roleId",required = true) Integer roleId,
+            @PathVariable(value = "userIds",required = true) Integer[] userIds
     ){
         return this.roleService.addAuthUsers(roleId,userIds);
     }
@@ -82,8 +81,8 @@ public class RoleController {
     @RequestMapping(value = "/del-auth-users/{roleId}/{userIds}",method = RequestMethod.POST)
     @ResponseBody
     public AjaxResult delAuthUsers(
-            @PathVariable(value = "roleId",required = true) Long roleId,
-            @PathVariable(value = "userIds",required = true) Long[] userIds
+            @PathVariable(value = "roleId",required = true) Integer roleId,
+            @PathVariable(value = "userIds",required = true) Integer[] userIds
     ){
         return this.roleService.deleteAuthUsers(roleId,userIds);
     }

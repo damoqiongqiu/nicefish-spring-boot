@@ -11,18 +11,18 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @see <a href="https://docs.spring.io/spring-data/jpa/docs/2.1.10.RELEASE/reference/html/">JPA DOC</a>
  * @author 大漠穷秋
  */
-public interface IRoleRepository extends PagingAndSortingRepository<RoleEntity, Long>, JpaSpecificationExecutor {
-    Iterable<RoleEntity> findAllByRoleId(Long roleId);
+public interface IRoleRepository extends PagingAndSortingRepository<RoleEntity, Integer>, JpaSpecificationExecutor {
+    Iterable<RoleEntity> findAllByRoleId(Integer roleId);
 
-    Page<UserEntity> findUserEntitiesByRoleId(Long roleId, Pageable pageable);
+    Page<UserEntity> findUserEntitiesByRoleId(Integer roleId, Pageable pageable);
 
     RoleEntity findDistinctByRoleKey(String roleKey);
 
     RoleEntity findDistinctByRoleName(String roleName);
 
-    RoleEntity findDistinctByRoleId(Long roleId);
+    RoleEntity findDistinctByRoleId(Integer roleId);
 
-    void deleteAllByRoleIdIn(Long[] roleIds);
+    void deleteAllByRoleIdIn(Integer[] roleIds);
 
-    int deleteByRoleId(Long roleId);
+    int deleteByRoleId(Integer roleId);
 }

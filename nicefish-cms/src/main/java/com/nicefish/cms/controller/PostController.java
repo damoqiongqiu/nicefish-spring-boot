@@ -37,12 +37,12 @@ public class PostController {
 
     @ApiOperation("获取文章详情")
     @RequestMapping(value = "/post-detail/{postId}",method = RequestMethod.GET)
-    public PostEntity getPostDetail(@PathVariable(value = "postId",required = true) Long postId){
+    public PostEntity getPostDetail(@PathVariable(value = "postId",required = true) Integer postId){
         return postService.getOne(postId);
     }
 
     private PostEntity setUserInfoToPostEntity(PostEntity postEntity, HttpSession session){
-        Long userId= NiceFishSecurityUtils.getUserEntity().getUserId();
+        Integer userId= NiceFishSecurityUtils.getUserEntity().getUserId();
         String nickName= NiceFishSecurityUtils.getUserEntity().getNickName();
         String email= NiceFishSecurityUtils.getUserEntity().getEmail();
 
@@ -71,13 +71,13 @@ public class PostController {
     @RequestMapping(value = "/manage/post-table/{page}", method = RequestMethod.GET)
     public Page<PostEntity> getPostListByUserId(@PathVariable(value="page",required = true) Integer page) {
         Pageable pageable= PageRequest.of(page-1,10);
-        Long userId= NiceFishSecurityUtils.getUserId();
+        Integer userId= NiceFishSecurityUtils.getUserId();
         return this.postService.getPostsByUserIdAndPaging(userId,pageable);
     }
 
     @ApiOperation("删除文章")
     @RequestMapping(value = "/manage/del-post/{postId}",method = RequestMethod.DELETE)
-    public AjaxResult delPostById(@PathVariable(value="postId",required = true) Long postId){
+    public AjaxResult delPostById(@PathVariable(value="postId",required = true) Integer postId){
         Integer affected=postService.delPost(postId);
         return AjaxResult.success(affected);
     }

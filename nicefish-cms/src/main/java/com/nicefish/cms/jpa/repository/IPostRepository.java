@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPostRepository extends PagingAndSortingRepository<PostEntity, Integer> {
 
-    Page<PostEntity> findAllByUserId(Long userId, Pageable pageable);
+    Page<PostEntity> findAllByUserId(Integer userId, Pageable pageable);
 
-    Long countByUserId(Long userId);
+    Integer countByUserId(Integer userId);
 
-    PostEntity findDistinctByPostId(Long postId);
+    PostEntity findDistinctByPostId(Integer postId);
 
-    Integer deleteByPostId(Long postId);
+    Integer deleteByPostId(Integer postId);
 
 }

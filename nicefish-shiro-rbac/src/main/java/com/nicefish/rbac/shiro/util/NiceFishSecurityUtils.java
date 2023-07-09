@@ -32,8 +32,8 @@ public class NiceFishSecurityUtils extends SecurityUtils{
         subject.runAs(newPrincipalCollection);
     }
 
-    public static Long getUserId() {
-        return getUserEntity().getUserId().longValue();
+    public static Integer getUserId() {
+        return getUserEntity().getUserId();
     }
 
     public static String getUserName() {

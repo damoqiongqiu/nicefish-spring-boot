@@ -50,6 +50,8 @@ public class NiceFishSessionFactory extends SimpleSessionFactory {
             if(!ObjectUtils.isEmpty(userName)){
                 session.setAttribute("userName", userName);
             }
+
+            //FIXME:增加对 sessionData 字段的处理
         }
         return session;
     }

@@ -27,7 +27,7 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     @Cacheable(value = "post-detail",key = "T(String).valueOf(#id)", unless="#result==null")
-    public PostEntity getOne(Long postId){
+    public PostEntity getOne(Integer postId){
         return this.postRepository.findDistinctByPostId(postId);
     }
 
@@ -40,17 +40,17 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     @CacheEvict(value = "posts",allEntries = true)
-    public Integer delPost(Long postId) {
+    public Integer delPost(Integer postId) {
         return this.postRepository.deleteByPostId(postId);
     }
 
     @Override
-    public Long countByUserId(Long userId) {
+    public Integer countByUserId(Integer userId) {
         return postRepository.countByUserId(userId);
     }
 
     @Override
-    public Page<PostEntity> getPostsByUserIdAndPaging(Long userId,Pageable pageable) {
+    public Page<PostEntity> getPostsByUserIdAndPaging(Integer userId,Pageable pageable) {
         return postRepository.findAllByUserId(userId,pageable);
     }
 }

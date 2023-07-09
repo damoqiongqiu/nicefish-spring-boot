@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "nicefish_rbac_session")
-public class NiceFishSessionEntity {
+public class NiceFishSessionEntity implements Serializable {
     @Id
     @Column(name = "session_id")
     private String sessionId= UUID.randomUUID().toString();

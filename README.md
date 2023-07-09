@@ -34,8 +34,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 <img src="./docs/imgs/maven-modules.png">
 
 - nicefish-core: 提供通用的工具
-- nicefish-auth-shiro: 提供基于Shiro的通用认证和鉴权服务
-- nicefish-staff-org: 提供经典的树形组织机构和员工管理
+- nicefish-shiro-rbac: 提供基于 Shiro 的通用认证和鉴权服务，RBAC 型。
 - nicefish-cms: 基于以上基础模块的内容管理应用
 
 ## 5.Swagger 接口

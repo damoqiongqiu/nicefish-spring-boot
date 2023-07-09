@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService {
     private IRoleService roleService2;
 
     @Override
-    public AjaxResult resetPwd(Long userId){
+    public AjaxResult resetPwd(Integer userId){
         //TODO:生成随机密码
 
         //TODO:生成密文链接
@@ -100,7 +100,7 @@ public class UserServiceImpl implements IUserService {
         userEntity=this.userRepository.save(userEntity);
 
         //保存角色数据，默认普通用户
-        this.roleService2.addAuthUsers(2L,new Long[]{userEntity.getUserId()});
+        this.roleService2.addAuthUsers(2,new Integer[]{userEntity.getUserId()});
 
         ajaxResult =new AjaxResult(true,userEntity);
         logger.info(ajaxResult.toString());
@@ -185,23 +185,23 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserEntity getUserByUserId(Long userId) {
+    public UserEntity getUserByUserId(Integer userId) {
         return this.userRepository.findDistinctByUserId(userId);
     }
 
     @Override
     @Transactional
-    public int deleteByUserId(Long userId) {
+    public int deleteByUserId(Integer userId) {
         UserEntity userEntity= this.userRepository.findDistinctByUserId(userId);
         //特权用户状态位-1，不准删除
-        if(userEntity.getStatus()!=null&&userEntity.getStatus()==-1){
+        if("-1".equals(userEntity.getStatus())){
             return 0;
         }
         return this.userRepository.deleteByUserId(userId);
     }
 
     @Override
-    public int deleteByIds(Long[] ids) {
+    public int deleteByIds(Integer[] ids) {
         return this.userRepository.deleteByUserIdIn(ids);
     }
 
@@ -240,7 +240,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public String getRoleList(Long userId) {
+    public String getRoleList(Integer userId) {
         return null;
     }
 

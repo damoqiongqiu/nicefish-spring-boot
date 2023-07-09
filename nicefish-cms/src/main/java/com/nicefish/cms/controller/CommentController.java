@@ -29,7 +29,7 @@ public class CommentController {
 	//TODO:每页显示的条数改为系统配置项
     @ApiOperation("根据postId获取评论列表，按时间倒排，带分页")
 	@RequestMapping(value = "/post-id/{postId}/page/{page}", method = RequestMethod.GET)
-	public Page<CommentEntity> getCommentList(@PathVariable(value="postId",required = true) Long postId, @PathVariable(value="page",required = true) Integer page) {
+	public Page<CommentEntity> getCommentList(@PathVariable(value="postId",required = true) Integer postId, @PathVariable(value="page",required = true) Integer page) {
         PageRequest pageRequest= PageRequest.of(page-1,10, new Sort(Sort.Direction.DESC,"id"));
         return commentService.findByPostId(postId,pageRequest);
 	}
@@ -50,27 +50,27 @@ public class CommentController {
 	@RequestMapping(value = "/manage/comment-table/{page}", method = RequestMethod.GET)
 	public Page<CommentEntity> getCommentListByUserId(@PathVariable(value="page",required = true) Integer page) {
         Pageable pageable= PageRequest.of(page-1,10);
-        Long userId= NiceFishSecurityUtils.getUserId();
+        Integer userId= NiceFishSecurityUtils.getUserId();
         return this.commentService.findAllByUserIdAndPaging(userId,pageable);
 	}
 
     @ApiOperation("根据commentId删除评论")
 	@RequestMapping(value = "/manage/delete/{commentId}",method = RequestMethod.DELETE)
-	public AjaxResult deleteByCommentId(@PathVariable(value="commentId",required = true) Long commentId){
-        Integer affected=commentService.deleteById(commentId);
-		return AjaxResult.success(affected);
+	public AjaxResult deleteByCommentId(@PathVariable(value="commentId",required = true) Integer commentId){
+        commentService.deleteById(commentId);
+		return AjaxResult.success();
 	}
 
     @ApiOperation("根据postId删除评论")
     @RequestMapping(value = "/manage/delete-by-post-id/{postId}",method = RequestMethod.DELETE)
-    public AjaxResult deletetByPostId(@PathVariable(value="postId",required = true) Long postId){
+    public AjaxResult deletetByPostId(@PathVariable(value="postId",required = true) Integer postId){
         Integer affected=commentService.deletetByPostId(postId);
         return AjaxResult.success(affected);
     }
 
     @ApiOperation("根据userId删除评论")
     @RequestMapping(value = "/manage/delete-by-user-id/{userId}",method = RequestMethod.DELETE)
-    public AjaxResult deletetByUserId(@PathVariable(value="userId",required = true) Long userId){
+    public AjaxResult deletetByUserId(@PathVariable(value="userId",required = true) Integer userId){
         Integer affected=commentService.deleteByUserId(userId);
         return AjaxResult.success(affected);
     }

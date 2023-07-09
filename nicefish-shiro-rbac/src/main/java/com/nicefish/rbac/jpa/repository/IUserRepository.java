@@ -11,9 +11,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @see <a href="https://docs.spring.io/spring-data/jpa/docs/2.1.10.RELEASE/reference/html/">JPA DOC</a>
  * @author 大漠穷秋
  */
-public interface IUserRepository extends PagingAndSortingRepository<UserEntity, Long>, JpaSpecificationExecutor {
+public interface IUserRepository extends PagingAndSortingRepository<UserEntity, Integer>, JpaSpecificationExecutor {
 
-    UserEntity findDistinctByUserId(Long userId);
+    UserEntity findDistinctByUserId(Integer userId);
 
     UserEntity findDistinctByUserName(String userName);
 
@@ -31,9 +31,9 @@ public interface IUserRepository extends PagingAndSortingRepository<UserEntity, 
 
     Page<UserEntity> findAll(Pageable pageable);
 
-    int deleteByUserId(Long userId);
+    int deleteByUserId(Integer userId);
 
-    int deleteByUserIdIn(Long[] userIds);
+    int deleteByUserIdIn(Integer[] userIds);
 
-    int deleteAllByUserId(Long[] ids);
+    int deleteAllByUserId(Integer[] ids);
 }

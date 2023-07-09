@@ -53,11 +53,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
 
-mybatis:
-    typeAliasesPackage: com.nicefish
-    mapperLocations: classpath*:mapper/**/*Mapper.xml
-    configLocation: classpath:mybatis/mybatis-config.xml
-
 pagehelper:
   helperDialect: mysql
   reasonable: true

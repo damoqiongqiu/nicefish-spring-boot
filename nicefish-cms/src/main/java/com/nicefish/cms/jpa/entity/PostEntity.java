@@ -11,49 +11,68 @@ import java.util.Date;
  * @version 创建时间：2018-12-31 17:00
  */
 @Entity
-@Table(name="cms_post")
+@Table(name="nicefish_cms_post")
 public class PostEntity implements Serializable {
     @Id
-    @Column(name="PostId")
+    @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
-    @Column(name = "BgImg")
-    private String bgImg;
-    @Column(name="PostTitle")
+    private Integer postId;
+
+    @Column(name = "thumb_img_url")
+    private String thumbImgUrl;
+
+    @Column(name = "header_img_url")
+    private String headerImgUrl;
+
+    @Column(name="post_title")
     private String title;
+
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="PostTime")
+    @Column(name="post_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date time;
+    private Date time=new Date();
+
     @Lob
-    @Column(name="PostContent",columnDefinition="text")
+    @Column(name="post_content",columnDefinition="text")
     private String content;
-    @Column(name="PostSummary")
+
+    @Column(name="post_summary")
     private String summary;
-    @Column(name="OriginalUrl")
+
+    @Column(name="original_url")
     private String originalURL="";
-    @Column(name="PostType")
-    private Integer postType=0;
+
+    @Column(name="post_type")
+    private String postType="0";
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name="LastModifyTime")
-    private Date lastModifyTime=new Date();
-    @Column(name = "ReadTimes")
-    private Long readTimes=1L;
-    @Column(name="LikedTimes")
-    private Long likedTimes=0L;
-    @Column(name="CommentTimes")
-    private Long commentTimes=0L;
-    @Column(name="UserId")
-    private Long userId;
+    @Column(name="update_time")
+    private Date updateTime=new Date();
+
+    @Column(name = "read_times")
+    private Integer readTimes=1;
+    
+    @Column(name="liked_times")
+    private Integer likedTimes=0;
+    
+    @Column(name="comment_times")
+    private Integer commentTimes=0;
+    
+    @Column(name="user_id")
+    private Integer userId;
+
     @Basic(optional=true)
-    @Column(name="Email")
+    @Column(name="email")
     private String email;
-    @Column(name="NickName")
+    
+    @Column(name="nick_name")
     private String nickName;
-    @Column(name="EnableComment")
-    private Integer enableComment=1;
-    @Column(name="Status")
+    
+    @Column(name="enable_comment")
+    private String enableComment="Y";
+    
+    @Column(name="status")
     private Integer status=4;
 
     public String getTitle() {
@@ -88,20 +107,20 @@ public class PostEntity implements Serializable {
         this.originalURL = originalURL;
     }
 
-    public Integer getPostType() {
+    public String getPostType() {
         return postType;
     }
 
-    public void setPostType(Integer postType) {
+    public void setPostType(String postType) {
         this.postType = postType;
     }
 
     public Date getLastModifyTime() {
-        return lastModifyTime;
+        return updateTime;
     }
 
-    public void setLastModifyTime(Date lastModifyTime) {
-        this.lastModifyTime = lastModifyTime;
+    public void setLastModifyTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getEmail() {
@@ -120,14 +139,6 @@ public class PostEntity implements Serializable {
         this.nickName = nickName;
     }
 
-    public Integer getEnableComment() {
-        return enableComment;
-    }
-
-    public void setEnableComment(Integer enableComment) {
-        this.enableComment = enableComment;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -144,51 +155,67 @@ public class PostEntity implements Serializable {
         this.summary = summary;
     }
 
-    public String getBgImg() {
-        return bgImg;
-    }
-
-    public void setBgImg(String bgImg) {
-        this.bgImg = bgImg;
-    }
-
-    public Long getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
-    public Long getReadTimes() {
+    public Integer getReadTimes() {
         return readTimes;
     }
 
-    public void setReadTimes(Long readTimes) {
+    public void setReadTimes(Integer readTimes) {
         this.readTimes = readTimes;
     }
 
-    public Long getLikedTimes() {
+    public Integer getLikedTimes() {
         return likedTimes;
     }
 
-    public void setLikedTimes(Long likedTimes) {
+    public void setLikedTimes(Integer likedTimes) {
         this.likedTimes = likedTimes;
     }
 
-    public Long getCommentTimes() {
+    public Integer getCommentTimes() {
         return commentTimes;
     }
 
-    public void setCommentTimes(Long commentTimes) {
+    public void setCommentTimes(Integer commentTimes) {
         this.commentTimes = commentTimes;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public String getThumbImgUrl() {
+        return thumbImgUrl;
+    }
+
+    public void setThumbImgUrl(String thumbImgUrl) {
+        this.thumbImgUrl = thumbImgUrl;
+    }
+
+    public String getHeaderImgUrl() {
+        return headerImgUrl;
+    }
+
+    public void setHeaderImgUrl(String headerImgUrl) {
+        this.headerImgUrl = headerImgUrl;
+    }
+
+    public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getEnableComment() {
+        return enableComment;
+    }
+
+    public void setEnableComment(String enableComment) {
+        this.enableComment = enableComment;
     }
 }

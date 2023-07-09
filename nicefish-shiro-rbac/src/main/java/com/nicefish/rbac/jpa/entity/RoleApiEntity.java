@@ -3,30 +3,25 @@ package com.nicefish.rbac.jpa.entity;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "nicefish_rbac_user_role")
-public class UserRoleEntity implements Serializable {
+@Table(name = "nicefish_rbac_role_api")
+public class RoleApiEntity implements Serializable {
     @Id
 
     
-    @Column(name="user_id")
-    private Integer userId;
-
     @Column(name="role_id")
     private Integer roleId;
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    @Column(name="api_id")
+    private Integer apiId;
 
     public Integer getRoleId() {
         return roleId;
@@ -34,5 +29,13 @@ public class UserRoleEntity implements Serializable {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public Integer getApiId() {
+        return apiId;
+    }
+
+    public void setApiId(Integer apiId) {
+        this.apiId = apiId;
     }
 }
