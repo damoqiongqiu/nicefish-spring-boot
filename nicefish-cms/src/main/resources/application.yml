@@ -79,7 +79,7 @@ shiro:
     maxAge: 72 #Hours，利用 cookie 免登录。
     secure: false
   session:
-    expireTime: 72 #Hours
+    timeout: 72 #Hours
     dbSyncPeriod: 1
     validationInterval: 10
     maxSession: -1

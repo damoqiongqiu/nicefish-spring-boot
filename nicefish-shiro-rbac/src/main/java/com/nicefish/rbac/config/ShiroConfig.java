@@ -32,8 +32,8 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
-    @Value("${shiro.session.expireTime}")//单位：小时
-    private int expireTime;
+    @Value("${shiro.session.timeout}")//单位：小时
+    private int timeout;
 
     @Value("${shiro.session.validationInterval}")
     private int validationInterval;
@@ -184,7 +184,7 @@ public class ShiroConfig {
         sessionManager.setCacheManager(ehCacheManager());
 
         sessionManager.setDeleteInvalidSessions(true);
-        sessionManager.setGlobalSessionTimeout(expireTime * 60 * 60 *1000);
+        sessionManager.setGlobalSessionTimeout(timeout * 60 * 60 *1000);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         
         //启用定时调度器，用来清理 Session ，Shiro 默认采用内置的 ExecutorServiceSessionValidationScheduler 进行调度。
