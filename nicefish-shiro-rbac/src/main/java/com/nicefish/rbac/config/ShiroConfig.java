@@ -120,6 +120,10 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
+    /**
+     * 创建自定义的 NiceFishRbacRealm 实例。
+     * @return
+     */
     @Bean
     public NiceFishRbacRealm nicefishRbacRealm() {
         NiceFishRbacRealm niceFishRbacRealm = new NiceFishRbacRealm();
@@ -132,7 +136,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 使用自定义的 NiceFishMySQLSessionDAO ，把 Session 持久化到数据库。
+     * 创建自定义的 NiceFishMySQLSessionDAO 实例
      * @return
      */
     @Bean
@@ -143,7 +147,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 使用自定义的 NiceFishSessionFactory
+     * 创建自定义的 NiceFishSessionFactory 实例
      * @return
      */
     @Bean
@@ -153,19 +157,32 @@ public class ShiroConfig {
     }
 
     /**
-     * 使用 EhCache 作为缓存。
+     * 创建 EhCache 实例
      */
     @Bean
     public EhCacheManager ehCacheManager(){
         EhCacheManager cacheManager = new EhCacheManager();
-        cacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");//FIXME:重构这里的配置文件路径
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
         return cacheManager;
     }
 
+    /**
+     * web 应用和 spring 本身没有 SessionDAO 的概念，
+     * 这里创建 Shiro 提供的 DefaultWebSessionManager 实例，从而可以自定义 Session 的数据格式，
+     * 然后利用自定义的 NiceFishMySQLSessionDAO 对 Session 进行操作。
+     * @see https://shiro.apache.org/session-management.html
+     * @return
+     */
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        
+        //启用 EhCache 缓存，Shiro 默认不启用
+        //启用 EhCache 缓存之后，需要在持久化的 Session 和缓存中的 Session 之间进行数据同步。
+        //EhCache 实例配置位于 classpath:ehcache-shiro.xml 文件中，session 默认缓存在 "shiro-activeSessionCache" 实例中。
+        //认证、授权、Session，全部使用同一个 EhCache 运行时对象。
         sessionManager.setCacheManager(ehCacheManager());
+        
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setGlobalSessionTimeout(expireTime * 60 * 60 *1000);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
@@ -180,8 +197,16 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(nicefishRbacRealm());
         securityManager.setRememberMeManager(rememberMeManager());
+        
+        //启用自定义的 SessionManager
         securityManager.setSessionManager(sessionManager());
+
+        //启用缓存管理器，用来缓存认证、授权信息。
+        //EhCache 实例配置位于 classpath:ehcache-shiro.xml 文件中
+        //认证信息默认操作 "authenticationCache" ，授权信息默认操作 "authorizationCache" 。
+        //认证、授权、Session，全部使用同一个 EhCache 运行时对象。
         securityManager.setCacheManager(ehCacheManager());
+        
         return securityManager;
     }
 
