@@ -1,8 +1,6 @@
 package com.nicefish.rbac.jpa.repository;
 
 import com.nicefish.rbac.jpa.entity.NiceFishSessionEntity;
-import com.nicefish.rbac.jpa.entity.PermissionEntity;
-import com.nicefish.rbac.jpa.entity.RoleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

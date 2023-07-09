@@ -45,11 +45,11 @@ public class NiceFishSessionEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastAccessTime;
 
-    @Column(name="max_interactive_interval")
-    private Integer maxInteractiveInteval;
+    @Column(name="max_inactive_interval")
+    private Integer maxInactiveInteval;
 
     @Column(name="timeout")
-    private Integer timeout;
+    private Long timeout;
 
     @Column(name="expired")
     private String expired;
@@ -126,19 +126,11 @@ public class NiceFishSessionEntity {
         this.lastAccessTime = lastAccessTime;
     }
 
-    public Integer getMaxInteractiveInteval() {
-        return maxInteractiveInteval;
-    }
-
-    public void setMaxInteractiveInteval(Integer maxInteractiveInteval) {
-        this.maxInteractiveInteval = maxInteractiveInteval;
-    }
-
-    public Integer getTimeout() {
+    public Long getTimeout() {
         return timeout;
     }
 
-    public void setTimeout(Integer timeout) {
+    public void setTimeout(Long timeout) {
         this.timeout = timeout;
     }
 
@@ -188,5 +180,13 @@ public class NiceFishSessionEntity {
 
     public void setSessionData(String sessionData) {
         this.sessionData = sessionData;
+    }
+
+    public Integer getMaxInactiveInteval() {
+        return maxInactiveInteval;
+    }
+
+    public void setMaxInactiveInteval(Integer maxInactiveInteval) {
+        this.maxInactiveInteval = maxInactiveInteval;
     }
 }

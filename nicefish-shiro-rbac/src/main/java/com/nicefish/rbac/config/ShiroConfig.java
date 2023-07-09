@@ -182,11 +182,14 @@ public class ShiroConfig {
         //EhCache 实例配置位于 classpath:ehcache-shiro.xml 文件中，session 默认缓存在 "shiro-activeSessionCache" 实例中。
         //认证、授权、Session，全部使用同一个 EhCache 运行时对象。
         sessionManager.setCacheManager(ehCacheManager());
-        
+
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setGlobalSessionTimeout(expireTime * 60 * 60 *1000);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
+        
+        //启用定时调度器，用来清理 Session ，Shiro 默认采用内置的 ExecutorServiceSessionValidationScheduler 进行调度。
         sessionManager.setSessionValidationSchedulerEnabled(true);
+        
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setSessionFactory(sessionFactory());
         return sessionManager;

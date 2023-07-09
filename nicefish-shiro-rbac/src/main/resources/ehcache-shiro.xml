@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache name="es">
+<ehcache name="nicefish">
     <!-- 磁盘缓存路径，可以修改其它目录 -->
     <diskStore path="java.io.tmpdir"/>
     <!--

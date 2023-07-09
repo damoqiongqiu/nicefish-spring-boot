@@ -64,6 +64,7 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql 
 
+# Shiro 相关的配置， ShiroConfig.java 配置类会读取这些配置项。
 shiro:
   user:
     loginUrl: /nicefish/auth/shiro/login
