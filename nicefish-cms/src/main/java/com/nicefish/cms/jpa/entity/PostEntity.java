@@ -30,7 +30,7 @@ public class PostEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="post_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date time=new Date();
+    private Date postTime=new Date();
 
     @Lob
     @Column(name="post_content",columnDefinition="text")
@@ -91,12 +91,20 @@ public class PostEntity implements Serializable {
         this.content = content;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getPostTime() {
+        return postTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setPostTime(Date postTime) {
+        this.postTime = postTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getOriginalURL() {
