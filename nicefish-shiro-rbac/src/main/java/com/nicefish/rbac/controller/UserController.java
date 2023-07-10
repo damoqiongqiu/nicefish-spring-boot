@@ -1,15 +1,16 @@
 package com.nicefish.rbac.controller;
 
+import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
-import com.nicefish.core.utils.AjaxResult;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/nicefish/auth/user")
 public class UserController {
+    
+    Logger logger= LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     protected IUserService userService;
 
@@ -38,9 +42,23 @@ public class UserController {
     @PostMapping("/register")
     @ResponseBody
     public AjaxResult register(@RequestBody UserEntity userEntity) {
+        //TODO:与前端代码对接，让前端先加密一次传输过来
         userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
         userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
         return userService.createUser(userEntity);
+    }
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editUser(@RequestBody UserEntity userEntity) {
+        logger.debug(userEntity.toString());
+
+        //TODO:与前端代码对接，让前端先加密一次传输过来
+        userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
+        userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
+
+        //TODO:数据合法性校验
+        return AjaxResult.success(userService.saveUser(userEntity));
     }
 
     @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
@@ -54,6 +72,7 @@ public class UserController {
     @RequestMapping(value = "/delete/{userId}",method = RequestMethod.DELETE)
     @ResponseBody
     public AjaxResult deleteUser(@PathVariable(value="userId",required = true)Integer userId){
+        //TODO:合法性校验，关联表操作校验，业务逻辑校验
         int affected=userService.deleteByUserId(userId);
         //TODO:消息国际化
         if(affected==0){
@@ -61,17 +80,6 @@ public class UserController {
         }else{
             return new AjaxResult(true,"删除成功");
         }
-    }
-
-    @PostMapping("/edit")
-    @ResponseBody
-    public AjaxResult editUser(@Validated UserEntity userEntity) {
-        if (!userService.isPhoneUnique(userEntity.getCellphone())) {
-            return AjaxResult.failure("修改用户'" + userEntity.getUserName() + "'失败，手机号码已存在");
-        } else if (!userService.isEmailUnique(userEntity.getEmail())) {
-            return AjaxResult.failure("修改用户'" + userEntity.getUserName() + "'失败，邮箱账号已存在");
-        }
-        return AjaxResult.success(userService.saveUser(userEntity));
     }
 
     @RequestMapping(value = "/detail/{userId}",method = RequestMethod.GET)

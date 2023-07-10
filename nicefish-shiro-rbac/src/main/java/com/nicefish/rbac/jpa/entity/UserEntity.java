@@ -18,10 +18,10 @@ import java.util.List;
 public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @Column(name="user_id", updatable = false)
     private Integer userId;
 
-    @Column(name="user_name",nullable = false)
+    @Column(name="user_name",nullable = false,updatable = false)
     private String userName;
 
     @Column(name="nick_name",nullable = false)
@@ -36,11 +36,11 @@ public class UserEntity implements Serializable {
     @Column(name="cellphone")
     private String cellphone;
 
-    @Column(name="gender")
-    private String gender;
+    @Column(name="gender",columnDefinition = "varchar default 0")
+    private String gender="0";
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="create_time")
+    @Column(name="create_time",updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
@@ -50,8 +50,8 @@ public class UserEntity implements Serializable {
     @Column(name="salt")
     private String salt;
 
-    @Column(name="status")
-    private String status;
+    @Column(name="status",columnDefinition = "int default 1")
+    private Integer status=1;
 
     @Column(name="remark")
     private String remark;
@@ -146,11 +146,11 @@ public class UserEntity implements Serializable {
         this.salt = salt;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

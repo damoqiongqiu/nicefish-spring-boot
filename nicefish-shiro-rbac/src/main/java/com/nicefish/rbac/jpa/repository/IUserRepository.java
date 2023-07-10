@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @see <a href="https://docs.spring.io/spring-data/jpa/docs/2.1.10.RELEASE/reference/html/">JPA DOC</a>
@@ -31,9 +32,12 @@ public interface IUserRepository extends PagingAndSortingRepository<UserEntity, 
 
     Page<UserEntity> findAll(Pageable pageable);
 
+    @Transactional
     int deleteByUserId(Integer userId);
 
+    @Transactional
     int deleteByUserIdIn(Integer[] userIds);
 
+    @Transactional
     int deleteAllByUserId(Integer[] ids);
 }
