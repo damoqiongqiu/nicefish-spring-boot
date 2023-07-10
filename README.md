@@ -35,7 +35,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 - nicefish-core: 提供通用的工具
 - nicefish-shiro-rbac: 提供基于 Shiro 的通用认证和鉴权服务，RBAC 型。
-- nicefish-cms: 基于以上基础模块的内容管理应用
+- nicefish-cms: 基于以上基础模块的 CMS 应用
 
 ## 5.Swagger 接口
 
@@ -43,7 +43,13 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 - 项目起来之后访问 http://localhost:8080/swagger-ui.html
 
-## 6.系列项目
+## 6.物理模型
+
+<img src="./docs/imgs/pdm.png">
+
+物理模型 pdm 文件在 docs 目录下，可以使用 PowerDesigner 打开，目前针对 MySQL 数据库。
+
+## 7.系列项目
 
 |  名称   | 描述  |
 |  ----  | ----  |
@@ -55,7 +61,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 | nicefish-springcloud  | 用来示范前后端分离模式下，前端代码与分布式后端服务的对接方式， https://gitee.com/mumu-osc/nicefish-spring-boot。|
 | NiceFish-React  |  这是React 版本，基于React 18.0.0 ，使用 Antd、Inversify、 定制版 Bootstrap开发。  https://gitee.com/mumu-osc/NiceFish-React.git|
 
-## 7.前端界面截图
+## 8.前端界面截图
 
 <img src="./docs/imgs/1.png">
 
@@ -65,7 +71,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 <img src="./docs/imgs/4.png">
 
-## 8.开源许可证
+## 9.开源许可证
 
 MIT
 
