@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2023/7/9 23:14:27                            */
+/* Created on:     2023/7/10 13:28:18                           */
 /*==============================================================*/
 
 
@@ -163,8 +163,7 @@ create table nicefish_rbac_role
 (
    role_id              int(11) not null auto_increment,
    role_name            varchar(64) not null,
-   role_key             varchar(100) not null,
-   status               int(1) not null default 0 comment '-1 特权角色，不能删除 0正常 1停用 2删除',
+   status               int(11) not null default 0 comment '-1 特权角色，不能删除 0正常 1停用 2删除',
    remark               varchar(500) default '',
    primary key (role_id)
 );

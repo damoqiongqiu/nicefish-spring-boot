@@ -38,7 +38,6 @@ public interface IRoleService {
 
     AjaxResult addAuthUsers(Integer roleId, List<UserEntity> userEntities);
 
-    boolean isRoleKeyUnique(String roleKey);
 
     boolean isRoleNameUnique(String roleName);
 

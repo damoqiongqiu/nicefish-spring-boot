@@ -22,9 +22,6 @@ public class RoleEntity implements Serializable {
     @Column(name="role_name")
     private String roleName;
     
-    @Column(name="role_key")
-    private String roleKey;
-    
     @Column(name="status",columnDefinition = "int default 0",nullable = false)
     private Integer status;
     
@@ -72,14 +69,6 @@ public class RoleEntity implements Serializable {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public String getRoleKey() {
-        return roleKey;
-    }
-
-    public void setRoleKey(String roleKey) {
-        this.roleKey = roleKey;
     }
 
     public Integer getStatus() {

@@ -40,6 +40,12 @@ public class RoleController {
         return this.roleService.createRole(roleEntity);
     }
 
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult editRole(@RequestBody RoleEntity roleEntity){
+        return this.roleService.editRole(roleEntity);
+    }
+
     @RequestMapping(value = "/delete/{roleId}",method = RequestMethod.DELETE)
     @ResponseBody
     public AjaxResult deleteRole(@PathVariable(value="roleId",required = true)Integer roleId){
@@ -50,13 +56,7 @@ public class RoleController {
             return AjaxResult.success("删除成功");
         }
     }
-
-    @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResult editRole(@RequestBody RoleEntity roleEntity){
-        return this.roleService.editRole(roleEntity);
-    }
-
+    
     @RequestMapping(value = "/detail/{roleId}",method = RequestMethod.GET)
     @ResponseBody
     public RoleEntity getRoleDetail(@PathVariable(value = "roleId",required = true) Integer roleId){

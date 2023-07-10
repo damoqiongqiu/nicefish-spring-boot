@@ -1,14 +1,12 @@
 package com.nicefish.rbac.service.impl;
 
+import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.*;
-import com.nicefish.rbac.jpa.repository.IApiRepository;
-import com.nicefish.rbac.jpa.repository.IComponentRepository;
 import com.nicefish.rbac.jpa.repository.IRoleApiRepository;
 import com.nicefish.rbac.jpa.repository.IRoleComponentRepository;
 import com.nicefish.rbac.jpa.repository.IRoleRepository;
 import com.nicefish.rbac.jpa.repository.IUserRoleRepository;
 import com.nicefish.rbac.service.IRoleService;
-import com.nicefish.core.utils.AjaxResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -46,9 +43,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional
     public AjaxResult createRole(RoleEntity roleEntity) {
-        if(!this.isRoleKeyUnique(roleEntity.getRoleKey())){
-            return new AjaxResult(false,"角色KEY已存在");
-        }
+        //TODO:数据校验
         this.roleRepository.save(roleEntity);
         return new AjaxResult(true,roleEntity);
     }
@@ -56,11 +51,6 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional
     public int deleteRole(Integer roleId) {
-        RoleEntity roleEntity= this.roleRepository.findDistinctByRoleId(roleId);
-        //特权角色状态位-1，不准删除
-        if(roleEntity.getStatus()==-1){
-            return 0;
-        }
         return this.roleRepository.deleteByRoleId(roleId);
     }
 
@@ -112,9 +102,9 @@ public class RoleServiceImpl implements IRoleService {
                 if(!StringUtils.isEmpty(roleEntity.getRoleName())){
                     predicates.add(criteriaBuilder.like(root.get("roleName"),"%"+roleEntity.getRoleName()+"%"));
                 }
-                if(!StringUtils.isEmpty(roleEntity.getRoleKey())){
-                    predicates.add(criteriaBuilder.like(root.get("roleKey"),"%"+roleEntity.getRoleKey()+"%"));
-                }
+//                if(!StringUtils.isEmpty(roleEntity.getRoleKey())){
+//                    predicates.add(criteriaBuilder.like(root.get("roleKey"),"%"+roleEntity.getRoleKey()+"%"));
+//                }
                 if(!StringUtils.isEmpty(roleEntity.getStatus())){
                     predicates.add(criteriaBuilder.equal(root.get("status"),roleEntity.getStatus()));
                 }
@@ -180,11 +170,6 @@ public class RoleServiceImpl implements IRoleService {
         });
         this.userRoleRepository.saveAll(list);
         return new AjaxResult(true,"保存成功");
-    }
-
-    @Override
-    public boolean isRoleKeyUnique(String roleKey) {
-        return this.roleRepository.findDistinctByRoleKey(roleKey)==null?true:false;
     }
 
     @Override
