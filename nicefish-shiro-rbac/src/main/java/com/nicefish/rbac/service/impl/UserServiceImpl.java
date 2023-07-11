@@ -119,9 +119,10 @@ public class UserServiceImpl implements IUserService {
                 if(!StringUtils.isEmpty(userEntity.getCellphone())){
                     predicates.add(criteriaBuilder.like(root.get("cellphone"),"%"+userEntity.getCellphone()+"%"));
                 }
-                if(!StringUtils.isEmpty(userEntity.getStatus())){
-                    predicates.add(criteriaBuilder.equal(root.get("status"),userEntity.getStatus()));
-                }
+                //FIXME:这里为什么要过滤 status?
+                // if(!StringUtils.isEmpty(userEntity.getStatus())){
+                //     predicates.add(criteriaBuilder.equal(root.get("status"),userEntity.getStatus()));
+                // }
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         },pageable);
