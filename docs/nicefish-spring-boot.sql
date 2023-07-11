@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2023/7/10 21:47:03                           */
+/* Created on:     2023/7/11 14:04:47                           */
 /*==============================================================*/
 
 
@@ -229,7 +229,7 @@ create table nicefish_rbac_user
    password             varchar(64) default '',
    email                varchar(64) default '',
    cellphone            varchar(32) default '',
-   gender               varchar(32) default '0' comment '0男 1女 2未知',
+   gender               int(11) default 0 comment '0男 1女 2未知',
    avatar_url           varchar(64) default '' comment '用户头像 URL',
    salt                 varchar(32) default '',
    create_time          datetime default current_timestamp,

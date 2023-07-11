@@ -31,19 +31,23 @@ public class ShiroAuthController {
     @PostMapping("/login")
     @ResponseBody
     public AjaxResult login(String userName, String password, Boolean rememberMe) {
+        UserEntity userInDB=this.userService.getUserByUserName(userName);
+        if(ObjectUtils.isEmpty(userInDB)){
+            return AjaxResult.failure("登录失败，用户名或密码错误。");
+        }
+
         UserEntity userEntity=new UserEntity();
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(userName, password, rememberMe);
             SecurityUtils.getSubject().login(token);
 
             //TODO:重新整合数据模型，全部统一到UserEntity
-            UserEntity userInDB=this.userService.getUserByUserName(userName);
             if(!ObjectUtils.isEmpty(userInDB)){
                 BeanUtils.copyProperties(userInDB,userEntity);
             }
             return AjaxResult.success(userEntity);
         } catch (AuthenticationException e) {
-            String msg = "登录失败，用户或密码错误";
+            String msg = "登录失败，用户名或密码错误。";
             if (!StringUtils.isEmpty(e.getMessage())) {
                 msg = e.getMessage();
             }

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -83,8 +84,8 @@ public class UserServiceImpl implements IUserService {
             msg="邮箱已存在";
             isSuccess=false;
         }
-        if(userEntity.getCellphone()!=null
-                &&this.userRepository.findDistinctByCellphone(userEntity.getCellphone())!=null){
+
+        if(!StringUtils.isEmpty(userEntity.getCellphone()) && !ObjectUtils.isEmpty(this.userRepository.findDistinctTopByCellphone(userEntity.getCellphone()))){
             msg="手机号已存在";
             isSuccess=false;
         }
@@ -177,7 +178,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserEntity getUserByCellphone(String cellphone) {
-        return this.userRepository.findDistinctByCellphone(cellphone);
+        return this.userRepository.findDistinctTopByCellphone(cellphone);
     }
 
     @Override
@@ -229,7 +230,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean isPhoneUnique(String cellphone) {
         logger.debug(cellphone);
-        UserEntity userEntity=this.userRepository.findDistinctByCellphone(cellphone);
+        UserEntity userEntity=this.userRepository.findDistinctTopByCellphone(cellphone);
         return userEntity==null?true:false;
     }
 

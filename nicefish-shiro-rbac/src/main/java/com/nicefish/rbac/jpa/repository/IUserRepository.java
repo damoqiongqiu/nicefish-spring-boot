@@ -20,7 +20,7 @@ public interface IUserRepository extends PagingAndSortingRepository<UserEntity, 
 
     UserEntity findDistinctByEmail(String email);
 
-    UserEntity findDistinctByCellphone(String cellphone);
+    UserEntity findDistinctTopByCellphone(String cellphone);
 
     UserEntity findDistinctByUserNameOrEmailOrCellphone(String userName,String email,String cellphone);
 

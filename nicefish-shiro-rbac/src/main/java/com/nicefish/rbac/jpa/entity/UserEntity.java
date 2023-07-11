@@ -36,8 +36,8 @@ public class UserEntity implements Serializable {
     @Column(name="cellphone")
     private String cellphone;
 
-    @Column(name="gender",columnDefinition = "varchar default 0")
-    private String gender="0";
+    @Column(name="gender",columnDefinition = "int default 0")
+    private Integer gender=0;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="create_time",updatable = false)
@@ -122,11 +122,11 @@ public class UserEntity implements Serializable {
         this.cellphone = cellphone;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
