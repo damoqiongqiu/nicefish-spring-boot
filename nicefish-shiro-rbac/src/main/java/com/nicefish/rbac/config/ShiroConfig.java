@@ -4,7 +4,7 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.nicefish.rbac.shiro.filter.NiceFishCaptchaValidateFilter;
 import com.nicefish.rbac.shiro.filter.NiceFishLogoutFilter;
 import com.nicefish.rbac.shiro.filter.NiceFishUserFilter;
-import com.nicefish.rbac.shiro.realm.NiceFishRbacRealm;
+import com.nicefish.rbac.shiro.realm.NiceFishMySQLRealm;
 import com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO;
 import com.nicefish.rbac.shiro.session.NiceFishSessionFactory;
 
@@ -121,18 +121,18 @@ public class ShiroConfig {
     }
 
     /**
-     * 创建自定义的 NiceFishRbacRealm 实例。
+     * 创建自定义的 NiceFishMySQLRealm 实例。
      * @return
      */
     @Bean
-    public NiceFishRbacRealm nicefishRbacRealm() {
-        NiceFishRbacRealm niceFishRbacRealm = new NiceFishRbacRealm();
-        niceFishRbacRealm.setCachingEnabled(true);
-        niceFishRbacRealm.setAuthenticationCachingEnabled(true);
-        niceFishRbacRealm.setAuthenticationCacheName("authenticationCache");
-        niceFishRbacRealm.setAuthorizationCachingEnabled(true);
-        niceFishRbacRealm.setAuthorizationCacheName("authorizationCache");
-        return niceFishRbacRealm;
+    public NiceFishMySQLRealm nicefishRbacRealm() {
+        NiceFishMySQLRealm niceFishMySQLRealm = new NiceFishMySQLRealm();
+        niceFishMySQLRealm.setCachingEnabled(true);
+        niceFishMySQLRealm.setAuthenticationCachingEnabled(true);
+        niceFishMySQLRealm.setAuthenticationCacheName("authenticationCache");
+        niceFishMySQLRealm.setAuthorizationCachingEnabled(true);
+        niceFishMySQLRealm.setAuthorizationCacheName("authorizationCache");
+        return niceFishMySQLRealm;
     }
 
     /**

@@ -13,18 +13,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * NiceFish 版本的 Authorization 和 Authentication ，实现基于 RBAC 的认证和授权。
+ * NiceFish 操作 MySQL 的 Realm 。
  * @author 大漠穷秋
  */
-public class NiceFishRbacRealm extends AuthorizingRealm {
-    private static final Logger logger = LoggerFactory.getLogger(NiceFishRbacRealm.class);
+public class NiceFishMySQLRealm extends AuthorizingRealm {
+    private static final Logger logger = LoggerFactory.getLogger(NiceFishMySQLRealm.class);
 
     @Autowired
-    private IUserService userService2;
+    private IUserService userService;
 
-    /**
-     * 实现父类中的认证逻辑。
-     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
@@ -33,7 +30,8 @@ public class NiceFishRbacRealm extends AuthorizingRealm {
 
         UserEntity userEntity = null;
         try {
-            userEntity = userService2.checkUser(username, password);
+            //调用 User Service 认证用户信息，如果认证失败，抛出对应的异常。
+            userEntity = userService.checkUser(username, password);
             logger.debug("UserName>"+username);
             logger.debug("Password>"+password);
         } catch (CaptchaException e) {
@@ -59,6 +57,7 @@ public class NiceFishRbacRealm extends AuthorizingRealm {
             throw new AuthenticationException(e.getMessage(), e);
         }
 
+        //用户认证成功，返回验证信息实例。
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userEntity, password, getName());
         return info;
     }

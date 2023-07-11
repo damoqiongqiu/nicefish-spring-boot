@@ -55,7 +55,8 @@ public interface IUserService {
 
     String encryptPassword(String username, String password, String salt);
 
-    UserEntity checkUser(String userName, String password) throws UserNotExistsException,
+    UserEntity checkUser(String userName, String password)
+            throws UserNotExistsException,
             CaptchaException, UserPasswordNotMatchException,
             UserDeleteException, UserBlockedException;
 }
