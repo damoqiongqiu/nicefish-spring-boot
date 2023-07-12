@@ -3,6 +3,7 @@ package com.nicefish.rbac.shiro.realm;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
+import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -11,6 +12,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 /**
  * NiceFish 操作 MySQL 的 Realm 。
@@ -22,6 +25,9 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
     @Autowired
     private IUserService userService;
 
+    /**
+     * 认证
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
@@ -63,21 +69,15 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
     }
 
     /**
-     * TODO:实现父类中的授权逻辑。
+     * 获取用户的权限信息， NiceFish 采用 Shiro 字符串形式的权限定义，权限不实现成 Java 类。
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        //addRole
-        //addStringPermission
+        Integer userId= NiceFishSecurityUtils.getUserId();
+        Set<String> permStrs=this.userService.getPermStringsByUserId(userId);
 
-        // UserEntity userEntity = NiceFishSecurityUtils.getUserEntity();
-        // Set<String> roles = new HashSet<String>();
-        // Set<String> menus = new HashSet<String>();
-//        if (user.isAdmin()) {
-//            info.addRole("admin");
-//            info.addStringPermission("*:*:*");
-//        }
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.setStringPermissions(permStrs);
         return info;
     }
 }

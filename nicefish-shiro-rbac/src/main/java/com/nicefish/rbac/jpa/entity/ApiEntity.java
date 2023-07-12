@@ -8,6 +8,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 在 NiceFish 中，权限控制整体上分2个层次：前端权限和后端权限。
+ * - 前端权限是指在前端页面上的权限控制，比如菜单、按钮、甚至可以细致到一个 HTML 元素。
+ * - 后端权限是指在后端 API 接口上的权限控制，比如一个 API 接口是否需要登录才能访问，是否需要某个角色才能访问，是否需要某个权限才能访问等。
+ * 
+ * ApiEntity 用来定义服务端 API 接口的权限，对应数据库中的 nicefish_rbac_api 表。
+ * 
+ * @see ComponentEntity
+ * @author 大漠穷秋
+ */
 @Entity
 @DynamicInsert
 @DynamicUpdate

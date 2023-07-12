@@ -1,10 +1,11 @@
 package com.nicefish.rbac.controller;
 
+import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IRoleService;
 import com.nicefish.rbac.service.IUserService;
-import com.nicefish.core.utils.AjaxResult;
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

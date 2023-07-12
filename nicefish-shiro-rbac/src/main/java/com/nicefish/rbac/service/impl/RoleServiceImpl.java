@@ -254,7 +254,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public Iterable<String> getAllPermissionsByRoleId(Integer roleId) {
+    public Iterable<String> getPermStrsByRoleId(Integer roleId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllPermissionsByRoleId'");
     }

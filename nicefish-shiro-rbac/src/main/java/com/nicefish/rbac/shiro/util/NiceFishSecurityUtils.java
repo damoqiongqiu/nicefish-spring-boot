@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 
 /**
- * 静态工具类，扩展 Shiro 内置的 SecurityUtils 工具类，加上 NiceFish 需要的一些工具方法。
+ * 静态工具类，扩展 Shiro 内置的 SecurityUtils 工具类，加上 NiceFish 需要的一些工具方法，这些方法用来简化上层的业务代码。
  * @author 大漠穷秋
  */
 public class NiceFishSecurityUtils extends SecurityUtils{

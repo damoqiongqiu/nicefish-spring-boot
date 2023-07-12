@@ -1,11 +1,13 @@
 package com.nicefish.rbac.service;
 
+import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
-import com.nicefish.core.utils.AjaxResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Set;
 
 /**
  *
@@ -59,4 +61,12 @@ public interface IUserService {
             throws UserNotExistsException,
             CaptchaException, UserPasswordNotMatchException,
             UserDeleteException, UserBlockedException;
+
+    /**
+     * 根据 userId 获取此用户持有的所有权限字符串列表
+     * @param userId
+     * @return
+     */
+    Set<String> getPermStringsByUserId(Integer userId);
+
 }

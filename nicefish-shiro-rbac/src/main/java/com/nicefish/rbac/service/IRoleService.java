@@ -42,7 +42,7 @@ public interface IRoleService {
     boolean isRoleNameUnique(String roleName);
 
     //根据 roleId 获取此角色的所有权限字符串
-    Iterable<String> getAllPermissionsByRoleId(Integer roleId);
+    Iterable<String> getPermStrsByRoleId(Integer roleId);
 
     AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity);
 

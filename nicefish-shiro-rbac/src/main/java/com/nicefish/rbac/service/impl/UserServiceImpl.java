@@ -1,14 +1,16 @@
 package com.nicefish.rbac.service.impl;
 
+import com.nicefish.core.utils.AjaxResult;
+import com.nicefish.core.utils.ServletUtil;
 import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import com.nicefish.rbac.exception.*;
+import com.nicefish.rbac.jpa.entity.ApiEntity;
+import com.nicefish.rbac.jpa.entity.ComponentEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.jpa.repository.IUserRepository;
 import com.nicefish.rbac.service.IRoleService;
 import com.nicefish.rbac.service.IUserService;
-import com.nicefish.core.utils.AjaxResult;
-import com.nicefish.core.utils.ServletUtil;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +28,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author 大漠穷秋
@@ -260,10 +264,10 @@ public class UserServiceImpl implements IUserService {
     public UserEntity checkUser(String userName, String password) throws UserNotExistsException,
             CaptchaException, UserPasswordNotMatchException,
             UserDeleteException, UserBlockedException {
-        if (org.springframework.util.StringUtils.isEmpty(userName) || org.springframework.util.StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
             throw new UserNotExistsException();
         }
-        if (!org.springframework.util.StringUtils.isEmpty(ServletUtil.getRequest().getAttribute(NiceFishAuthConstants.CURRENT_CAPTCHA))) {
+        if (!StringUtils.isEmpty(ServletUtil.getRequest().getAttribute(NiceFishAuthConstants.CURRENT_CAPTCHA))) {
             throw new CaptchaException();
         }
         if (password.length() < NiceFishAuthConstants.PASSWORD_MIN_LENGTH
@@ -296,5 +300,27 @@ public class UserServiceImpl implements IUserService {
 
         this.saveUser(userEntity);
         return userEntity;
+    }
+
+    @Override
+    public Set<String> getPermStringsByUserId(Integer userId) {
+        UserEntity userEntity=this.userRepository.findDistinctByUserId(userId);
+        List<RoleEntity> roleEntities=userEntity.getRoleEntities();
+
+        Set<String> permStrs=new HashSet<>();
+        for (RoleEntity roleEntity:roleEntities) {
+            List<ApiEntity> apiEntities = roleEntity.getApiEntities();
+            List<ComponentEntity> componentEntities=roleEntity.getComponentEntities();
+            for(ApiEntity apiEntity:apiEntities){
+                permStrs.add(apiEntity.getPermission());
+            }
+            for(ComponentEntity componentEntity:componentEntities){
+                permStrs.add(componentEntity.getPermission());
+            }
+        }
+
+        logger.debug(permStrs.toString());
+
+        return permStrs;
     }
 }
