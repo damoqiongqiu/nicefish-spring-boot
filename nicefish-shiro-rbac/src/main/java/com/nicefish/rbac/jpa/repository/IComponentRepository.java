@@ -13,7 +13,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface IComponentRepository extends PagingAndSortingRepository<ComponentEntity, Integer>, JpaSpecificationExecutor {
     ComponentEntity findDistinctByComponentId(Integer componentId);
     
-    Page<ComponentEntity> findByPermission(String permission, Pageable pageable);
-    
     int deleteByComponentId(Integer componentId);
 }

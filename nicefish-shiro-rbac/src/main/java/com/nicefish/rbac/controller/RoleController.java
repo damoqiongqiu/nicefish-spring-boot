@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Api("Role Management")
 @RestController
 @RequestMapping("/nicefish/auth/role")
+@RequiresPermissions("sys:manage:role")
 public class RoleController {
 
     @Autowired
@@ -63,12 +64,6 @@ public class RoleController {
     public RoleEntity getRoleDetail(@PathVariable(value = "roleId",required = true) Integer roleId){
         return this.roleService.getRoleById(roleId);
     }
-
-    // @RequestMapping(value = "/get-all-permissions/{roleId}",method = RequestMethod.GET)
-    // @ResponseBody
-    // public Iterable<PermissionEntity> getAllPermissions(@PathVariable(value="roleId",required = true) Integer roleId) {
-    //     return this.roleService.getAllPermissionsByRoleId(roleId);
-    // }
 
     @RequestMapping(value = "/add-auth-users/{roleId}/{userIds}",method = RequestMethod.POST)
     @ResponseBody

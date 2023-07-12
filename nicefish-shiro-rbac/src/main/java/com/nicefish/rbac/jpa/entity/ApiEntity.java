@@ -40,7 +40,7 @@ public class ApiEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="create_time",updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private Date createTime=new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="update_time")

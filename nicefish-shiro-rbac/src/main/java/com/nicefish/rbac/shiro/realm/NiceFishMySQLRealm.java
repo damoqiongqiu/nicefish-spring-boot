@@ -75,6 +75,7 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Integer userId= NiceFishSecurityUtils.getUserId();
         Set<String> permStrs=this.userService.getPermStringsByUserId(userId);
+        logger.debug(permStrs.toString());
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permStrs);

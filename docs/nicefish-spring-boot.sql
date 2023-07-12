@@ -1,260 +1,281 @@
-/*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2023/7/11 14:04:47                           */
-/*==============================================================*/
+/*
+SQLyog Community v13.1.6 (64 bit)
+MySQL - 10.5.9-MariaDB : Database - nicefish-spring-boot-test
+*********************************************************************
+*/
 
+/*!40101 SET NAMES utf8 */;
 
-drop table if exists nicefish_cms_comment;
+/*!40101 SET SQL_MODE=''*/;
 
-drop table if exists nicefish_cms_file_upload;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*Table structure for table `hibernate_sequence` */
 
-drop table if exists nicefish_cms_post;
+DROP TABLE IF EXISTS `hibernate_sequence`;
 
-drop table if exists nicefish_cms_sys_params;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='MySQL 没有 sequence 机制，用表来模拟。';
 
-drop table if exists nicefish_rbac_api;
+/*Data for the table `hibernate_sequence` */
 
-drop table if exists nicefish_rbac_component;
+/*Table structure for table `nicefish_cms_comment` */
 
-drop table if exists nicefish_rbac_role;
+DROP TABLE IF EXISTS `nicefish_cms_comment`;
 
-drop table if exists nicefish_rbac_role_api;
+CREATE TABLE `nicefish_cms_comment` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL,
+  `content` text DEFAULT NULL,
+  `comment_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `comment_ip` varchar(64) DEFAULT NULL COMMENT '评论者的IP地址',
+  `p_id` int(11) DEFAULT -1 COMMENT '父层评论的ID，用来实现评论盖楼效果',
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(64) DEFAULT NULL,
+  `nick_name` varchar(64) DEFAULT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `status` int(11) DEFAULT 1 COMMENT '评论状态：0：已删除；1：已发布；2:优质评论；',
+  PRIMARY KEY (`comment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='评论表';
 
-drop table if exists nicefish_rbac_role_component;
+/*Data for the table `nicefish_cms_comment` */
 
-drop table if exists nicefish_rbac_session;
+insert  into `nicefish_cms_comment`(`comment_id`,`post_id`,`content`,`comment_time`,`comment_ip`,`p_id`,`user_id`,`user_name`,`nick_name`,`email`,`status`) values 
+(1,1,'1111111111111111111111111','2023-07-12 21:09:43',NULL,NULL,1,'admin@126.com','系统管理员',NULL,NULL),
+(2,1,'1111111111111111111111111','2023-07-12 21:09:47',NULL,NULL,1,'admin@126.com','系统管理员',NULL,NULL),
+(3,1,'1111111111111111111111111','2023-07-12 21:09:49',NULL,NULL,1,'admin@126.com','系统管理员',NULL,NULL);
 
-drop table if exists nicefish_rbac_user;
+/*Table structure for table `nicefish_cms_file_upload` */
 
-drop table if exists nicefish_rbac_user_role;
+DROP TABLE IF EXISTS `nicefish_cms_file_upload`;
 
-drop table if exists hibernate_sequence;
+CREATE TABLE `nicefish_cms_file_upload` (
+  `up_id` int(11) NOT NULL,
+  `up_time` datetime DEFAULT current_timestamp(),
+  `file_name` varchar(128) DEFAULT NULL COMMENT '与物理保存的文件名一致',
+  `file_type` varchar(32) DEFAULT '1' COMMENT '1、图片；\n            2、附件；',
+  `file_size` float DEFAULT 0,
+  `file_width` int(11) DEFAULT 0,
+  `file_height` int(11) DEFAULT 0,
+  `display_order` int(11) DEFAULT 0,
+  `user_id` int(11) DEFAULT 0,
+  `url` varchar(128) DEFAULT NULL COMMENT '访问此文件的路径，可以指向系统外部的 URL 。',
+  `file_module` int(11) DEFAULT 1 COMMENT '1、metro相关的图片\n            2、文章相关的图片\n            3、图书相关的图片\n            4、小图标\n            5、用户头像\n            ',
+  `file_desc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`up_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='上传文件的记录。';
 
-/*==============================================================*/
-/* Table: nicefish_cms_comment                                  */
-/*==============================================================*/
-create table nicefish_cms_comment
-(
-   comment_id           int(11) not null auto_increment,
-   post_id              int(11) not null,
-   content              text,
-   comment_time         datetime not null default current_timestamp,
-   comment_ip           varchar(64) default null comment '评论者的IP地址',
-   p_id                 int(11) default -1 comment '父层评论的ID，用来实现评论盖楼效果',
-   user_id              int(11) not null,
-   user_name            varchar(64) default null,
-   nick_name            varchar(64) default null,
-   email                varchar(64) default null,
-   status               int(11) default 1 comment '评论状态：0：已删除；1：已发布；2:优质评论；',
-   primary key (comment_id)
-);
+/*Data for the table `nicefish_cms_file_upload` */
 
-alter table nicefish_cms_comment comment '评论表';
+/*Table structure for table `nicefish_cms_post` */
 
-/*==============================================================*/
-/* Table: nicefish_cms_file_upload                              */
-/*==============================================================*/
-create table nicefish_cms_file_upload
-(
-   up_id                int(11) not null,
-   up_time              datetime default current_timestamp,
-   file_name            varchar(128) default null comment '与物理保存的文件名一致',
-   file_type            varchar(32) default '1' comment '1、图片；\n            2、附件；',
-   file_size            float default 0,
-   file_width           int(11) default 0,
-   file_height          int(11) default 0,
-   display_order        int(11) default 0,
-   user_id              int(11) default 0,
-   url                  varchar(128) comment '访问此文件的路径，可以指向系统外部的 URL 。',
-   file_module          int(11) default 1 comment '1、metro相关的图片\n            2、文章相关的图片\n            3、图书相关的图片\n            4、小图标\n            5、用户头像\n            ',
-   file_desc            varchar(255) default null,
-   primary key (up_id)
-);
+DROP TABLE IF EXISTS `nicefish_cms_post`;
 
-alter table nicefish_cms_file_upload comment '上传文件的记录。';
+CREATE TABLE `nicefish_cms_post` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_title` varchar(128) NOT NULL,
+  `post_summary` varchar(1024) DEFAULT NULL COMMENT '摘要，文章列表页需要使用',
+  `post_content` text DEFAULT NULL COMMENT '内容',
+  `original_url` varchar(512) DEFAULT NULL COMMENT '原文链接，如果有这个字段，说明是翻译文章',
+  `thumb_img_url` varchar(256) DEFAULT NULL COMMENT '缩略图链接',
+  `header_img_url` varchar(256) DEFAULT NULL,
+  `post_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `update_time` datetime DEFAULT current_timestamp(),
+  `post_type` varchar(32) NOT NULL DEFAULT '0' COMMENT '文章的类型，0原创1翻译',
+  `read_times` int(11) NOT NULL DEFAULT 1 COMMENT '阅读数',
+  `liked_times` int(11) NOT NULL DEFAULT 0 COMMENT '点赞数',
+  `comment_times` int(11) NOT NULL DEFAULT 0 COMMENT '评论数',
+  `user_id` int(11) NOT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `nick_name` varchar(64) DEFAULT NULL COMMENT '冗余字段，对应 nicefish_rbac_user 表中的 NICK_NAME 字段，用来避免表关联。',
+  `enable_comment` varchar(32) NOT NULL DEFAULT '1' COMMENT '是否可评论\n            0不可\n            1可',
+  `status` int(11) NOT NULL DEFAULT 4 COMMENT '状态：\n            1、已删除\n            2、已归档，已归档的内容禁止评论，文章不可删除\n            3、草稿\n            4、已发布\n            5、精华-->精华文章不可删除\n            6、已推至首页\n            ',
+  PRIMARY KEY (`post_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
-/*==============================================================*/
-/* Table: nicefish_cms_post                                     */
-/*==============================================================*/
-create table nicefish_cms_post
-(
-   post_id              int(11) not null auto_increment,
-   post_title           varchar(128) not null,
-   post_summary         varchar(1024) default null comment '摘要，文章列表页需要使用',
-   post_content         text comment '内容',
-   original_url         varchar(512) default null comment '原文链接，如果有这个字段，说明是翻译文章',
-   thumb_img_url        varchar(256) default null comment '缩略图链接',
-   header_img_url       varchar(256),
-   post_time            datetime not null default current_timestamp,
-   update_time          datetime default current_timestamp,
-   post_type            varchar(32) not null default '0' comment '文章的类型，0原创1翻译',
-   read_times           int(11) not null default 1 comment '阅读数',
-   liked_times          int(11) not null default 0 comment '点赞数',
-   comment_times        int(11) not null default 0 comment '评论数',
-   user_id              int(11) not null,
-   email                varchar(64) default null,
-   nick_name            varchar(64) default null comment '冗余字段，对应 nicefish_rbac_user 表中的 NICK_NAME 字段，用来避免表关联。',
-   enable_comment       varchar(32) not null default '1' comment '是否可评论\n            0不可\n            1可',
-   status               int(11) not null default 4 comment '状态：\n            1、已删除\n            2、已归档，已归档的内容禁止评论，文章不可删除\n            3、草稿\n            4、已发布\n            5、精华-->精华文章不可删除\n            6、已推至首页\n            ',
-   primary key (post_id)
-);
+/*Data for the table `nicefish_cms_post` */
 
-alter table nicefish_cms_post comment '文章表';
+insert  into `nicefish_cms_post`(`post_id`,`post_title`,`post_summary`,`post_content`,`original_url`,`thumb_img_url`,`header_img_url`,`post_time`,`update_time`,`post_type`,`read_times`,`liked_times`,`comment_times`,`user_id`,`email`,`nick_name`,`enable_comment`,`status`) values 
+(1,'1111111111111111111111111',NULL,'<p>11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p>','',NULL,NULL,'2023-07-12 21:09:20','2023-07-12 21:09:20','0',1,0,0,1,'admin@126.com','系统管理员','Y',4),
+(2,'222222222222222222222222222222',NULL,'<p>222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</p>','',NULL,NULL,'2023-07-12 21:09:33','2023-07-12 21:09:33','0',1,0,0,1,'admin@126.com','系统管理员','Y',4);
 
-/*==============================================================*/
-/* Table: nicefish_cms_sys_params                               */
-/*==============================================================*/
-create table nicefish_cms_sys_params
-(
-   param_key            varchar(128) not null,
-   param_value          varchar(2048) not null,
-   param_desc           varchar(512) default null,
-   primary key (param_key)
-);
+/*Table structure for table `nicefish_cms_sys_params` */
 
-alter table nicefish_cms_sys_params comment '系统参数配置表';
+DROP TABLE IF EXISTS `nicefish_cms_sys_params`;
 
-/*==============================================================*/
-/* Table: nicefish_rbac_api                                     */
-/*==============================================================*/
-create table nicefish_rbac_api
-(
-   api_id               int(11) not null auto_increment,
-   api_name             varchar(64) not null,
-   url                  varchar(64) comment 'URL 的匹配模式和 @RequestMapping 中的定义模式完全相同。',
-   permission           varchar(64) not null default '*' comment '权限定义，按照 Apache Shiro 的权限定义规则进行定义。
-            为了避免重复和歧义，权限字符串必须是不同的。',
-   create_time          datetime,
-   update_time          datetime,
-   remark               varchar(500),
-   primary key (api_id)
-);
+CREATE TABLE `nicefish_cms_sys_params` (
+  `param_key` varchar(128) NOT NULL,
+  `param_value` varchar(2048) NOT NULL,
+  `param_desc` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`param_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统参数配置表';
 
-alter table nicefish_rbac_api comment '用来定义并保护服务端 API 接口的权限。';
+/*Data for the table `nicefish_cms_sys_params` */
 
-/*==============================================================*/
-/* Table: nicefish_rbac_component                               */
-/*==============================================================*/
-create table nicefish_rbac_component
-(
-   component_id         int(11) not null auto_increment,
-   p_id                 int(11),
-   component_name       varchar(64) not null,
-   icon                 varchar(64),
-   url                  varchar(64) comment '组件对应的 URL 路径，可以定义成系统外部的链接 URL',
-   display_order        int(11) not null default 1 comment '组件在前端屏幕上的显示顺序，按数值从小到达排列，数值越小越靠屏幕顶部。',
-   permission           varchar(64) not null default '*' comment '权限定义，按照 Apache Shiro 的权限定义规则进行定义。
-            为了避免重复和歧义，权限字符串必须是不同的。',
-   create_time          datetime default current_timestamp,
-   update_time          datetime,
-   visiable             varchar(32) not null default 'Y' comment '菜单是否可见，只能是 N 和 Y 两个取值，字母大写。',
-   remark               varchar(500),
-   primary key (component_id)
-);
+/*Table structure for table `nicefish_rbac_api` */
 
-alter table nicefish_rbac_component comment '用来定义前端页面上的组件权限，
-component 可以是菜单、按钮，甚至可以细致到一个 HTML 元素。
-';
+DROP TABLE IF EXISTS `nicefish_rbac_api`;
 
-/*==============================================================*/
-/* Table: nicefish_rbac_role                                    */
-/*==============================================================*/
-create table nicefish_rbac_role
-(
-   role_id              int(11) not null auto_increment,
-   role_name            varchar(64) not null,
-   status               int(11) not null default 0 comment '-1 特权角色，不能删除 0正常 1停用 2删除',
-   remark               varchar(500) default '',
-   primary key (role_id)
-);
+CREATE TABLE `nicefish_rbac_api` (
+  `api_id` int(11) NOT NULL AUTO_INCREMENT,
+  `api_name` varchar(64) NOT NULL,
+  `url` varchar(64) DEFAULT NULL COMMENT 'URL 的匹配模式和 @RequestMapping 中的定义模式完全相同。',
+  `permission` varchar(64) NOT NULL DEFAULT '*' COMMENT '权限定义，按照 Apache Shiro 的权限定义规则进行定义。\n            为了避免重复和歧义，权限字符串必须是不同的。',
+  `create_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `update_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `remark` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`api_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='用来定义服务端 API 接口的权限。';
 
-/*==============================================================*/
-/* Table: nicefish_rbac_role_api                                */
-/*==============================================================*/
-create table nicefish_rbac_role_api
-(
-   role_id              int(11) not null,
-   api_id               int(11) not null,
-   primary key (role_id, api_id)
-);
+/*Data for the table `nicefish_rbac_api` */
 
-alter table nicefish_rbac_role_api comment '角色与 API  接口之间的关联关系。';
+insert  into `nicefish_rbac_api`(`api_id`,`api_name`,`url`,`permission`,`create_time`,`update_time`,`remark`) values 
+(1,'系统管理',NULL,'sys:manage','2023-07-12 20:57:31','2023-07-12 20:57:31','删除此权限将会导致整个系统无法运行。'),
+(2,'测试','','*','2023-07-12 21:05:10','2023-07-12 21:05:10',''),
+(3,'测试2','','*','2023-07-12 21:05:18','2023-07-12 21:05:18',''),
+(4,'测试3','','*','2023-07-12 21:08:41','2023-07-12 21:08:41','');
 
-/*==============================================================*/
-/* Table: nicefish_rbac_role_component                          */
-/*==============================================================*/
-create table nicefish_rbac_role_component
-(
-   role_id              int(11) not null,
-   component_id         int(11) not null,
-   primary key (role_id, component_id)
-);
+/*Table structure for table `nicefish_rbac_component` */
 
-alter table nicefish_rbac_role_component comment '角色与菜单的关联关系';
+DROP TABLE IF EXISTS `nicefish_rbac_component`;
 
-/*==============================================================*/
-/* Table: nicefish_rbac_session                                 */
-/*==============================================================*/
-create table nicefish_rbac_session
-(
-   session_id           varchar(64) not null default '',
-   app_name             varchar(64) comment '应用名称',
-   user_id              int(11) comment '如果用户没有登录，此列可为空',
-   user_name            varchar(64),
-   creation_time        datetime,
-   expiry_time          datetime,
-   last_access_time     datetime,
-   max_inactive_interval int(11),
-   timeout              bigint comment '过期时间',
-   expired              varchar(32) default 'N' comment 'Session 是否已经过期，N 表示未过期，Y 表示已过期。',
-   host                 varchar(64) default '' comment 'IP地址',
-   os                   varchar(64) default '',
-   browser              varchar(64) default '',
-   user_agent           varchar(255) comment '浏览器发送过来的 UserAgent 字符串',
-   session_data         text comment 'Session 中的所有 Attribute ，格式是 JSON 。',
-   primary key (session_id)
-);
+CREATE TABLE `nicefish_rbac_component` (
+  `component_id` int(11) NOT NULL AUTO_INCREMENT,
+  `p_id` int(11) DEFAULT NULL COMMENT '用来构建 Tree 形菜单，P_ID=-1 表示顶级菜单',
+  `component_name` varchar(64) NOT NULL,
+  `icon` varchar(64) DEFAULT NULL,
+  `url` varchar(64) DEFAULT NULL COMMENT '组件对应的 URL 路径，可以定义成系统外部的链接 URL',
+  `display_order` int(11) NOT NULL DEFAULT 1 COMMENT '组件在前端屏幕上的显示顺序，按数值从小到达排列，数值越小越靠屏幕顶部。',
+  `permission` varchar(64) NOT NULL DEFAULT '*' COMMENT '权限定义，按照 Apache Shiro 的权限定义规则进行定义。\n            为了避免重复和歧义，权限字符串必须是不同的。',
+  `create_time` datetime DEFAULT current_timestamp(),
+  `update_time` datetime DEFAULT NULL,
+  `visiable` int(11) NOT NULL DEFAULT 1 COMMENT '菜单是否可见，1 可见，0 不可见',
+  `remark` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`component_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用来定义前端页面上的组件权限，\ncomponent 可以是菜单、按钮，甚至可以细致到一个 HTML 元素。\n';
 
-alter table nicefish_rbac_session comment '用来持久化 Session ，应用端可以利用此表实现 SSO 。
-此表中的 SESSION_DATA 是 J';
+/*Data for the table `nicefish_rbac_component` */
 
-/*==============================================================*/
-/* Table: nicefish_rbac_user                                    */
-/*==============================================================*/
-create table nicefish_rbac_user
-(
-   user_id              int(11) not null auto_increment,
-   user_name            varchar(64) not null,
-   nick_name            varchar(64) not null,
-   password             varchar(64) default '',
-   email                varchar(64) default '',
-   cellphone            varchar(32) default '',
-   gender               int(11) default 0 comment '0男 1女 2未知',
-   avatar_url           varchar(64) default '' comment '用户头像 URL',
-   salt                 varchar(32) default '',
-   create_time          datetime default current_timestamp,
-   status               int(11) default 1 comment '-1 特权用户不能删除 0正常 1禁用 2删除',
-   remark               varchar(500) default '',
-   primary key (user_id)
-);
+/*Table structure for table `nicefish_rbac_role` */
 
-/*==============================================================*/
-/* Table: nicefish_rbac_user_role                               */
-/*==============================================================*/
-create table nicefish_rbac_user_role
-(
-   user_id              int(11) not null,
-   role_id              int(11) not null,
-   primary key (user_id, role_id)
-);
+DROP TABLE IF EXISTS `nicefish_rbac_role`;
 
-/*==============================================================*/
-/* Table: hibernate_sequence                                    */
-/*==============================================================*/
-create table hibernate_sequence
-(
-   next_val             bigint(20) default null
-);
+CREATE TABLE `nicefish_rbac_role` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(64) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '-1 特权角色，不能删除 0正常 1停用 2删除',
+  `remark` varchar(500) DEFAULT '',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
-alter table hibernate_sequence comment 'MySQL 没有 sequence 机制，用表来模拟。';
+/*Data for the table `nicefish_rbac_role` */
 
+insert  into `nicefish_rbac_role`(`role_id`,`role_name`,`status`,`remark`) values 
+(1,'系统管理员',1,'删除此角色将会导致整个系统不可用。'),
+(2,'测试角色1',1,''),
+(3,'测试角色2',0,''),
+(4,'测试3',1,'');
+
+/*Table structure for table `nicefish_rbac_role_api` */
+
+DROP TABLE IF EXISTS `nicefish_rbac_role_api`;
+
+CREATE TABLE `nicefish_rbac_role_api` (
+  `role_id` int(11) NOT NULL,
+  `api_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`,`api_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色与 API  接口之间的关联关系。';
+
+/*Data for the table `nicefish_rbac_role_api` */
+
+insert  into `nicefish_rbac_role_api`(`role_id`,`api_id`) values 
+(1,1);
+
+/*Table structure for table `nicefish_rbac_role_component` */
+
+DROP TABLE IF EXISTS `nicefish_rbac_role_component`;
+
+CREATE TABLE `nicefish_rbac_role_component` (
+  `role_id` int(11) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`,`component_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色与菜单的关联关系';
+
+/*Data for the table `nicefish_rbac_role_component` */
+
+/*Table structure for table `nicefish_rbac_session` */
+
+DROP TABLE IF EXISTS `nicefish_rbac_session`;
+
+CREATE TABLE `nicefish_rbac_session` (
+  `session_id` varchar(64) NOT NULL DEFAULT '',
+  `app_name` varchar(64) DEFAULT NULL COMMENT '应用名称',
+  `user_id` int(11) DEFAULT NULL COMMENT '如果用户没有登录，此列可为空',
+  `user_name` varchar(64) DEFAULT NULL,
+  `creation_time` datetime DEFAULT NULL,
+  `expiry_time` datetime DEFAULT NULL,
+  `last_access_time` datetime DEFAULT NULL,
+  `max_inactive_interval` int(11) DEFAULT NULL,
+  `timeout` bigint(20) DEFAULT NULL COMMENT '过期时间',
+  `expired` varchar(32) DEFAULT 'N' COMMENT 'Session 是否已经过期，N 表示未过期，Y 表示已过期。',
+  `host` varchar(64) DEFAULT '' COMMENT 'IP地址',
+  `os` varchar(64) DEFAULT '',
+  `browser` varchar(64) DEFAULT '',
+  `user_agent` varchar(255) DEFAULT NULL COMMENT '浏览器发送过来的 UserAgent 字符串',
+  `session_data` text DEFAULT NULL COMMENT 'Session 中的所有 Attribute ，格式是 JSON 。',
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用来持久化 Session ，应用端可以利用此表实现 SSO 。\n此表中的 SESSION_DATA 是 J';
+
+/*Data for the table `nicefish_rbac_session` */
+
+insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_name`,`creation_time`,`expiry_time`,`last_access_time`,`max_inactive_interval`,`timeout`,`expired`,`host`,`os`,`browser`,`user_agent`,`session_data`) values 
+('4341d6a3-83b1-4983-af10-56468dbf6cc4',NULL,NULL,NULL,'2023-07-12 20:55:19',NULL,'2023-07-12 20:55:19',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('459670a0-e3db-4b74-aa7b-ae022848af3f',NULL,NULL,NULL,'2023-07-12 20:55:19',NULL,'2023-07-12 21:10:05',NULL,300000,'N','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL);
+
+/*Table structure for table `nicefish_rbac_user` */
+
+DROP TABLE IF EXISTS `nicefish_rbac_user`;
+
+CREATE TABLE `nicefish_rbac_user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(64) NOT NULL,
+  `nick_name` varchar(64) NOT NULL,
+  `password` varchar(64) DEFAULT '',
+  `email` varchar(64) DEFAULT '',
+  `cellphone` varchar(32) DEFAULT '',
+  `gender` int(11) DEFAULT 0 COMMENT '0男 1女 2未知',
+  `avatar_url` varchar(64) DEFAULT '' COMMENT '用户头像 URL',
+  `salt` varchar(32) DEFAULT '',
+  `create_time` datetime DEFAULT current_timestamp(),
+  `status` int(11) DEFAULT 1 COMMENT '-1 特权用户不能删除 0正常 1禁用 2删除',
+  `remark` varchar(500) DEFAULT '',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `nicefish_rbac_user` */
+
+insert  into `nicefish_rbac_user`(`user_id`,`user_name`,`nick_name`,`password`,`email`,`cellphone`,`gender`,`avatar_url`,`salt`,`create_time`,`status`,`remark`) values 
+(1,'admin@126.com','系统管理员','93c1ec603e93996a9cb18dc4b8f6c468','admin@126.com','',0,'','570a31','2023-07-12 20:55:53',1,'');
+
+/*Table structure for table `nicefish_rbac_user_role` */
+
+DROP TABLE IF EXISTS `nicefish_rbac_user_role`;
+
+CREATE TABLE `nicefish_rbac_user_role` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `nicefish_rbac_user_role` */
+
+insert  into `nicefish_rbac_user_role`(`user_id`,`role_id`) values 
+(1,1);
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

@@ -9,7 +9,6 @@ import com.nicefish.rbac.jpa.entity.ComponentEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.jpa.repository.IUserRepository;
-import com.nicefish.rbac.service.IRoleService;
 import com.nicefish.rbac.service.IUserService;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
@@ -42,9 +41,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
-    @Autowired
-    private IRoleService roleService2;
-
     @Override
     public AjaxResult resetPwd(Integer userId){
         //TODO:生成随机密码
@@ -68,7 +64,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public AjaxResult editUser(UserEntity userEntity){
         if(!this.userRepository.existsById(userEntity.getUserId())){
-           return new AjaxResult(false,"不存在指定的用户ID");
+            return new AjaxResult(false,"不存在指定的用户ID");
         }
         userEntity=this.userRepository.save(userEntity);
         return new AjaxResult(true,userEntity);
@@ -103,12 +99,7 @@ public class UserServiceImpl implements IUserService {
 
         //保存用户数据
         userEntity=this.userRepository.save(userEntity);
-
-        //保存角色数据，默认普通用户
-        this.roleService2.addAuthUsers(2,new Integer[]{userEntity.getUserId()});
-
         ajaxResult =new AjaxResult(true,userEntity);
-        logger.info(ajaxResult.toString());
         return ajaxResult;
     }
     
@@ -305,6 +296,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Set<String> getPermStringsByUserId(Integer userId) {
         UserEntity userEntity=this.userRepository.findDistinctByUserId(userId);
+        //FIXME:已经被禁用的角色需要排除掉
         List<RoleEntity> roleEntities=userEntity.getRoleEntities();
 
         Set<String> permStrs=new HashSet<>();

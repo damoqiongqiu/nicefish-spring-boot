@@ -44,8 +44,18 @@ public class RoleServiceImpl implements IRoleService {
     @Transactional
     public AjaxResult createRole(RoleEntity roleEntity) {
         //TODO:数据校验
-        this.roleRepository.save(roleEntity);
+        roleEntity=this.roleRepository.save(roleEntity);
         return new AjaxResult(true,roleEntity);
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult editRole(RoleEntity roleEntity) {
+        //TODO:数据校验
+        RoleEntity oldEntity=this.roleRepository.findDistinctByRoleId(roleEntity.getRoleId());
+        BeanUtils.copyProperties(roleEntity,oldEntity);
+        this.roleRepository.save(oldEntity);
+        return new AjaxResult(true,"保存成功");
     }
 
     @Override
@@ -66,31 +76,6 @@ public class RoleServiceImpl implements IRoleService {
         }
         this.roleRepository.deleteAllByRoleIdIn(longIds);
         return new AjaxResult(true,"删除成功");
-    }
-
-    @Override
-    @Transactional
-    public AjaxResult editRole(RoleEntity roleEntity) {
-        RoleEntity oldEntity=this.roleRepository.findDistinctByRoleId(roleEntity.getRoleId());
-        BeanUtils.copyProperties(roleEntity,oldEntity);
-        this.roleRepository.save(oldEntity);
-
-        // this.roleComponentRepository.deleteAllByRoleId(oldEntity.getRoleId());
-        // this.roleApiRepository.deleteAllByRoleId(oldEntity.getRoleId());
-
-        // List<PermissionEntity> list=oldEntity.getPermissionEntities();
-        // if(!CollectionUtils.isEmpty(list)){
-        //     List<RolePermissionEntity> rolePermissionEntities=new ArrayList<RolePermissionEntity>();
-        //     for (PermissionEntity permissionEntity : list) {
-        //         RolePermissionEntity rolePermissionEntity=new RolePermissionEntity();
-        //         rolePermissionEntity.setRoleId(oldEntity.getRoleId());
-        //         rolePermissionEntity.setPermissionId(permissionEntity.getPermissionId());
-        //         rolePermissionEntities.add(rolePermissionEntity);
-        //     }
-        //     this.rolePermissionRepository.saveAll(rolePermissionEntities);
-        // }
-
-        return new AjaxResult(true,"保存成功");
     }
 
     @Override
