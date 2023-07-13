@@ -1,9 +1,11 @@
 package com.nicefish.rbac.controller;
 
 import com.nicefish.core.utils.AjaxResult;
-import com.nicefish.rbac.jpa.entity.ApiEntity;
+import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import com.nicefish.rbac.service.IApiPermissionService;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,48 +13,49 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * API 权限管理
+ * 服务端 API 权限管理
  * @author 大漠穷秋
  */
-@Api("Api Permission Management")
+@Api("Api Permission Controller")
 @RestController
 @RequestMapping("/nicefish/auth/api-permission")
 public class ApiPermissionController {
+    private static final Logger logger = LoggerFactory.getLogger(ApiPermissionController.class);
 
     @Autowired
     protected IApiPermissionService apiPermService;
 
     @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
     @ResponseBody
-    public Page<ApiEntity> getPermissionList(@RequestBody ApiEntity apiEntity, @PathVariable(value="page",required = true) int page) {
+    public Page<ApiPermissionEntity> getPermissionList(@RequestBody ApiPermissionEntity apiPermissionEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10);
-        Page<ApiEntity> permList = apiPermService.getPermListPaging(apiEntity,pageable);
+        Page<ApiPermissionEntity> permList = apiPermService.getPermListPaging(apiPermissionEntity,pageable);
         return permList;
     }
 
-    @RequestMapping(value = "/detail/{apiId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/detail/{apiPermissionId}",method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult getApiPermissionDetail(@PathVariable(value = "apiId",required = true) Integer apiId){
-        return AjaxResult.success(this.apiPermService.getApiPermissionById(apiId));
+    public AjaxResult getApiPermissionDetail(@PathVariable(value = "apiPermissionId",required = true) Integer apiPermissionId){
+        return AjaxResult.success(this.apiPermService.getApiPermissionById(apiPermissionId));
     }
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult createApiPermission(@RequestBody ApiEntity apiEntity){
-        return this.apiPermService.createApiPermission(apiEntity);
+    public AjaxResult createApiPermission(@RequestBody ApiPermissionEntity apiPermissionEntity){
+        return this.apiPermService.createApiPermission(apiPermissionEntity);
     }
 
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult editPermission(@RequestBody ApiEntity apiEntity){
-        return this.apiPermService.editPermission(apiEntity);
+    public AjaxResult editPermission(@RequestBody ApiPermissionEntity apiPermissionEntity){
+        return this.apiPermService.editPermission(apiPermissionEntity);
     }
 
-    @RequestMapping(value = "/delete/{apiId}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{apiPermissionId}",method = RequestMethod.DELETE)
     @ResponseBody
-    public AjaxResult deleteByApiId(@PathVariable(value="apiId",required = true)Integer apiId){
+    public AjaxResult deleteByApiId(@PathVariable(value="apiPermissionId",required = true)Integer apiPermissionId){
         //TODO:数据校验，数据关联性测试
-        this.apiPermService.deleteByApiId(apiId);
+        this.apiPermService.deleteByApiId(apiPermissionId);
         return AjaxResult.success();
     }
 }

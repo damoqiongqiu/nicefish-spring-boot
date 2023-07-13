@@ -1,7 +1,7 @@
 package com.nicefish.rbac.service;
 
 import com.nicefish.core.utils.AjaxResult;
-import com.nicefish.rbac.jpa.entity.ApiEntity;
+import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,9 +10,9 @@ import org.springframework.data.domain.Pageable;
  * @author 大漠穷秋
  */
 public interface IApiPermissionService {
-    Page<ApiEntity> getPermListPaging(ApiEntity permEntity, Pageable pageable);
-    AjaxResult createApiPermission(ApiEntity permEntity);
-    AjaxResult editPermission(ApiEntity permEntity);
-    ApiEntity getApiPermissionById(Integer permissionId);
-    int deleteByApiId(Integer apiId);
+    Page<ApiPermissionEntity> getPermListPaging(ApiPermissionEntity permEntity, Pageable pageable);
+    AjaxResult createApiPermission(ApiPermissionEntity permEntity);
+    AjaxResult editPermission(ApiPermissionEntity permEntity);
+    ApiPermissionEntity getApiPermissionById(Integer permissionId);
+    int deleteByApiId(Integer apiPermissionId);
 }

@@ -32,10 +32,10 @@ public class RoleEntity implements Serializable {
     private List<UserEntity> userEntities;
 
     @ManyToMany(mappedBy = "roleEntities",fetch = FetchType.LAZY)
-    private List<ApiEntity> apiEntities;
+    private List<ApiPermissionEntity> apiEntities;
 
     @ManyToMany(mappedBy = "roleEntities",fetch = FetchType.LAZY)
-    private List<ComponentEntity> componentEntities;
+    private List<ComponentPermissionEntity> componentEntities;
 
     //每个角色都可能被大量用户关联，因此 JSON 序列化时忽略 userEntities
     //TODO:用户数量很大时查询会有问题？？？需要用测试数据 check
@@ -49,19 +49,19 @@ public class RoleEntity implements Serializable {
         this.userEntities = userEntities;
     }
 
-    public List<ApiEntity> getApiEntities() {
+    public List<ApiPermissionEntity> getApiEntities() {
         return apiEntities;
     }
 
-    public void setApiEntities(List<ApiEntity> apiEntities) {
+    public void setApiEntities(List<ApiPermissionEntity> apiEntities) {
         this.apiEntities = apiEntities;
     }
 
-    public List<ComponentEntity> getComponentEntities() {
+    public List<ComponentPermissionEntity> getComponentEntities() {
         return componentEntities;
     }
 
-    public void setComponentEntities(List<ComponentEntity> componentEntities) {
+    public void setComponentEntities(List<ComponentPermissionEntity> componentEntities) {
         this.componentEntities = componentEntities;
     }
 

@@ -164,17 +164,17 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity) {
+    public AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentPermissionEntity componentPermissionEntity) {
         RoleComponentEntity roleComponentEntity=new RoleComponentEntity();
         roleComponentEntity.setRoleId(roleEntity.getRoleId());
-        roleComponentEntity.setComponentId(componentEntity.getComponentId());
+        roleComponentEntity.setComponentId(componentPermissionEntity.getComponentId());
         this.roleComponentRepository.save(roleComponentEntity);
         return new AjaxResult(true,"保存成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult addComponentPermissions(RoleEntity roleEntity, List<ComponentEntity> componentEntities) {
+    public AjaxResult addComponentPermissions(RoleEntity roleEntity, List<ComponentPermissionEntity> componentEntities) {
         List<RoleComponentEntity> list=new ArrayList<>();
         list.forEach(componentEntity -> {
             RoleComponentEntity roleComponentEntity=new RoleComponentEntity();
@@ -188,22 +188,22 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public AjaxResult addApiPermission(RoleEntity roleEntity, ApiEntity apiEntity) {
+    public AjaxResult addApiPermission(RoleEntity roleEntity, ApiPermissionEntity apiPermissionEntity) {
         RoleApiEntity list=new RoleApiEntity();
         list.setRoleId(roleEntity.getRoleId());
-        list.setApiId(apiEntity.getApiId());
+        list.setApiPermissionId(apiPermissionEntity.getApiId());
         this.roleApiRepository.save(list);
         return new AjaxResult(true,"保存成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiEntity> apiEntities) {
+    public AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiPermissionEntity> apiEntities) {
         List<RoleApiEntity> list=new ArrayList<>();
         list.forEach(apiEntity -> {
             RoleApiEntity roleApiEntity=new RoleApiEntity();
             roleApiEntity.setRoleId(roleEntity.getRoleId());
-            roleApiEntity.setApiId(apiEntity.getApiId());
+            roleApiEntity.setApiPermissionId(apiEntity.getApiPermissionId());
             list.add(roleApiEntity);
         });
         this.roleApiRepository.saveAll(list);
@@ -212,29 +212,29 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity) {
-        this.roleComponentRepository.deleteByRoleIdAndComponentId(roleEntity.getRoleId(),componentEntity.getComponentId());
+    public AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentPermissionEntity componentPermissionEntity) {
+        this.roleComponentRepository.deleteByRoleIdAndCompPermId(roleEntity.getRoleId(), componentPermissionEntity.getComponentId());
         return new AjaxResult(true,"删除成功");
     }
 
     @Override
     @Transactional
     public AjaxResult deleteComponentPermissions(Integer roleId, Integer[] componentIds) {
-        this.roleComponentRepository.deleteByRoleIdAndComponentIdIsIn(roleId,componentIds);
+        this.roleComponentRepository.deleteByRoleIdAndCompPermIdIsIn(roleId,componentIds);
         return new AjaxResult(true,"删除成功");
     }
 
     @Override
     @Transactional
-    public AjaxResult deleteApiPermission(RoleEntity roleEntity, ApiEntity apiEntity) {
-        this.roleApiRepository.deleteByRoleIdAndApiId(roleEntity.getRoleId(),apiEntity.getApiId());
+    public AjaxResult deleteApiPermission(RoleEntity roleEntity, ApiPermissionEntity apiPermissionEntity) {
+        this.roleApiRepository.deleteByRoleIdAndApiPermissionId(roleEntity.getRoleId(), apiPermissionEntity.getApiId());
         return new AjaxResult(true,"删除成功");
     }
 
     @Override
     @Transactional
     public AjaxResult deleteApiPermissions(Integer roleId, Integer[] componentIds) {
-        this.roleApiRepository.deleteByRoleIdAndApiIdIsIn(roleId,componentIds);
+        this.roleApiRepository.deleteByRoleIdAndApiPermissionIdIsIn(roleId,componentIds);
         return new AjaxResult(true,"删除成功");
     }
 

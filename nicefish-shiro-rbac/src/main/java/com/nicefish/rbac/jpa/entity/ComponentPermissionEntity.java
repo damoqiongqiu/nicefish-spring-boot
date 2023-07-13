@@ -16,20 +16,20 @@ import java.util.List;
  * - 前端权限是指在前端页面上的权限控制，比如菜单、按钮、甚至可以细致到一个 HTML 元素。
  * - 后端权限是指在后端 API 接口上的权限控制，比如一个 API 接口是否需要登录才能访问，是否需要某个角色才能访问，是否需要某个权限才能访问等。
  * 
- * ComponentEntity 用来定义前端页面的权限，对应数据库中的 nicefish_rbac_component 表。
+ * ComponentPermissionEntity 用来定义前端页面的权限，对应数据库中的 nicefish_rbac_component 表。
  * 
- * @see ApiEntity
+ * @see ApiPermissionEntity
  * @author: 大漠穷秋
  */
 @Entity
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "nicefish_rbac_component")
-public class ComponentEntity implements Serializable {
+public class ComponentPermissionEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="component_id")
-    private Integer componentId;
+    private Integer compPermId;
     
     @Column(name="p_id")
     private Integer pId;
@@ -84,11 +84,11 @@ public class ComponentEntity implements Serializable {
     }
 
     public Integer getComponentId() {
-        return componentId;
+        return compPermId;
     }
 
-    public void setComponentId(Integer componentId) {
-        this.componentId = componentId;
+    public void setComponentId(Integer compPermId) {
+        this.compPermId = compPermId;
     }
 
     public Integer getpId() {

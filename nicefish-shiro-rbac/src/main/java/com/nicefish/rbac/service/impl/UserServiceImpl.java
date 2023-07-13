@@ -4,8 +4,8 @@ import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.core.utils.ServletUtil;
 import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import com.nicefish.rbac.exception.*;
-import com.nicefish.rbac.jpa.entity.ApiEntity;
-import com.nicefish.rbac.jpa.entity.ComponentEntity;
+import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
+import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.jpa.repository.IUserRepository;
@@ -301,13 +301,13 @@ public class UserServiceImpl implements IUserService {
 
         Set<String> permStrs=new HashSet<>();
         for (RoleEntity roleEntity:roleEntities) {
-            List<ApiEntity> apiEntities = roleEntity.getApiEntities();
-            List<ComponentEntity> componentEntities=roleEntity.getComponentEntities();
-            for(ApiEntity apiEntity:apiEntities){
-                permStrs.add(apiEntity.getPermission());
+            List<ApiPermissionEntity> apiEntities = roleEntity.getApiEntities();
+            List<ComponentPermissionEntity> componentEntities=roleEntity.getComponentEntities();
+            for(ApiPermissionEntity apiPermissionEntity :apiEntities){
+                permStrs.add(apiPermissionEntity.getPermission());
             }
-            for(ComponentEntity componentEntity:componentEntities){
-                permStrs.add(componentEntity.getPermission());
+            for(ComponentPermissionEntity componentPermissionEntity :componentEntities){
+                permStrs.add(componentPermissionEntity.getPermission());
             }
         }
 

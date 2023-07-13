@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface IRoleApiRepository extends PagingAndSortingRepository<RoleApiEntity, Integer>, JpaSpecificationExecutor {
     @Transactional
-    int deleteByRoleIdAndApiId(Integer roleId,Integer apiId);
+    int deleteByRoleIdAndApiPermissionId(Integer roleId,Integer apiPermissionId);
 
     @Transactional
-    int deleteByRoleIdAndApiIdIsIn(Integer roleId,Integer[] apiIds);
+    int deleteByRoleIdAndApiPermissionIdIsIn(Integer roleId,Integer[] apiIds);
 
     int deleteAllByRoleId(Integer roleId);
 
-    int deleteByApiId(Integer apiId);
+    int deleteByApiPermissionId(Integer apiPermissionId);
 
     Iterable<RoleApiEntity> findAllByRoleId(Integer roleId);//TODO:分页？
 
-    Iterable<RoleApiEntity> findAllByApiId(Integer apiId);//TODO:分页？
+    Iterable<RoleApiEntity> findAllByApiPermissionId(Integer apiPermissionId);//TODO:分页？
 }

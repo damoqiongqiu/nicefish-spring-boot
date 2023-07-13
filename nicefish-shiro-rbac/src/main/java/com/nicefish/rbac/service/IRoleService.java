@@ -1,7 +1,7 @@
 package com.nicefish.rbac.service;
 
-import com.nicefish.rbac.jpa.entity.ApiEntity;
-import com.nicefish.rbac.jpa.entity.ComponentEntity;
+import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
+import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.core.utils.AjaxResult;
@@ -43,21 +43,21 @@ public interface IRoleService {
     //根据 roleId 获取此角色的所有权限字符串
     Iterable<String> getPermStrsByRoleId(Integer roleId);
 
-    AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity);
+    AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentPermissionEntity componentPermissionEntity);
 
-    AjaxResult addComponentPermissions(RoleEntity roleEntity, List<ComponentEntity> componentEntities);
+    AjaxResult addComponentPermissions(RoleEntity roleEntity, List<ComponentPermissionEntity> componentEntities);
     
-    AjaxResult addApiPermission(RoleEntity roleEntity, ApiEntity apiEntity);
+    AjaxResult addApiPermission(RoleEntity roleEntity, ApiPermissionEntity apiPermissionEntity);
 
-    AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiEntity> apiEntities);
+    AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiPermissionEntity> apiEntities);
     
     AjaxResult deleteAllPermissionsByRoleId(Integer roleId);
     
-    AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentEntity componentEntity);
+    AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentPermissionEntity componentPermissionEntity);
 
     AjaxResult deleteComponentPermissions(Integer roleId, Integer[] componentIds);
 
-    AjaxResult deleteApiPermission(RoleEntity roleEntity, ApiEntity apiEntity);
+    AjaxResult deleteApiPermission(RoleEntity roleEntity, ApiPermissionEntity apiPermissionEntity);
 
     AjaxResult deleteApiPermissions(Integer roleId, Integer[] componentIds);
 }

@@ -1,15 +1,17 @@
 package com.nicefish.rbac.controller;
 
 import com.nicefish.core.utils.AjaxResult;
-import com.nicefish.rbac.jpa.entity.ApiEntity;
-import com.nicefish.rbac.jpa.entity.ComponentEntity;
+import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
+import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IApiPermissionService;
-import com.nicefish.rbac.service.IComponentService;
+import com.nicefish.rbac.service.IComponentPermissionService;
 import com.nicefish.rbac.service.IRoleService;
 import com.nicefish.rbac.service.IUserService;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,11 +24,12 @@ import java.util.List;
  * 角色管理
  * @author 大漠穷秋
  */
-@Api("Role Management")
+@Api("Role Controller")
 @RestController
 @RequestMapping("/nicefish/auth/role")
 @RequiresPermissions("sys:manage:role")
 public class RoleController {
+    private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
 
     @Autowired
     protected IRoleService roleService;
@@ -38,7 +41,7 @@ public class RoleController {
     protected IApiPermissionService apiPermissionService;
 
     @Autowired
-    protected IComponentService componentService;
+    protected IComponentPermissionService componentService;
 
     @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
     @ResponseBody
@@ -48,19 +51,19 @@ public class RoleController {
         return roleList;
     }
 
-    @RequestMapping(value = "/list-by-api-id/{apiId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/list-by-api-id/{apiPermissionId}",method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult findRoleListByApiId(@PathVariable(value="apiId",required = true) int apiId){
-        ApiEntity apiEntity=this.apiPermissionService.getApiPermissionById(apiId);
-        List<RoleEntity> roleEntities=apiEntity.getRoleEntities();
+    public AjaxResult findRoleListByApiId(@PathVariable(value="apiPermissionId",required = true) int apiPermissionId){
+        ApiPermissionEntity apiPermissionEntity =this.apiPermissionService.getApiPermissionById(apiPermissionId);
+        List<RoleEntity> roleEntities= apiPermissionEntity.getRoleEntities();
         return AjaxResult.success(roleEntities);
     }
 
-    @RequestMapping(value = "/list-by-component-id/{componentId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/list-by-component-id/{compPermId}",method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult findRoleListByComponentId(@PathVariable(value="componentId",required = true) int componentId){
-        ComponentEntity componentEntity=this.componentService.getComponentDetail(componentId);
-        List<RoleEntity> roleEntities=componentEntity.getRoleEntities();
+    public AjaxResult findRoleListByComponentId(@PathVariable(value="compPermId",required = true) int compPermId){
+        ComponentPermissionEntity componentPermissionEntity =this.componentService.getComponentDetail(compPermId);
+        List<RoleEntity> roleEntities= componentPermissionEntity.getRoleEntities();
         return AjaxResult.success(roleEntities);
     }
 

@@ -4,6 +4,8 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +24,12 @@ import java.io.IOException;
  * 验证码
  * @author 大漠穷秋
  */
-@Api("Captcha")
+@Api("Captcha Controller")
 @Controller
 @RequestMapping("/nicefish/auth/captcha")
 public class CaptchaController {
+    private static final Logger logger = LoggerFactory.getLogger(CaptchaController.class);
+
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
 

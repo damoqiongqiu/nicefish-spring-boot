@@ -18,12 +18,11 @@ import org.springframework.web.bind.annotation.*;
  * TODO:完成整合和重构，包括权限 shiro 控制的部分
  * @author 大漠穷秋
  */
-@Api("User Management")
+@Api("User Controller")
 @RestController
 @RequestMapping("/nicefish/auth/user")
 public class UserController {
-    
-    Logger logger= LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     protected IUserService userService;

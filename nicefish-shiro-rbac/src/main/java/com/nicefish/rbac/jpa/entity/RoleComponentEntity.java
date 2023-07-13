@@ -21,7 +21,7 @@ public class RoleComponentEntity implements Serializable {
     private Integer roleId;
 
     @Column(name="component_id")
-    private Integer componentId;
+    private Integer compPermId;
 
     public Integer getRoleId() {
         return roleId;
@@ -32,10 +32,10 @@ public class RoleComponentEntity implements Serializable {
     }
 
     public Integer getComponentId() {
-        return componentId;
+        return compPermId;
     }
 
-    public void setComponentId(Integer componentId) {
-        this.componentId = componentId;
+    public void setComponentId(Integer compPermId) {
+        this.compPermId = compPermId;
     }
 }

@@ -21,7 +21,7 @@ public class RoleApiEntity implements Serializable {
     private Integer roleId;
 
     @Column(name="api_id")
-    private Integer apiId;
+    private Integer apiPermissionId;
 
     public Integer getRoleId() {
         return roleId;
@@ -31,11 +31,11 @@ public class RoleApiEntity implements Serializable {
         this.roleId = roleId;
     }
 
-    public Integer getApiId() {
-        return apiId;
+    public Integer getApiPermissionId() {
+        return apiPermissionId;
     }
 
-    public void setApiId(Integer apiId) {
-        this.apiId = apiId;
+    public void setApiPermissionId(Integer apiPermissionId) {
+        this.apiPermissionId = apiPermissionId;
     }
 }

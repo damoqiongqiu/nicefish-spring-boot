@@ -2,7 +2,7 @@ package com.nicefish.rbac.service.impl;
 
 
 import com.nicefish.core.utils.AjaxResult;
-import com.nicefish.rbac.jpa.entity.ApiEntity;
+import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import com.nicefish.rbac.jpa.repository.IApiPermissionRepository;
 import com.nicefish.rbac.service.IApiPermissionService;
 import org.springframework.beans.BeanUtils;
@@ -30,10 +30,10 @@ public class ApiPermissionServiceImpl implements IApiPermissionService {
     private IApiPermissionRepository apiPermRepository;
 
     @Override
-    public Page<ApiEntity> getPermListPaging(ApiEntity permEntity, Pageable pageable) {
-        return this.apiPermRepository.findAll(new Specification<ApiEntity>() {
+    public Page<ApiPermissionEntity> getPermListPaging(ApiPermissionEntity permEntity, Pageable pageable) {
+        return this.apiPermRepository.findAll(new Specification<ApiPermissionEntity>() {
             @Override
-            public Predicate toPredicate(Root<ApiEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<ApiPermissionEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates=new ArrayList<>();
                 if(!StringUtils.isEmpty(permEntity.getApiName())){
                     predicates.add(criteriaBuilder.like(root.get("apiName"),"%"+permEntity.getApiName()+"%"));
@@ -44,28 +44,28 @@ public class ApiPermissionServiceImpl implements IApiPermissionService {
     }
 
     @Override
-    public AjaxResult createApiPermission(ApiEntity permEntity) {
+    public AjaxResult createApiPermission(ApiPermissionEntity permEntity) {
         permEntity=this.apiPermRepository.save(permEntity);
         return new AjaxResult(true,permEntity);
     }
 
     @Override
-    public AjaxResult editPermission(ApiEntity permEntity) {
+    public AjaxResult editPermission(ApiPermissionEntity permEntity) {
         //TODO:数据校验
-        ApiEntity permEntityDB=this.apiPermRepository.findDistinctByApiId(permEntity.getApiId());
+        ApiPermissionEntity permEntityDB=this.apiPermRepository.findDistinctByApiPermissionId(permEntity.getApiId());
         BeanUtils.copyProperties(permEntity,permEntityDB);
         this.apiPermRepository.save(permEntity);
         return new AjaxResult(true,"保存成功");
     }
 
     @Override
-    public ApiEntity getApiPermissionById(Integer apiId) {
-        return this.apiPermRepository.findDistinctByApiId(apiId);
+    public ApiPermissionEntity getApiPermissionById(Integer apiPermissionId) {
+        return this.apiPermRepository.findDistinctByApiPermissionId(apiPermissionId);
     }
 
     @Override
     @Transactional
-    public int deleteByApiId(Integer apiId) {
-        return this.apiPermRepository.deleteByApiId(apiId);
+    public int deleteByApiId(Integer apiPermissionId) {
+        return this.apiPermRepository.deleteByApiPermissionId(apiPermissionId);
     }
 }
