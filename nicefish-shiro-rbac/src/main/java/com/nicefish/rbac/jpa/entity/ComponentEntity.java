@@ -1,12 +1,15 @@
 package com.nicefish.rbac.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 在 NiceFish 中，权限控制整体上分2个层次：前端权限和后端权限。
@@ -61,6 +64,24 @@ public class ComponentEntity implements Serializable {
 
     @Column(name="remark")
     private String remark;
+
+    @JoinTable(
+            name="nicefish_rbac_role_component",
+            joinColumns={@JoinColumn(name="component_id",referencedColumnName="component_id")},
+            inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")}
+    )
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<RoleEntity> roleEntities;
+
+    @JsonIgnore
+    public List<RoleEntity> getRoleEntities() {
+        return roleEntities;
+    }
+
+    @JsonProperty(value = "roleEntities")
+    public void setRoleEntities(List<RoleEntity> roleEntities) {
+        this.roleEntities = roleEntities;
+    }
 
     public Integer getComponentId() {
         return componentId;

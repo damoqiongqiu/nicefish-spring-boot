@@ -1,7 +1,5 @@
 package com.nicefish.rbac.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -31,20 +29,10 @@ public class RoleEntity implements Serializable {
     @ManyToMany(mappedBy = "roleEntities",fetch = FetchType.LAZY)
     private List<UserEntity> userEntities;
 
-    @JoinTable(
-        name="nicefish_rbac_role_api",
-        joinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")},
-        inverseJoinColumns={@JoinColumn(name="api_id",referencedColumnName="api_id")}
-    )
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roleEntities",fetch = FetchType.LAZY)
     private List<ApiEntity> apiEntities;
 
-    @JoinTable(
-        name="nicefish_rbac_role_component",
-        joinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")},
-        inverseJoinColumns={@JoinColumn(name="component_id",referencedColumnName="component_id")}
-    )
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roleEntities",fetch = FetchType.LAZY)
     private List<ComponentEntity> componentEntities;
 
     public List<UserEntity> getUserEntities() {
@@ -53,6 +41,22 @@ public class RoleEntity implements Serializable {
 
     public void setUserEntities(List<UserEntity> userEntities) {
         this.userEntities = userEntities;
+    }
+
+    public List<ApiEntity> getApiEntities() {
+        return apiEntities;
+    }
+
+    public void setApiEntities(List<ApiEntity> apiEntities) {
+        this.apiEntities = apiEntities;
+    }
+
+    public List<ComponentEntity> getComponentEntities() {
+        return componentEntities;
+    }
+
+    public void setComponentEntities(List<ComponentEntity> componentEntities) {
+        this.componentEntities = componentEntities;
     }
 
     public Integer getRoleId() {
@@ -87,23 +91,4 @@ public class RoleEntity implements Serializable {
         this.remark = remark;
     }
 
-    @JsonIgnore
-    public List<ApiEntity> getApiEntities() {
-        return apiEntities;
-    }
-
-    @JsonProperty(value = "apiEntities")
-    public void setApiEntities(List<ApiEntity> apiEntities) {
-        this.apiEntities = apiEntities;
-    }
-
-    @JsonIgnore
-    public List<ComponentEntity> getComponentEntities() {
-        return componentEntities;
-    }
-
-    @JsonProperty(value = "componentEntities")
-    public void setComponentEntities(List<ComponentEntity> componentEntities) {
-        this.componentEntities = componentEntities;
-    }
 }

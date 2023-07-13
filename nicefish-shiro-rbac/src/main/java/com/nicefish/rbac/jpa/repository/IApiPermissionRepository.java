@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author 大漠穷秋
  */
 public interface IApiPermissionRepository extends PagingAndSortingRepository<ApiEntity, Integer>, JpaSpecificationExecutor {
+    ApiEntity findDistinctByApiId(Integer apiId);
+    
     @Transactional
     int deleteByApiId(Integer apiId);
-
-    ApiEntity findDistinctByApiId(Integer apiId);
 }
