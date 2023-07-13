@@ -1,7 +1,6 @@
 package com.nicefish.rbac.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -64,12 +63,11 @@ public class UserEntity implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<RoleEntity> roleEntities;
 
-    @JsonIgnore
     public List<RoleEntity> getRoleEntities() {
         return roleEntities;
     }
 
-    @JsonProperty(value = "roleEntities")
+    @JsonProperty
     public void setRoleEntities(List<RoleEntity> roleEntities) {
         this.roleEntities = roleEntities;
     }

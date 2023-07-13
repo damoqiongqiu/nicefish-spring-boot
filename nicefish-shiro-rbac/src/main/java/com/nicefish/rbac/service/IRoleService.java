@@ -38,7 +38,6 @@ public interface IRoleService {
 
     AjaxResult addAuthUsers(Integer roleId, List<UserEntity> userEntities);
 
-
     boolean isRoleNameUnique(String roleName);
 
     //根据 roleId 获取此角色的所有权限字符串

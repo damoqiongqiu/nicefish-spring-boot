@@ -59,9 +59,8 @@ public class ApiPermissionServiceImpl implements IApiPermissionService {
     }
 
     @Override
-    public AjaxResult getApiPermissionById(Integer apiId) {
-        ApiEntity apiEntity=this.apiPermRepository.findDistinctByApiId(apiId);
-        return AjaxResult.success(apiEntity);
+    public ApiEntity getApiPermissionById(Integer apiId) {
+        return this.apiPermRepository.findDistinctByApiId(apiId);
     }
 
     @Override

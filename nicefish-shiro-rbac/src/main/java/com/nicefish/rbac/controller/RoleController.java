@@ -1,7 +1,11 @@
 package com.nicefish.rbac.controller;
 
 import com.nicefish.core.utils.AjaxResult;
+import com.nicefish.rbac.jpa.entity.ApiEntity;
+import com.nicefish.rbac.jpa.entity.ComponentEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
+import com.nicefish.rbac.service.IApiPermissionService;
+import com.nicefish.rbac.service.IComponentService;
 import com.nicefish.rbac.service.IRoleService;
 import com.nicefish.rbac.service.IUserService;
 import io.swagger.annotations.Api;
@@ -11,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 角色管理
@@ -28,12 +34,34 @@ public class RoleController {
     @Autowired
     protected IUserService userService;
 
+    @Autowired
+    protected IApiPermissionService apiPermissionService;
+
+    @Autowired
+    protected IComponentService componentService;
+
     @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
     @ResponseBody
     public Page<RoleEntity> getRoleList(@RequestBody RoleEntity roleEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10);
         Page<RoleEntity> roleList = roleService.getRoleListPaging(roleEntity,pageable);
         return roleList;
+    }
+
+    @RequestMapping(value = "/list-by-api-id/{apiId}",method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult findRoleListByApiId(@PathVariable(value="apiId",required = true) int apiId){
+        ApiEntity apiEntity=this.apiPermissionService.getApiPermissionById(apiId);
+        List<RoleEntity> roleEntities=apiEntity.getRoleEntities();
+        return AjaxResult.success(roleEntities);
+    }
+
+    @RequestMapping(value = "/list-by-component-id/{componentId}",method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult findRoleListByComponentId(@PathVariable(value="componentId",required = true) int componentId){
+        ComponentEntity componentEntity=this.componentService.getComponentDetail(componentId);
+        List<RoleEntity> roleEntities=componentEntity.getRoleEntities();
+        return AjaxResult.success(roleEntities);
     }
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)

@@ -13,6 +13,6 @@ public interface IApiPermissionService {
     Page<ApiEntity> getPermListPaging(ApiEntity permEntity, Pageable pageable);
     AjaxResult createApiPermission(ApiEntity permEntity);
     AjaxResult editPermission(ApiEntity permEntity);
-    AjaxResult getApiPermissionById(Integer permissionId);
+    ApiEntity getApiPermissionById(Integer permissionId);
     int deleteByApiId(Integer apiId);
 }

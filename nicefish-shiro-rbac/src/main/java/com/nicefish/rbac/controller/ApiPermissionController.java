@@ -33,7 +33,7 @@ public class ApiPermissionController {
     @RequestMapping(value = "/detail/{apiId}",method = RequestMethod.GET)
     @ResponseBody
     public AjaxResult getApiPermissionDetail(@PathVariable(value = "apiId",required = true) Integer apiId){
-        return this.apiPermService.getApiPermissionById(apiId);
+        return AjaxResult.success(this.apiPermService.getApiPermissionById(apiId));
     }
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)

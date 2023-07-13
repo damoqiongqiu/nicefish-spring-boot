@@ -1,5 +1,7 @@
 package com.nicefish.rbac.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -35,10 +37,14 @@ public class RoleEntity implements Serializable {
     @ManyToMany(mappedBy = "roleEntities",fetch = FetchType.LAZY)
     private List<ComponentEntity> componentEntities;
 
+    //每个角色都可能被大量用户关联，因此 JSON 序列化时忽略 userEntities
+    //TODO:用户数量很大时查询会有问题？？？需要用测试数据 check
+    @JsonIgnore
     public List<UserEntity> getUserEntities() {
         return userEntities;
     }
 
+    @JsonProperty
     public void setUserEntities(List<UserEntity> userEntities) {
         this.userEntities = userEntities;
     }

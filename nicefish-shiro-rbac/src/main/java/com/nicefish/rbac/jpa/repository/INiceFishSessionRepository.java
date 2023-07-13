@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @see <a href="https://docs.spring.io/spring-data/jpa/docs/2.1.10.RELEASE/reference/html/">JPA DOC</a>
@@ -14,6 +15,7 @@ public interface INiceFishSessionRepository extends PagingAndSortingRepository<N
     NiceFishSessionEntity findDistinctBySessionId(String sessionId);
     
     Page<NiceFishSessionEntity> findNiceFishSessionEntitiesByUserId(Integer userId, Pageable pageable);
-    
+
+    @Transactional
     int deleteDistinctBySessionId(String sessionId);
 }
