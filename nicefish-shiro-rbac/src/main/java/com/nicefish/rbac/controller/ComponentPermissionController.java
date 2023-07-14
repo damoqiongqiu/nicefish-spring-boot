@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api("Component Permission Management")
 @RestController
-@RequestMapping("/nicefish/auth/api-permission")
+@RequestMapping("/nicefish/auth/component-permission")
 public class ComponentPermissionController {
     private static final Logger logger = LoggerFactory.getLogger(ComponentPermissionController.class);
 
     @Autowired
     private IComponentPermissionService componentService;
 
-    @RequestMapping(value = "/list/{page}",method = RequestMethod.GET)
+    @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
     @ResponseBody
-    public Page<ComponentPermissionEntity> getPermissionList(@PathVariable(value="page",required = true) int page) {
+    public Page<ComponentPermissionEntity> getPermissionList(@RequestBody ComponentPermissionEntity componentPermissionEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10);
-        Page<ComponentPermissionEntity> compoPermList = componentService.getComponentList(pageable);
+        Page<ComponentPermissionEntity> compoPermList = componentService.getComponentTree(componentPermissionEntity,pageable);
 
         logger.debug(compoPermList.toString());
 

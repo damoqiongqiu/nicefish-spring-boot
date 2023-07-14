@@ -12,8 +12,10 @@ import org.springframework.data.domain.Pageable;
  * @author 大漠穷秋
  */
 public interface IComponentPermissionService {
-
-    Page<ComponentPermissionEntity> getComponentList(Pageable pageable);
+    /**
+     * 此方法从根节点开始，包含所有层级上的子节点，带分页
+     */
+    Page<ComponentPermissionEntity> getComponentTree(ComponentPermissionEntity componentPermissionEntity, Pageable pageable);
 
     ComponentPermissionEntity getComponentDetail(Integer compPermId);
 

@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,9 +31,6 @@ public class ComponentPermissionEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="component_id")
     private Integer compPermId;
-    
-    @Column(name="p_id")
-    private Integer pId;
 
     @Column(name="component_name")
     private String componentName;
@@ -65,6 +63,19 @@ public class ComponentPermissionEntity implements Serializable {
     @Column(name="remark")
     private String remark;
 
+    /**
+     * 以下 parentEntity 和 children 用来构造 Tree 形结构，为防止 Jackson 因为循环依赖导致 JSON 处理失败
+     * parentEntity 属性在转 JSON 字符串时会被忽略
+     * TODO:如何把 pId 塞到 JSON 字符串里面供前端页面使用，又不会导致 Jackson 出现循环依赖问题？
+     */
+    @ManyToOne
+    @JoinColumn(name="p_id")
+    private ComponentPermissionEntity parentEntity;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name="p_id")
+    private List<ComponentPermissionEntity> children=new ArrayList<>();
+
     @JoinTable(
             name="nicefish_rbac_role_component",
             joinColumns={@JoinColumn(name="component_id",referencedColumnName="component_id")},
@@ -83,20 +94,12 @@ public class ComponentPermissionEntity implements Serializable {
         this.roleEntities = roleEntities;
     }
 
-    public Integer getComponentId() {
+    public Integer getCompPermId() {
         return compPermId;
     }
 
-    public void setComponentId(Integer compPermId) {
+    public void setCompPermId(Integer compPermId) {
         this.compPermId = compPermId;
-    }
-
-    public Integer getpId() {
-        return pId;
-    }
-
-    public void setpId(Integer pId) {
-        this.pId = pId;
     }
 
     public String getComponentName() {
@@ -169,5 +172,22 @@ public class ComponentPermissionEntity implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public List<ComponentPermissionEntity> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<ComponentPermissionEntity> children) {
+        this.children = children;
+    }
+
+    @JsonIgnore
+    public ComponentPermissionEntity getParentEntity() {
+        return parentEntity;
+    }
+
+    public void setParentEntity(ComponentPermissionEntity parentEntity) {
+        this.parentEntity = parentEntity;
     }
 }

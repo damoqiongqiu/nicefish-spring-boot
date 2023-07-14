@@ -167,7 +167,7 @@ public class RoleServiceImpl implements IRoleService {
     public AjaxResult addComponentPermission(RoleEntity roleEntity, ComponentPermissionEntity componentPermissionEntity) {
         RoleComponentEntity roleComponentEntity=new RoleComponentEntity();
         roleComponentEntity.setRoleId(roleEntity.getRoleId());
-        roleComponentEntity.setComponentId(componentPermissionEntity.getComponentId());
+        roleComponentEntity.setComponentId(componentPermissionEntity.getCompPermId());
         this.roleComponentRepository.save(roleComponentEntity);
         return new AjaxResult(true,"保存成功");
     }
@@ -213,7 +213,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional
     public AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentPermissionEntity componentPermissionEntity) {
-        this.roleComponentRepository.deleteByRoleIdAndCompPermId(roleEntity.getRoleId(), componentPermissionEntity.getComponentId());
+        this.roleComponentRepository.deleteByRoleIdAndCompPermId(roleEntity.getRoleId(), componentPermissionEntity.getCompPermId());
         return new AjaxResult(true,"删除成功");
     }
 

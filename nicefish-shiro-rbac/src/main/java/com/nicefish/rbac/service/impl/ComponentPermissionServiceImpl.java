@@ -27,15 +27,20 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
     @Autowired
     private IComponentRepository componentRepository;
 
+    /**
+     * 此方法从根节点开始，包含所有层级上的子节点，带分页
+     */
     @Override
-    public Page<ComponentPermissionEntity> getComponentList(Pageable pageable) {
-        return this.componentRepository.findAll(new Specification<ComponentPermissionEntity>() {
+    public Page<ComponentPermissionEntity> getComponentTree(ComponentPermissionEntity componentPermissionEntity,Pageable pageable) {
+        Page<ComponentPermissionEntity> page= this.componentRepository.findAll(new Specification<ComponentPermissionEntity>() {
             @Override
             public Predicate toPredicate(Root<ComponentPermissionEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates=new ArrayList<>();
+                predicates.add(criteriaBuilder.isNull(root.get("parentEntity")));
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         },pageable);
+        return page;
     }
 
     @Override
