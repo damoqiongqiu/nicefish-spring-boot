@@ -74,6 +74,7 @@ public class ComponentPermissionEntity implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="p_id")
+    @OrderBy("displayOrder asc ")
     private List<ComponentPermissionEntity> children=new ArrayList<>();
 
     @JoinTable(

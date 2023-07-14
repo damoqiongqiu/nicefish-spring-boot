@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,11 +28,9 @@ public class ComponentPermissionController {
     @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
     @ResponseBody
     public Page<ComponentPermissionEntity> getPermissionList(@RequestBody ComponentPermissionEntity componentPermissionEntity, @PathVariable(value="page",required = true) int page) {
-        Pageable pageable= PageRequest.of(page-1,10);
+        Pageable pageable= PageRequest.of(page-1,10,new Sort(Sort.Direction.ASC,"displayOrder"));
         Page<ComponentPermissionEntity> compoPermList = componentService.getComponentTree(componentPermissionEntity,pageable);
-
         logger.debug(compoPermList.toString());
-
         return compoPermList;
     }
 }
