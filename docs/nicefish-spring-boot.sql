@@ -148,16 +148,24 @@ CREATE TABLE `nicefish_rbac_component` (
   `component_name` varchar(64) NOT NULL,
   `icon` varchar(64) DEFAULT NULL,
   `url` varchar(64) DEFAULT NULL COMMENT '组件对应的 URL 路径，可以定义成系统外部的链接 URL',
-  `display_order` int(11) NOT NULL DEFAULT 1 COMMENT '组件在前端屏幕上的显示顺序，按数值从小到达排列，数值越小越靠屏幕顶部。',
-  `permission` varchar(64) NOT NULL DEFAULT '*' COMMENT '权限定义，按照 Apache Shiro 的权限定义规则进行定义。\n            为了避免重复和歧义，权限字符串必须是不同的。',
-  `create_time` datetime DEFAULT current_timestamp(),
-  `update_time` datetime DEFAULT NULL,
+  `display_order` int(11) NOT NULL DEFAULT 1 COMMENT '组件在前端屏幕上的显示顺序，按数值从小到达排列，数值越小越靠屏幕顶部。\r\n            在构建树形菜单时，可以利用此列控制显示的顺序。',
+  `permission` varchar(64) NOT NULL DEFAULT '*' COMMENT '权限定义，按照 Apache Shiro 的权限定义规则进行定义。\r\n            为了避免重复和歧义，权限字符串必须是不同的。',
+  `create_time` datetime NOT NULL DEFAULT current_timestamp(),
+  `update_time` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `visiable` int(11) NOT NULL DEFAULT 1 COMMENT '菜单是否可见，1 可见，0 不可见',
   `remark` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`component_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用来定义前端页面上的组件权限，\ncomponent 可以是菜单、按钮，甚至可以细致到一个 HTML 元素。\n';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='用来定义前端页面上的组件权限，\r\ncomponent 可以是菜单、按钮，甚至可以细致到一个 HTML 元素。\r\n';
 
 /*Data for the table `nicefish_rbac_component` */
+
+insert  into `nicefish_rbac_component`(`component_id`,`p_id`,`component_name`,`icon`,`url`,`display_order`,`permission`,`create_time`,`update_time`,`visiable`,`remark`) values 
+(1,NULL,'根节点1',NULL,NULL,1,'*','2023-07-14 11:37:22','2023-07-14 11:37:22',1,NULL),
+(2,1,'子节点1-1',NULL,NULL,1,'*','2023-07-14 11:37:30','2023-07-14 11:53:32',1,NULL),
+(3,2,'子节点1-1-1',NULL,NULL,1,'*','2023-07-14 11:57:34','2023-07-14 11:57:34',1,NULL),
+(4,NULL,'根节点2',NULL,NULL,1,'*','2023-07-14 11:57:42','2023-07-14 11:57:42',1,NULL),
+(5,4,'子节点2-1',NULL,NULL,1,'*','2023-07-14 11:58:00','2023-07-14 11:58:00',1,NULL),
+(6,5,'子节点2-1-1',NULL,NULL,1,'*','2023-07-14 11:58:12','2023-07-14 11:58:12',1,NULL);
 
 /*Table structure for table `nicefish_rbac_role` */
 
@@ -192,6 +200,9 @@ CREATE TABLE `nicefish_rbac_role_api` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色与 API  接口之间的关联关系。';
 
 /*Data for the table `nicefish_rbac_role_api` */
+
+insert  into `nicefish_rbac_role_api`(`role_id`,`api_id`) values 
+(1,1);
 
 /*Table structure for table `nicefish_rbac_role_component` */
 
@@ -231,6 +242,7 @@ CREATE TABLE `nicefish_rbac_session` (
 /*Data for the table `nicefish_rbac_session` */
 
 insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_name`,`creation_time`,`expiry_time`,`last_access_time`,`max_inactive_interval`,`timeout`,`expired`,`host`,`os`,`browser`,`user_agent`,`session_data`) values 
+('03682154-d7ae-4769-9991-b4197bcb50ca',NULL,NULL,NULL,'2023-07-14 10:34:30',NULL,'2023-07-14 10:34:30',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('0e4a60cf-5c1f-4c84-aa18-d8b1171a74ce',NULL,NULL,NULL,'2023-07-13 08:53:00',NULL,'2023-07-13 08:58:18',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('1795788b-cec3-47b0-a83e-2c471bfc34cb',NULL,NULL,NULL,'2023-07-13 16:53:10',NULL,'2023-07-13 16:54:31',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('240e48db-16c0-4bef-be49-2e02c7af107b',NULL,NULL,NULL,'2023-07-13 08:37:59',NULL,'2023-07-13 08:41:37',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
@@ -239,18 +251,27 @@ insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_nam
 ('3fabe6d1-e8c7-4e64-8adc-4491d837abbb',NULL,NULL,NULL,'2023-07-13 10:20:22',NULL,'2023-07-13 10:20:29',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('4341d6a3-83b1-4983-af10-56468dbf6cc4',NULL,NULL,NULL,'2023-07-12 20:55:19',NULL,'2023-07-12 20:55:19',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('459670a0-e3db-4b74-aa7b-ae022848af3f',NULL,NULL,NULL,'2023-07-12 20:55:19',NULL,'2023-07-12 21:10:05',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('5dd9c115-556a-40d6-9b27-a4bd144c90ce',NULL,NULL,NULL,'2023-07-13 22:16:27',NULL,'2023-07-13 22:17:44',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('5fcd8f77-9e18-4f77-82e5-f84980147668',NULL,NULL,NULL,'2023-07-13 12:24:33',NULL,'2023-07-13 12:43:39',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('6bdd8ea3-8ca7-4a51-b6d9-1f615d699bfc',NULL,NULL,NULL,'2023-07-13 12:49:08',NULL,'2023-07-13 12:49:12',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('6eeb047b-b9be-4cf0-89de-01a610769b7c',NULL,NULL,NULL,'2023-07-13 11:54:09',NULL,'2023-07-13 12:00:07',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('7781ee1f-a476-4db8-8e60-06ba12879d55',NULL,NULL,NULL,'2023-07-13 16:53:10',NULL,'2023-07-13 16:53:10',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('77b810b0-4c50-4d19-b6a7-6470e12cda6c',NULL,NULL,NULL,'2023-07-14 11:53:10',NULL,'2023-07-14 12:04:46',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('7e3e50c3-9ec8-4209-908d-2a6f081309ab',NULL,NULL,NULL,'2023-07-13 09:48:29',NULL,'2023-07-13 10:06:36',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('8491b2d5-77db-4755-9cda-971c40b17c9d',NULL,NULL,NULL,'2023-07-13 10:35:14',NULL,'2023-07-13 10:35:21',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('855653d3-e98b-4ece-8236-a77d750372c9',NULL,NULL,NULL,'2023-07-13 12:06:16',NULL,'2023-07-13 12:09:47',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('887d47e5-472b-4757-a0db-f4dbce77fd3b',NULL,NULL,NULL,'2023-07-13 22:17:50',NULL,'2023-07-13 22:20:57',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('8edf2c63-e310-47ab-a326-853524e3e643',NULL,NULL,NULL,'2023-07-13 12:50:24',NULL,'2023-07-13 12:50:24',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('98956b0d-288c-457f-ac62-8c38c703be83',NULL,NULL,NULL,'2023-07-13 11:40:32',NULL,'2023-07-13 11:40:44',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('9a5679e6-b474-4697-97e4-8be69886cfa8',NULL,NULL,NULL,'2023-07-14 11:19:47',NULL,'2023-07-14 11:38:58',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('a0243616-d19e-4d57-b646-f489ab29ba40',NULL,NULL,NULL,'2023-07-13 09:13:42',NULL,'2023-07-13 09:23:10',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('adab2985-3272-45eb-bda2-189b8c22e086',NULL,NULL,NULL,'2023-07-14 09:43:59',NULL,'2023-07-14 09:43:59',NULL,300000,'N','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('ae04e584-cae1-42a4-a26a-0855ebb32be7',NULL,NULL,NULL,'2023-07-14 10:02:57',NULL,'2023-07-14 10:15:46',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('b882b3fd-957b-4d15-81eb-fa92b545e6d4',NULL,NULL,NULL,'2023-07-13 09:06:25',NULL,'2023-07-13 09:06:25',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('c43c3855-fa3f-4c67-bd7e-7fe97fa9392d',NULL,NULL,NULL,'2023-07-13 13:10:25',NULL,'2023-07-13 13:16:29',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('d9be7a40-1a42-49f5-a52a-db708130280a',NULL,NULL,NULL,'2023-07-14 08:49:09',NULL,'2023-07-14 08:50:33',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('e2c686a4-e11a-487c-94c0-eeed1d7a8250',NULL,NULL,NULL,'2023-07-14 09:44:00',NULL,'2023-07-14 09:53:36',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('e5dafc10-1d23-4000-9106-872516790c2b',NULL,NULL,NULL,'2023-07-14 11:01:59',NULL,'2023-07-14 11:11:54',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('e83fdcc0-8d57-4700-8c39-6406db72a335',NULL,NULL,NULL,'2023-07-13 10:46:04',NULL,'2023-07-13 10:46:56',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('e9c5e5d0-eed9-47e9-b0c1-2f9cb34a8719',NULL,NULL,NULL,'2023-07-13 14:40:55',NULL,'2023-07-13 14:41:33',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('f05f1cd1-48e1-4f76-87dc-9f4812f7f623',NULL,NULL,NULL,'2023-07-13 13:34:08',NULL,'2023-07-13 13:38:39',NULL,300000,'Y','0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
