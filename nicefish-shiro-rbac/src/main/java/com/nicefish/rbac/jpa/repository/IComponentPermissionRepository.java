@@ -8,5 +8,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @see <a href="https://docs.spring.io/spring-data/jpa/docs/2.1.10.RELEASE/reference/html/">JPA DOC</a>
  * @author 大漠穷秋
  */
-public interface IComponentRepository extends PagingAndSortingRepository<ComponentPermissionEntity, Integer>, JpaSpecificationExecutor {
+public interface IComponentPermissionRepository extends PagingAndSortingRepository<ComponentPermissionEntity, Integer>, JpaSpecificationExecutor {
 }
