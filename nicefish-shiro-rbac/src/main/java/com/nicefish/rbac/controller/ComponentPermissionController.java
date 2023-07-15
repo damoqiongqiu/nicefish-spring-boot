@@ -35,9 +35,27 @@ public class ComponentPermissionController {
         return compoPermList;
     }
 
+    @RequestMapping(value = "/detail/{compPermId}",method = RequestMethod.GET)
+    @ResponseBody
+    public ComponentPermissionEntity getCompPermDetail(@PathVariable(value = "compPermId",required = true) Integer compPermId){
+        return this.componentService.getComponentPermissionDetail(compPermId);
+    }
+
     @RequestMapping(value = "/delete/{compPermId}",method = RequestMethod.DELETE)
     @ResponseBody
     public AjaxResult deleteComponentPermission(@PathVariable(value="compPermId",required = true)Integer compPermId){
         return this.componentService.deleteComponentPermission(compPermId);
+    }
+
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult createComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
+        return this.componentService.createComponentPermission(componentPermission);
+    }
+
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult editComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
+        return this.componentService.editComponentPermission(componentPermission);
     }
 }

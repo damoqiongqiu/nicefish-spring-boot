@@ -49,8 +49,6 @@ public interface IRoleService {
     
     AjaxResult addApiPermission(RoleEntity roleEntity, ApiPermissionEntity apiPermissionEntity);
 
-    AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiPermissionEntity> apiEntities);
-    
     AjaxResult deleteAllPermissionsByRoleId(Integer roleId);
     
     AjaxResult deleteComponentPermission(RoleEntity roleEntity, ComponentPermissionEntity componentPermissionEntity);

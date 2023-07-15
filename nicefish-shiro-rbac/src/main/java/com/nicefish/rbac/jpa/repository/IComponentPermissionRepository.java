@@ -9,4 +9,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author 大漠穷秋
  */
 public interface IComponentPermissionRepository extends PagingAndSortingRepository<ComponentPermissionEntity, Integer>, JpaSpecificationExecutor {
+    ComponentPermissionEntity findDistinctByCompPermId(Integer compPermId);
 }

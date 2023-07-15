@@ -45,7 +45,7 @@ public class RoleServiceImpl implements IRoleService {
     public AjaxResult createRole(RoleEntity roleEntity) {
         //TODO:数据校验
         roleEntity=this.roleRepository.save(roleEntity);
-        return new AjaxResult(true,roleEntity);
+        return AjaxResult.success(roleEntity);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RoleServiceImpl implements IRoleService {
         RoleEntity oldEntity=this.roleRepository.findDistinctByRoleId(roleEntity.getRoleId());
         BeanUtils.copyProperties(roleEntity,oldEntity);
         this.roleRepository.save(oldEntity);
-        return new AjaxResult(true,"保存成功");
+        return AjaxResult.success("保存成功");
     }
 
     @Override
@@ -193,20 +193,6 @@ public class RoleServiceImpl implements IRoleService {
         list.setRoleId(roleEntity.getRoleId());
         list.setApiPermissionId(apiPermissionEntity.getApiId());
         this.roleApiRepository.save(list);
-        return new AjaxResult(true,"保存成功");
-    }
-
-    @Override
-    @Transactional
-    public AjaxResult addApiPermissions(RoleEntity roleEntity, List<ApiPermissionEntity> apiEntities) {
-        List<RoleApiEntity> list=new ArrayList<>();
-        list.forEach(apiEntity -> {
-            RoleApiEntity roleApiEntity=new RoleApiEntity();
-            roleApiEntity.setRoleId(roleEntity.getRoleId());
-            roleApiEntity.setApiPermissionId(apiEntity.getApiPermissionId());
-            list.add(roleApiEntity);
-        });
-        this.roleApiRepository.saveAll(list);
         return new AjaxResult(true,"保存成功");
     }
 

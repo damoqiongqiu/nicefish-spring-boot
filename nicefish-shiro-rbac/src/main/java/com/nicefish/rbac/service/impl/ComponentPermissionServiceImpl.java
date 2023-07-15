@@ -6,6 +6,7 @@ import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.repository.IComponentPermissionRepository;
 import com.nicefish.rbac.service.IComponentPermissionService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,12 +43,13 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
 
     @Override
     public ComponentPermissionEntity getComponentPermissionDetail(Integer compPermId) {
-        return null;
+        return this.componentPermissionRepository.findDistinctByCompPermId(compPermId);
     }
 
     @Override
     public AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
-        return null;
+        componentPermissionEntity=this.componentPermissionRepository.save(componentPermissionEntity);
+        return AjaxResult.success(componentPermissionEntity);
     }
 
     @Override
@@ -58,7 +60,11 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
 
     @Override
     public AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
-        return null;
+        //TODO:数据校验
+        ComponentPermissionEntity oldEntity=this.componentPermissionRepository.findDistinctByCompPermId(componentPermissionEntity.getCompPermId());
+        BeanUtils.copyProperties(componentPermissionEntity,oldEntity);
+        this.componentPermissionRepository.save(oldEntity);
+        return AjaxResult.success("保存成功");
     }
 
     @Override
