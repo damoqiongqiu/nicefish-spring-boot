@@ -28,7 +28,7 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
      * 此方法从根节点开始，包含所有层级上的子节点，带分页
      */
     @Override
-    public Page<ComponentPermissionEntity> getComponentTree(ComponentPermissionEntity componentPermissionEntity,Pageable pageable) {
+    public Page<ComponentPermissionEntity> getComponentPermissionTree(ComponentPermissionEntity componentPermissionEntity,Pageable pageable) {
         Page<ComponentPermissionEntity> page= this.componentPermissionRepository.findAll(new Specification<ComponentPermissionEntity>() {
             @Override
             public Predicate toPredicate(Root<ComponentPermissionEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -41,32 +41,23 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
     }
 
     @Override
-    public ComponentPermissionEntity getComponentDetail(Integer compPermId) {
+    public ComponentPermissionEntity getComponentPermissionDetail(Integer compPermId) {
         return null;
     }
 
     @Override
-    public Iterable<ComponentPermissionEntity> getAllComponentsNotIn(RoleEntity roleEntity) {
+    public AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
         return null;
     }
 
     @Override
-    public AjaxResult createComponent(ComponentPermissionEntity componentPermissionEntity) {
-        return null;
+    public AjaxResult deleteComponentPermission(Integer compPermId) {
+        this.componentPermissionRepository.deleteById(compPermId);
+        return AjaxResult.success();
     }
 
     @Override
-    public AjaxResult deleteComponent(ComponentPermissionEntity componentPermissionEntity) {
-        return null;
-    }
-
-    @Override
-    public int deleteComponent(Integer compPermId) {
-        return 0;
-    }
-
-    @Override
-    public AjaxResult editComponent(ComponentPermissionEntity componentPermissionEntity) {
+    public AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
         return null;
     }
 
@@ -76,7 +67,7 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
     }
 
     @Override
-    public Page<RoleEntity> getRoleListByComponentId(Integer compPermId, Pageable pageable) {
+    public Page<RoleEntity> getRoleListByComponentPermissionId(Integer compPermId, Pageable pageable) {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.nicefish.rbac.controller;
 
+import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import io.swagger.annotations.Api;
@@ -29,8 +30,14 @@ public class ComponentPermissionController {
     @ResponseBody
     public Page<ComponentPermissionEntity> getPermissionList(@RequestBody ComponentPermissionEntity componentPermissionEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10,new Sort(Sort.Direction.ASC,"displayOrder"));
-        Page<ComponentPermissionEntity> compoPermList = componentService.getComponentTree(componentPermissionEntity,pageable);
+        Page<ComponentPermissionEntity> compoPermList = componentService.getComponentPermissionTree(componentPermissionEntity,pageable);
         logger.debug(compoPermList.toString());
         return compoPermList;
+    }
+
+    @RequestMapping(value = "/delete/{compPermId}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public AjaxResult deleteComponentPermission(@PathVariable(value="compPermId",required = true)Integer compPermId){
+        return this.componentService.deleteComponentPermission(compPermId);
     }
 }

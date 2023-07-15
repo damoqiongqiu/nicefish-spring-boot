@@ -15,22 +15,18 @@ public interface IComponentPermissionService {
     /**
      * 此方法从根节点开始，包含所有层级上的子节点，带分页
      */
-    Page<ComponentPermissionEntity> getComponentTree(ComponentPermissionEntity componentPermissionEntity, Pageable pageable);
+    Page<ComponentPermissionEntity> getComponentPermissionTree(ComponentPermissionEntity componentPermissionEntity, Pageable pageable);
 
-    ComponentPermissionEntity getComponentDetail(Integer compPermId);
+    ComponentPermissionEntity getComponentPermissionDetail(Integer compPermId);
 
-    Iterable<ComponentPermissionEntity> getAllComponentsNotIn(RoleEntity roleEntity);
+    AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
-    AjaxResult createComponent(ComponentPermissionEntity componentPermissionEntity);
+    AjaxResult deleteComponentPermission(Integer compPermId);
 
-    AjaxResult deleteComponent(ComponentPermissionEntity componentPermissionEntity);
-
-    int deleteComponent(Integer compPermId);
-
-    AjaxResult editComponent(ComponentPermissionEntity componentPermissionEntity);
+    AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
     //权限字符串是否唯一
     boolean isPermissionStrUnique(String permissionStr);
 
-    Page<RoleEntity> getRoleListByComponentId(Integer compPermId, Pageable pageable);
+    Page<RoleEntity> getRoleListByComponentPermissionId(Integer compPermId, Pageable pageable);
 }

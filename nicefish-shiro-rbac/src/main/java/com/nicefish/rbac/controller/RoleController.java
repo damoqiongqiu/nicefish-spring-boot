@@ -62,7 +62,7 @@ public class RoleController {
     @RequestMapping(value = "/list-by-component-id/{compPermId}",method = RequestMethod.GET)
     @ResponseBody
     public AjaxResult findRoleListByComponentId(@PathVariable(value="compPermId",required = true) int compPermId){
-        ComponentPermissionEntity componentPermissionEntity =this.componentService.getComponentDetail(compPermId);
+        ComponentPermissionEntity componentPermissionEntity =this.componentService.getComponentPermissionDetail(compPermId);
         List<RoleEntity> roleEntities= componentPermissionEntity.getRoleEntities();
         return AjaxResult.success(roleEntities);
     }
