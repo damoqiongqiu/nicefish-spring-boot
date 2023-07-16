@@ -48,7 +48,7 @@ public class ApiPermissionEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="update_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+    private Date updateTime=new Date();
 
     @Column(name="remark")
     private String remark;
