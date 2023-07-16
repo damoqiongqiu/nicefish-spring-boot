@@ -13,7 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +46,9 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
 
     @Override
     public ComponentPermissionEntity getComponentPermissionDetail(Integer compPermId) {
+        ComponentPermissionEntity componentPermissionEntity=this.componentPermissionRepository.findDistinctByCompPermId(compPermId);
+        //FIXME: Jackson 循环依赖问题，导致不能直接返回 parentEntity ，这里自己用 HashMap 处理
+
         return this.componentPermissionRepository.findDistinctByCompPermId(compPermId);
     }
 

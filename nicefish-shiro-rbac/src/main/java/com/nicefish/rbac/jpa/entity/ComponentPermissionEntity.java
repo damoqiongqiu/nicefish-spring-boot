@@ -1,8 +1,6 @@
 package com.nicefish.rbac.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -64,10 +62,9 @@ public class ComponentPermissionEntity implements Serializable {
     private String remark;
 
     /**
-     * 以下 parentEntity 和 children 用来构造 Tree 形结构，为防止 Jackson 因为循环依赖导致 JSON 处理失败
-     * parentEntity 属性在转 JSON 字符串时会被忽略
-     * TODO:如何把 pId 塞到 JSON 字符串里面供前端页面使用，又不会导致 Jackson 出现循环依赖问题？
+     * 以下 parentEntity 和 children 用来构造 Tree 形结构
      */
+    @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="compPermId")
     @ManyToOne
     @JoinColumn(name="p_id")
     private ComponentPermissionEntity parentEntity;
@@ -183,7 +180,6 @@ public class ComponentPermissionEntity implements Serializable {
         this.children = children;
     }
 
-    @JsonIgnore
     public ComponentPermissionEntity getParentEntity() {
         return parentEntity;
     }
