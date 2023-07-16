@@ -1,6 +1,10 @@
 package com.nicefish.rbac.jpa.entity;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.nicefish.rbac.jpautils.RoleListSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -61,9 +65,6 @@ public class ComponentPermissionEntity implements Serializable {
     @Column(name="remark")
     private String remark;
 
-    /**
-     * 以下 parentEntity 和 children 用来构造 Tree 形结构
-     */
     @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="compPermId")
     @ManyToOne
     @JoinColumn(name="p_id")
@@ -80,14 +81,13 @@ public class ComponentPermissionEntity implements Serializable {
             inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")}
     )
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonSerialize(using = RoleListSerializer.class)
     private List<RoleEntity> roleEntities;
 
-    @JsonIgnore
     public List<RoleEntity> getRoleEntities() {
         return roleEntities;
     }
 
-    @JsonProperty(value = "roleEntities")
     public void setRoleEntities(List<RoleEntity> roleEntities) {
         this.roleEntities = roleEntities;
     }

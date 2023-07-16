@@ -1,7 +1,6 @@
 package com.nicefish.rbac.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -44,7 +43,6 @@ public class RoleEntity implements Serializable {
         return userEntities;
     }
 
-    @JsonProperty
     public void setUserEntities(List<UserEntity> userEntities) {
         this.userEntities = userEntities;
     }

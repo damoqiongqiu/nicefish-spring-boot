@@ -1,8 +1,8 @@
 package com.nicefish.rbac.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.nicefish.rbac.jpautils.RoleListSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -59,23 +59,22 @@ public class ApiPermissionEntity implements Serializable {
         inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")}
     )
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonSerialize(using = RoleListSerializer.class)
     private List<RoleEntity> roleEntities;
 
-    @JsonIgnore
     public List<RoleEntity> getRoleEntities() {
         return roleEntities;
     }
 
-    @JsonProperty(value = "roleEntities")
     public void setRoleEntities(List<RoleEntity> roleEntities) {
         this.roleEntities = roleEntities;
     }
 
-    public Integer getApiId() {
+    public Integer getApiPermissionId() {
         return apiPermissionId;
     }
 
-    public void setApiId(Integer apiPermissionId) {
+    public void setApiPermissionId(Integer apiPermissionId) {
         this.apiPermissionId = apiPermissionId;
     }
 

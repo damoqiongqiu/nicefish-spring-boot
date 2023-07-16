@@ -3,6 +3,7 @@ package com.nicefish.rbac.service.impl;
 
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
+import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.repository.IApiPermissionRepository;
 import com.nicefish.rbac.service.IApiPermissionService;
 import org.springframework.beans.BeanUtils;
@@ -44,6 +45,19 @@ public class ApiPermissionServiceImpl implements IApiPermissionService {
     }
 
     @Override
+    public Iterable<ApiPermissionEntity> getPermListAll(ApiPermissionEntity apiPermissionEntity) {
+        return this.apiPermRepository.findAll();
+    }
+
+    @Override
+    public Iterable<ApiPermissionEntity> getPermListAllByRole(RoleEntity roleEntity) {
+        List<RoleEntity> list=new ArrayList<>();
+        list.add(roleEntity);
+        Iterable<ApiPermissionEntity> apiPermissionEntities=this.apiPermRepository.findAllByRoleEntitiesIn(list);
+        return apiPermissionEntities;
+    }
+
+    @Override
     public AjaxResult createApiPermission(ApiPermissionEntity permEntity) {
         permEntity=this.apiPermRepository.save(permEntity);
         return new AjaxResult(true,permEntity);
@@ -52,7 +66,7 @@ public class ApiPermissionServiceImpl implements IApiPermissionService {
     @Override
     public AjaxResult editPermission(ApiPermissionEntity permEntity) {
         //TODO:数据校验
-        ApiPermissionEntity permEntityDB=this.apiPermRepository.findDistinctByApiPermissionId(permEntity.getApiId());
+        ApiPermissionEntity permEntityDB=this.apiPermRepository.findDistinctByApiPermissionId(permEntity.getApiPermissionId());
         BeanUtils.copyProperties(permEntity,permEntityDB);
         this.apiPermRepository.save(permEntity);
         return new AjaxResult(true,"保存成功");

@@ -191,7 +191,7 @@ public class RoleServiceImpl implements IRoleService {
     public AjaxResult addApiPermission(RoleEntity roleEntity, ApiPermissionEntity apiPermissionEntity) {
         RoleApiEntity list=new RoleApiEntity();
         list.setRoleId(roleEntity.getRoleId());
-        list.setApiPermissionId(apiPermissionEntity.getApiId());
+        list.setApiPermissionId(apiPermissionEntity.getApiPermissionId());
         this.roleApiRepository.save(list);
         return new AjaxResult(true,"保存成功");
     }
@@ -213,7 +213,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     @Transactional
     public AjaxResult deleteApiPermission(RoleEntity roleEntity, ApiPermissionEntity apiPermissionEntity) {
-        this.roleApiRepository.deleteByRoleIdAndApiPermissionId(roleEntity.getRoleId(), apiPermissionEntity.getApiId());
+        this.roleApiRepository.deleteByRoleIdAndApiPermissionId(roleEntity.getRoleId(), apiPermissionEntity.getApiPermissionId());
         return new AjaxResult(true,"删除成功");
     }
 

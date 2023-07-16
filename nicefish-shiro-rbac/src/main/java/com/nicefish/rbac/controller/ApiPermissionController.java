@@ -2,6 +2,7 @@ package com.nicefish.rbac.controller;
 
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
+import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IApiPermissionService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -31,6 +32,18 @@ public class ApiPermissionController {
         Pageable pageable= PageRequest.of(page-1,10);
         Page<ApiPermissionEntity> permList = apiPermService.getPermListPaging(apiPermissionEntity,pageable);
         return permList;
+    }
+
+    @RequestMapping(value = "/list-all",method = RequestMethod.POST)
+    @ResponseBody
+    public Iterable<ApiPermissionEntity> getPermissionListAll(@RequestBody ApiPermissionEntity apiPermissionEntity) {
+        return apiPermService.getPermListAll(apiPermissionEntity);
+    }
+
+    @RequestMapping(value = "/list-all-by-role",method = RequestMethod.POST)
+    @ResponseBody
+    public Iterable<ApiPermissionEntity> getPermissionListByRole(@RequestBody RoleEntity roleEntity) {
+        return apiPermService.getPermListAllByRole(roleEntity);
     }
 
     @RequestMapping(value = "/detail/{apiPermissionId}",method = RequestMethod.GET)
