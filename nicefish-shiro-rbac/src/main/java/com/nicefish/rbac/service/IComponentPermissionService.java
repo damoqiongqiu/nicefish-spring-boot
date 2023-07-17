@@ -23,12 +23,7 @@ public interface IComponentPermissionService {
 
     AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
-    AjaxResult deleteComponentPermission(Integer compPermId);
-
     AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
-    //权限字符串是否唯一
-    boolean isPermissionStrUnique(String permissionStr);
-
-    Page<RoleEntity> getRoleListByComponentPermissionId(Integer compPermId, Pageable pageable);
+    AjaxResult deleteComponentPermission(Integer compPermId);
 }

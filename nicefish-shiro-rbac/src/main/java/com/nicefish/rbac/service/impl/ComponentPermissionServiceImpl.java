@@ -8,12 +8,12 @@ import com.nicefish.rbac.jpa.repository.IComponentPermissionRepository;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -58,40 +58,45 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
 
     @Override
     public ComponentPermissionEntity getComponentPermissionDetail(Integer compPermId) {
-        ComponentPermissionEntity componentPermissionEntity=this.componentPermissionRepository.findDistinctByCompPermId(compPermId);
-        //FIXME: Jackson 循环依赖问题，导致不能直接返回 parentEntity ，这里自己用 HashMap 处理
-
         return this.componentPermissionRepository.findDistinctByCompPermId(compPermId);
     }
 
+    /**
+     * 创建组件权限，创建时可以带有父层节点的 id 作为参数，但是不处理子节点，即使传递 children 参数，也会被忽略。
+     * @param componentPermissionEntity
+     * @return
+     */
     @Override
     public AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
+        if(!ObjectUtils.isEmpty(componentPermissionEntity.getParentEntity())){
+            Integer pId=componentPermissionEntity.getParentEntity().getCompPermId();
+            ComponentPermissionEntity parentEntity=this.componentPermissionRepository.findDistinctByCompPermId(pId);
+            componentPermissionEntity.setParentEntity(parentEntity);
+        }
+        componentPermissionEntity.setChildren(new ArrayList<>());
         componentPermissionEntity=this.componentPermissionRepository.save(componentPermissionEntity);
         return AjaxResult.success(componentPermissionEntity);
+    }
+
+    /**
+     * 编辑组件权限，编辑时只修改当前组件节点上的属性，父层和子层都不修改。
+     * 即使接收到了 parentEntity 和 children 参数 ，也全部忽略，仍然使用原来的值。
+     * @param componentPermissionEntity
+     * @return
+     */
+    @Override
+    public AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
+        //TODO:数据校验
+        ComponentPermissionEntity oldEntity=this.componentPermissionRepository.findDistinctByCompPermId(componentPermissionEntity.getCompPermId());
+        componentPermissionEntity.setParentEntity(oldEntity.getParentEntity());
+        componentPermissionEntity.setChildren(oldEntity.getChildren());
+        this.componentPermissionRepository.save(componentPermissionEntity);
+        return AjaxResult.success("保存成功");
     }
 
     @Override
     public AjaxResult deleteComponentPermission(Integer compPermId) {
         this.componentPermissionRepository.deleteById(compPermId);
         return AjaxResult.success();
-    }
-
-    @Override
-    public AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
-        //TODO:数据校验
-        ComponentPermissionEntity oldEntity=this.componentPermissionRepository.findDistinctByCompPermId(componentPermissionEntity.getCompPermId());
-        BeanUtils.copyProperties(componentPermissionEntity,oldEntity);
-        this.componentPermissionRepository.save(oldEntity);
-        return AjaxResult.success("保存成功");
-    }
-
-    @Override
-    public boolean isPermissionStrUnique(String permissionStr) {
-        return false;
-    }
-
-    @Override
-    public Page<RoleEntity> getRoleListByComponentPermissionId(Integer compPermId, Pageable pageable) {
-        return null;
     }
 }

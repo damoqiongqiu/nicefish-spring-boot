@@ -70,7 +70,7 @@ public class ComponentPermissionEntity implements Serializable {
     @JoinColumn(name="p_id")
     private ComponentPermissionEntity parentEntity;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name="p_id")
     @OrderBy("displayOrder asc ")
     private List<ComponentPermissionEntity> children=new ArrayList<>();
@@ -80,7 +80,7 @@ public class ComponentPermissionEntity implements Serializable {
             joinColumns={@JoinColumn(name="component_id",referencedColumnName="component_id")},
             inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="role_id")}
     )
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JsonSerialize(using = RoleListSerializer.class)
     private List<RoleEntity> roleEntities;
 
