@@ -6,6 +6,8 @@ import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.repository.IApiPermissionRepository;
 import com.nicefish.rbac.service.IApiPermissionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,8 @@ import java.util.List;
  */
 @Service
 public class ApiPermissionServiceImpl implements IApiPermissionService {
+    private static final Logger logger = LoggerFactory.getLogger(ApiPermissionServiceImpl.class);
+
     @Autowired
     private IApiPermissionRepository apiPermRepository;
 

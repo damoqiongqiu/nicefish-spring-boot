@@ -3,23 +3,20 @@ package com.nicefish.rbac.jpa.entity;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @DynamicInsert
 @DynamicUpdate
+@IdClass(RoleComponentEntity.class)
 @Table(name = "nicefish_rbac_role_component")
 public class RoleComponentEntity implements Serializable {
     @Id
-
-    
     @Column(name="role_id")
     private Integer roleId;
 
+    @Id
     @Column(name="component_id")
     private Integer compPermId;
 

@@ -16,6 +16,7 @@ public interface IRoleApiRepository extends PagingAndSortingRepository<RoleApiEn
     @Transactional
     int deleteByRoleIdAndApiPermissionIdIsIn(Integer roleId,Integer[] apiIds);
 
+    @Transactional
     int deleteAllByRoleId(Integer roleId);
 
     int deleteByApiPermissionId(Integer apiPermissionId);

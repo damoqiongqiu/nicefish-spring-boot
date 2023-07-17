@@ -6,6 +6,8 @@ import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.repository.IComponentPermissionRepository;
 import com.nicefish.rbac.service.IComponentPermissionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class ComponentPermissionServiceImpl implements IComponentPermissionService {
+    private static final Logger logger = LoggerFactory.getLogger(ComponentPermissionServiceImpl.class);
+
     @Autowired
     private IComponentPermissionRepository componentPermissionRepository;
 
@@ -42,6 +46,14 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
             }
         },pageable);
         return page;
+    }
+
+    @Override
+    public Iterable<ComponentPermissionEntity> getPermListAllByRole(RoleEntity roleEntity) {
+        List<RoleEntity> list=new ArrayList<>();
+        list.add(roleEntity);
+        Iterable<ComponentPermissionEntity> compPermList=this.componentPermissionRepository.findAllByRoleEntitiesIn(list);
+        return compPermList;
     }
 
     @Override

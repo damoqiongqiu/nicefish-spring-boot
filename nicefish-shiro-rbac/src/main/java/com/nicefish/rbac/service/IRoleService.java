@@ -20,7 +20,7 @@ public interface IRoleService {
 
     AjaxResult deleteRoleByIds(String ids);
 
-    AjaxResult editRole(RoleEntity roleEntity);
+    AjaxResult editRole(RoleEntity newRoleEntity);
 
     Page<RoleEntity> getRoleListPaging(RoleEntity roleEntity, Pageable pageable);
 
