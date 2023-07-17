@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="150" src="./docs/imgs/nice-fish.png">
+    <img width="150" src="https://gitee.com/mumu-osc/nicefish-spring-boot/raw/master/docs/imgs/nice-fish.png">
 </p>
 
 <h1 align="center">NiceFish</h1>
@@ -31,7 +31,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 4.项目模块依赖关系
 
-<img src="./docs/imgs/maven-modules.png">
+<img src="https://gitee.com/mumu-osc/nicefish-spring-boot/raw/master/docs/imgs/maven-modules.png">
 
 - nicefish-core: 提供通用的工具
 - nicefish-shiro-rbac: 提供基于 Shiro 的通用认证和鉴权服务，RBAC 型。
@@ -39,13 +39,13 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 5.Swagger 接口
 
-<img src="./docs/imgs/swagger.png">
+<img src="https://gitee.com/mumu-osc/nicefish-spring-boot/raw/master/docs/imgs/swagger.png">
 
 - 项目起来之后访问 http://localhost:8080/swagger-ui.html
 
 ## 6.物理模型
 
-<img src="./docs/imgs/pdm.png">
+<img src="https://gitee.com/mumu-osc/nicefish-spring-boot/raw/master/docs/imgs/pdm.png">
 
 物理模型 pdm 文件在 docs 目录下，可以使用 PowerDesigner 打开，目前针对 MySQL 数据库。
 
@@ -63,13 +63,19 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 8.前端界面截图
 
-<img src="./docs/imgs/1.png">
+<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/1.png">
 
-<img src="./docs/imgs/2.png">
+<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/2.png">
 
-<img src="./docs/imgs/3.png">
+<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/3.png">
 
-<img src="./docs/imgs/4.png">
+<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/4.png">
+
+<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/5.png">
+
+<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/6.png">
+
+<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/7.png">
 
 ## 9.开源许可证
 
