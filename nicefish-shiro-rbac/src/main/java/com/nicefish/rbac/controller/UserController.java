@@ -47,9 +47,9 @@ public class UserController {
         return userService.createUser(userEntity);
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/update")
     @ResponseBody
-    public AjaxResult editUser(@RequestBody UserEntity userEntity) {
+    public AjaxResult updateUser(@RequestBody UserEntity userEntity) {
         logger.debug(userEntity.toString());
 
         //TODO:与前端代码对接，让前端先加密一次传输过来

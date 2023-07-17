@@ -73,10 +73,10 @@ public class RoleController {
         return this.roleService.createRole(roleEntity);
     }
 
-    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult editRole(@RequestBody RoleEntity roleEntity){
-        return this.roleService.editRole(roleEntity);
+    public AjaxResult updateRole(@RequestBody RoleEntity roleEntity){
+        return this.roleService.updateRole(roleEntity);
     }
 
     @RequestMapping(value = "/delete/{roleId}",method = RequestMethod.DELETE)

@@ -15,7 +15,7 @@ public interface IApiPermissionService {
     Iterable<ApiPermissionEntity> getPermListAll(ApiPermissionEntity apiPermissionEntity);
     Iterable<ApiPermissionEntity> getPermListAllByRole(RoleEntity roleEntity);
     AjaxResult createApiPermission(ApiPermissionEntity apiPermissionEntity);
-    AjaxResult editPermission(ApiPermissionEntity apiPermissionEntity);
+    AjaxResult updatePermission(ApiPermissionEntity apiPermissionEntity);
     ApiPermissionEntity getApiPermissionById(Integer apiPermissionEntity);
     int deleteByApiId(Integer apiPermissionId);
 }

@@ -23,7 +23,7 @@ public interface IComponentPermissionService {
 
     AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
-    AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity);
+    AjaxResult updateComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
     AjaxResult deleteComponentPermission(Integer compPermId);
 }

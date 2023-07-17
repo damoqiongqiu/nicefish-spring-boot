@@ -60,8 +60,8 @@ public class PostController {
     }
 
     @ApiOperation("编辑文章")
-    @RequestMapping(value = "/edit-post",method = RequestMethod.POST)
-    public PostEntity editPost(@RequestBody PostEntity postEntity, HttpSession session){
+    @RequestMapping(value = "/update-post",method = RequestMethod.POST)
+    public PostEntity updatePost(@RequestBody PostEntity postEntity, HttpSession session){
         this.setUserInfoToPostEntity(postEntity,session);
         return postService.savePost(postEntity);
     }
