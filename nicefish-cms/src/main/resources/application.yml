@@ -20,6 +20,10 @@ logging:
     level:
         com.nicefish: debug
         org.springframework: debug
+        org.hibernate.SQL: debug
+        org.hibernate.engine.QueryParameters: debug
+        org.hibernate.engine.query.HQLQueryPlan: debug
+        org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 user:
     password:
