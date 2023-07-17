@@ -62,7 +62,7 @@ public class UserServiceImpl implements IUserService {
 
     //TODO:消息国际化
     @Override
-    public AjaxResult editUser(UserEntity userEntity){
+    public AjaxResult updateUser(UserEntity userEntity){
         if(!this.userRepository.existsById(userEntity.getUserId())){
             return new AjaxResult(false,"不存在指定的用户ID");
         }

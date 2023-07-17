@@ -60,9 +60,9 @@ public class ComponentPermissionController {
         return this.componentService.createComponentPermission(componentPermission);
     }
 
-    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult editComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
-        return this.componentService.editComponentPermission(componentPermission);
+    public AjaxResult updateComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
+        return this.componentService.updateComponentPermission(componentPermission);
     }
 }

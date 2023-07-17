@@ -108,7 +108,7 @@ public class ShiroConfig {
         //需要加验证码保护的接口
         //TODO:前端需要改成动态显示验证码的方式，默认不显示验证码，当访问次数过于频繁的时候，才显示验证码。
         filterChainDefinitionMap.put("/nicefish/cms/post/write-post", "captchaValidate");
-        filterChainDefinitionMap.put("/nicefish/cms/post/edit-post", "captchaValidate");
+        filterChainDefinitionMap.put("/nicefish/cms/post/update-post", "captchaValidate");
         filterChainDefinitionMap.put("/nicefish/cms/comment/write-comment", "captchaValidate");
         filterChainDefinitionMap.put("/nicefish/auth/user/register", "anon,captchaValidate");
         filterChainDefinitionMap.put("/nicefish/auth/shiro/login", "anon,captchaValidate");

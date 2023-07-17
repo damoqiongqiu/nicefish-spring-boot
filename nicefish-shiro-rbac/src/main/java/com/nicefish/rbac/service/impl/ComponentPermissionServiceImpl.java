@@ -85,7 +85,7 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
      * @return
      */
     @Override
-    public AjaxResult editComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
+    public AjaxResult updateComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
         //TODO:数据校验
         ComponentPermissionEntity oldEntity=this.componentPermissionRepository.findDistinctByCompPermId(componentPermissionEntity.getCompPermId());
         componentPermissionEntity.setParentEntity(oldEntity.getParentEntity());

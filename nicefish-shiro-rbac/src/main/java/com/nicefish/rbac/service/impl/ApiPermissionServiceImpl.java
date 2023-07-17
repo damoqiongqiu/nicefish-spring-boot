@@ -68,7 +68,7 @@ public class ApiPermissionServiceImpl implements IApiPermissionService {
     }
 
     @Override
-    public AjaxResult editPermission(ApiPermissionEntity permEntity) {
+    public AjaxResult updatePermission(ApiPermissionEntity permEntity) {
         //TODO:数据校验
         ApiPermissionEntity permEntityDB=this.apiPermRepository.findDistinctByApiPermissionId(permEntity.getApiPermissionId());
         BeanUtils.copyProperties(permEntity,permEntityDB);

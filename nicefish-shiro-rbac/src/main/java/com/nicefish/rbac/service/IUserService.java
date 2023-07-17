@@ -21,7 +21,7 @@ public interface IUserService {
 
     UserEntity setUserStatus(UserEntity userEntity);
 
-    AjaxResult editUser(UserEntity userEntity);
+    AjaxResult updateUser(UserEntity userEntity);
 
     Page<UserEntity> getUserList(UserEntity userEntity, Pageable pageable);
 

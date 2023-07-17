@@ -58,10 +58,10 @@ public class ApiPermissionController {
         return this.apiPermService.createApiPermission(apiPermissionEntity);
     }
 
-    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult editPermission(@RequestBody ApiPermissionEntity apiPermissionEntity){
-        return this.apiPermService.editPermission(apiPermissionEntity);
+    public AjaxResult updatePermission(@RequestBody ApiPermissionEntity apiPermissionEntity){
+        return this.apiPermService.updatePermission(apiPermissionEntity);
     }
 
     @RequestMapping(value = "/delete/{apiPermissionId}",method = RequestMethod.DELETE)
