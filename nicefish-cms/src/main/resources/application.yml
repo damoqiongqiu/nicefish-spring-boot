@@ -55,6 +55,11 @@ spring:
                 hbm2ddl:
                     auto: validate
                 dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+                order_inserts: true
+                order_updates: true
+                jdbc:
+                    batch_size: 500
+                    batch_versioned_data: true
         show-sql: true
 
 pagehelper:

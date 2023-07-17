@@ -2,6 +2,7 @@ package com.nicefish.rbac.controller;
 
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
+import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -33,6 +34,12 @@ public class ComponentPermissionController {
         Page<ComponentPermissionEntity> compoPermList = componentService.getComponentPermissionTree(componentPermissionEntity,pageable);
         logger.debug(compoPermList.toString());
         return compoPermList;
+    }
+
+    @RequestMapping(value = "/list-all-by-role",method = RequestMethod.POST)
+    @ResponseBody
+    public Iterable<ComponentPermissionEntity> getPermissionListByRole(@RequestBody RoleEntity roleEntity) {
+        return this.componentService.getPermListAllByRole(roleEntity);
     }
 
     @RequestMapping(value = "/detail/{compPermId}",method = RequestMethod.GET)

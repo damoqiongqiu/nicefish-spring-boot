@@ -2,12 +2,10 @@ package com.nicefish.rbac.service.impl;
 
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.*;
-import com.nicefish.rbac.jpa.repository.IRoleApiRepository;
-import com.nicefish.rbac.jpa.repository.IRoleComponentRepository;
-import com.nicefish.rbac.jpa.repository.IRoleRepository;
-import com.nicefish.rbac.jpa.repository.IUserRoleRepository;
+import com.nicefish.rbac.jpa.repository.*;
 import com.nicefish.rbac.service.IRoleService;
-import org.springframework.beans.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +26,8 @@ import java.util.List;
  */
 @Service
 public class RoleServiceImpl implements IRoleService {
+    private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
+
     @Autowired
     private IRoleRepository roleRepository;
 
@@ -40,6 +40,12 @@ public class RoleServiceImpl implements IRoleService {
     @Autowired
     private IRoleApiRepository roleApiRepository;
 
+    @Autowired
+    private IApiPermissionRepository apiPermissionRepository;
+
+    @Autowired
+    private IComponentPermissionRepository componentPermissionRepository;
+
     @Override
     @Transactional
     public AjaxResult createRole(RoleEntity roleEntity) {
@@ -50,11 +56,44 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public AjaxResult editRole(RoleEntity roleEntity) {
+    public AjaxResult editRole(RoleEntity newRoleEntity) {
         //TODO:数据校验
-        RoleEntity oldEntity=this.roleRepository.findDistinctByRoleId(roleEntity.getRoleId());
-        BeanUtils.copyProperties(roleEntity,oldEntity);
-        this.roleRepository.save(oldEntity);
+
+        RoleEntity oldEntity=this.roleRepository.findDistinctByRoleId(newRoleEntity.getRoleId());
+
+        //处理服务端 API 权限关联关系
+        //TODO:自动级联更新？
+        //先删掉现有的 API 权限关联关系
+        this.roleApiRepository.deleteAllByRoleId(oldEntity.getRoleId());
+        List<RoleApiEntity> newRoleApiPermList=new ArrayList<>();
+        List<ApiPermissionEntity> newPermApiEntities=newRoleEntity.getApiEntities();
+        newPermApiEntities.forEach(entity->{
+            RoleApiEntity newRoleApiEntity=new RoleApiEntity();
+            newRoleApiEntity.setRoleId(newRoleEntity.getRoleId());
+            newRoleApiEntity.setApiPermissionId(entity.getApiPermissionId());
+            newRoleApiPermList.add(newRoleApiEntity);
+        });
+        logger.debug(newRoleApiPermList.toString());
+        this.roleApiRepository.saveAll(newRoleApiPermList);
+
+        //处理前端组件权限关联关系
+        //TODO:自动级联更新？
+        //先删掉现有的组件权限关联关系
+        this.roleComponentRepository.deleteAllByRoleId(oldEntity.getRoleId());
+        List<RoleComponentEntity> newRoleCompPermList=new ArrayList<>();
+        List<ComponentPermissionEntity> componentEntities=newRoleEntity.getComponentEntities();
+        componentEntities.forEach(entity->{
+            RoleComponentEntity newRoleCompEntity=new RoleComponentEntity();
+            newRoleCompEntity.setRoleId(newRoleEntity.getRoleId());
+            newRoleCompEntity.setComponentId(entity.getCompPermId());
+            newRoleCompPermList.add(newRoleCompEntity);
+        });
+        logger.debug(newRoleCompPermList.toString());
+        this.roleComponentRepository.saveAll(newRoleCompPermList);
+
+        //TODO:处理用户角色关联关系
+        //TODO:自动级联更新？
+        this.roleRepository.save(newRoleEntity);
         return AjaxResult.success("保存成功");
     }
 

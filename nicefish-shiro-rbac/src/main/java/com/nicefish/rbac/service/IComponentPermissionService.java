@@ -17,6 +17,8 @@ public interface IComponentPermissionService {
      */
     Page<ComponentPermissionEntity> getComponentPermissionTree(ComponentPermissionEntity componentPermissionEntity, Pageable pageable);
 
+    Iterable<ComponentPermissionEntity> getPermListAllByRole(RoleEntity roleEntity);
+
     ComponentPermissionEntity getComponentPermissionDetail(Integer compPermId);
 
     AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity);

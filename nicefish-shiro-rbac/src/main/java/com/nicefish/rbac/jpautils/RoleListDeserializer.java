@@ -25,6 +25,9 @@ public class RoleListDeserializer extends StdDeserializer<List<RoleEntity>> {
 
     @Override
     public List<RoleEntity> deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
+        System.out.println("==========================");
+        System.out.println("RoleListDeserializer..................");
+        System.out.println("==========================");
         return new ArrayList<>();
     }
 }
