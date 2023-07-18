@@ -40,15 +40,6 @@ public class UserController {
         return NiceFishSecurityUtils.getUserEntity();
     }
 
-    @PostMapping("/register")
-    @ResponseBody
-    public AjaxResult register(@RequestBody UserEntity userEntity) {
-        //TODO:与前端代码对接，让前端先加密一次传输过来
-        userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
-        userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
-        return userService.createUser(userEntity);
-    }
-
     @PostMapping("/update")
     @ResponseBody
     public AjaxResult updateUser(@RequestBody UserEntity userEntity) {
