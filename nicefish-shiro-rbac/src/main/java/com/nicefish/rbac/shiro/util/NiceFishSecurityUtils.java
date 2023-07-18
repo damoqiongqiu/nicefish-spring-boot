@@ -3,6 +3,7 @@ package com.nicefish.rbac.shiro.util;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -30,6 +31,10 @@ public class NiceFishSecurityUtils extends SecurityUtils{
         String realmName = principalCollection.getRealmNames().iterator().next();
         PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(userEntity, realmName);
         subject.runAs(newPrincipalCollection);
+    }
+
+    public static Session getSession(){
+        return SecurityUtils.getSubject().getSession();
     }
 
     public static Integer getUserId() {

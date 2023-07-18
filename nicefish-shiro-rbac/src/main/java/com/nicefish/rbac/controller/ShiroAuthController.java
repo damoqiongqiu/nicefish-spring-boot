@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,11 @@ public class ShiroAuthController {
             if(ObjectUtils.isEmpty(userInDB)){
                 return AjaxResult.failure("登录失败，用户名或密码错误。");
             }
+
+            Session session=NiceFishSecurityUtils.getSession();
+            session.setAttribute("userId",userInDB.getUserId());
+            session.setAttribute("userName",userInDB.getUserName());
+
             return AjaxResult.success(userInDB);
         } catch (AuthenticationException e) {
             return AjaxResult.failure(e.getMessage());
