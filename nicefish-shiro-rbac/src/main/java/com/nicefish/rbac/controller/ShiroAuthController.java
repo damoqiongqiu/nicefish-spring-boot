@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api("Shiro Auth Controller")
 @Controller
 @RequestMapping("/nicefish/auth/shiro")
+@RequiresPermissions("sys:manage:auth")
 public class ShiroAuthController {
     private static final Logger logger = LoggerFactory.getLogger(ShiroAuthController.class);
 

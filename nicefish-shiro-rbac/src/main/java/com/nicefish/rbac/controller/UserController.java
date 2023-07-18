@@ -5,6 +5,7 @@ import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Api("User Controller")
 @RestController
 @RequestMapping("/nicefish/auth/user")
+@RequiresPermissions("sys:manage:user")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
