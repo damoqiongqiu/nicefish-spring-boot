@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,15 +38,14 @@ public class ShiroAuthController {
             //调用 Shiro 的 API 尝试登录。
             SecurityUtils.getSubject().login(token);
 
-            //登录成功，查库，返回完整的用户信息，TODO:不返回密码
+            //查库，返回完整的用户信息，TODO:不返回密码
             UserEntity userInDB=this.userService.getUserByUserName(userName);
+            if(ObjectUtils.isEmpty(userInDB)){
+                return AjaxResult.failure("登录失败，用户名或密码错误。");
+            }
             return AjaxResult.success(userInDB);
         } catch (AuthenticationException e) {
-            String msg = "登录失败，用户名或密码错误。";
-            if (!StringUtils.isEmpty(e.getMessage())) {
-                msg = e.getMessage();
-            }
-            return AjaxResult.failure(msg);
+            return AjaxResult.failure(e.getMessage());
         }
     }
 
