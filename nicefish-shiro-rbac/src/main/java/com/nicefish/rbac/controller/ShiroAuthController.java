@@ -3,6 +3,7 @@ package com.nicefish.rbac.controller;
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
+import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -12,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Shiro 认证和授权相关的 API 。
@@ -47,6 +45,15 @@ public class ShiroAuthController {
         } catch (AuthenticationException e) {
             return AjaxResult.failure(e.getMessage());
         }
+    }
+
+    @PostMapping("/register")
+    @ResponseBody
+    public AjaxResult register(@RequestBody UserEntity userEntity) {
+        //TODO:与前端代码对接，让前端先加密一次传输过来
+        userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
+        userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
+        return userService.createUser(userEntity);
     }
 
     @GetMapping("/unauth")
