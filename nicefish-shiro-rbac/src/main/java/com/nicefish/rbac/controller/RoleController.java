@@ -4,6 +4,7 @@ import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
+import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IApiPermissionService;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import com.nicefish.rbac.service.IRoleService;
@@ -64,6 +65,14 @@ public class RoleController {
     public AjaxResult findRoleListByComponentId(@PathVariable(value="compPermId",required = true) int compPermId){
         ComponentPermissionEntity componentPermissionEntity =this.componentService.getComponentPermissionDetail(compPermId);
         List<RoleEntity> roleEntities= componentPermissionEntity.getRoleEntities();
+        return AjaxResult.success(roleEntities);
+    }
+
+    @RequestMapping(value = "/list-by-user-id/{userId}",method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult findRoleListByUserId(@PathVariable(value="userId",required = true) int userId){
+        UserEntity userEntity=this.userService.getUserByUserId(userId);
+        List<RoleEntity> roleEntities= userEntity.getRoleEntities();
         return AjaxResult.success(roleEntities);
     }
 

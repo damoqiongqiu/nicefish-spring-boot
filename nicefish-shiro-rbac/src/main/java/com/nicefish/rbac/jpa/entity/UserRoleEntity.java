@@ -9,14 +9,14 @@ import java.io.Serializable;
 @Entity
 @DynamicInsert
 @DynamicUpdate
+@IdClass(UserRoleEntity.class)
 @Table(name = "nicefish_rbac_user_role")
 public class UserRoleEntity implements Serializable {
     @Id
-
-    
     @Column(name="user_id")
     private Integer userId;
 
+    @Id
     @Column(name="role_id")
     private Integer roleId;
 

@@ -82,6 +82,12 @@ public class RoleServiceImpl implements IRoleService {
         return AjaxResult.success(newRoleEntity);
     }
 
+    /**
+     * 创建或更新角色。
+     * TODO:自动级联更新关联表？
+     * @param newRoleEntity
+     * @return
+     */
     @Override
     @Transactional
     public AjaxResult updateRole(RoleEntity newRoleEntity) {
@@ -90,28 +96,30 @@ public class RoleServiceImpl implements IRoleService {
         RoleEntity oldEntity=this.roleRepository.findDistinctByRoleId(newRoleEntity.getRoleId());
 
         //处理服务端 API 权限关联关系，先删掉现有的 API 权限关联关系
-        //TODO:自动级联更新？
-        this.roleApiRepository.deleteAllByRoleId(oldEntity.getRoleId());
+        this.roleApiRepository.deleteAllByRoleId(newRoleEntity.getRoleId());
         this.saveRoleApiPermissions(newRoleEntity);
 
         //处理前端组件权限关联关系，先删掉现有的组件权限关联关系
-        //TODO:自动级联更新？
-        this.roleComponentRepository.deleteAllByRoleId(oldEntity.getRoleId());
+        this.roleComponentRepository.deleteAllByRoleId(newRoleEntity.getRoleId());
         this.saveRoleComponentPermissions(newRoleEntity);
 
         //TODO:处理用户角色关联关系
-        //TODO:自动级联更新？
         this.roleRepository.save(newRoleEntity);
         return AjaxResult.success("保存成功");
     }
 
+    /**
+     * 删除角色，同时删除此角色上的关联关系。
+     * TODO:自动级联更新？
+     * @param roleId
+     * @return
+     */
     @Override
     @Transactional
     public int deleteRole(Integer roleId) {
         this.roleApiRepository.deleteAllByRoleId(roleId);
         this.roleComponentRepository.deleteAllByRoleId(roleId);
-        //TODO:处理用户角色关联关系
-        //TODO:自动级联更新？
+        this.userRoleRepository.deleteAllByRoleId(roleId);
         return this.roleRepository.deleteByRoleId(roleId);
     }
 

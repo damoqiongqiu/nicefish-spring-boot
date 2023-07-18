@@ -4,11 +4,9 @@ import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.core.utils.ServletUtil;
 import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import com.nicefish.rbac.exception.*;
-import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
-import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
-import com.nicefish.rbac.jpa.entity.RoleEntity;
-import com.nicefish.rbac.jpa.entity.UserEntity;
+import com.nicefish.rbac.jpa.entity.*;
 import com.nicefish.rbac.jpa.repository.IUserRepository;
+import com.nicefish.rbac.jpa.repository.IUserRoleRepository;
 import com.nicefish.rbac.service.IUserService;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
@@ -41,6 +39,9 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
+    @Autowired
+    private IUserRoleRepository userRoleRepository;
+
     @Override
     public AjaxResult resetPwd(Integer userId){
         //TODO:生成随机密码
@@ -68,6 +69,28 @@ public class UserServiceImpl implements IUserService {
         }
         userEntity=this.userRepository.save(userEntity);
         return new AjaxResult(true,userEntity);
+    }
+
+    /**
+     * 创建或更新 user-role 之间的关联关系
+     * @param userEntity
+     * @return
+     */
+    @Override
+    public AjaxResult updateUserRoleRelation(UserEntity userEntity) {
+        //先删除现有的关联关系记录
+        this.userRoleRepository.deleteByUserId(userEntity.getUserId());
+        //创建新的关联关系
+        List<UserRoleEntity> userRoleEntityList=new ArrayList<>();
+        Iterable<RoleEntity> roleEntities=userEntity.getRoleEntities();
+        roleEntities.forEach(roleEntity -> {
+            UserRoleEntity userRoleEntity=new UserRoleEntity();
+            userRoleEntity.setUserId(userEntity.getUserId());
+            userRoleEntity.setRoleId(roleEntity.getRoleId());
+            userRoleEntityList.add(userRoleEntity);
+        });
+        this.userRoleRepository.saveAll(userRoleEntityList);
+        return AjaxResult.success("保存成功");
     }
 
     @Transactional

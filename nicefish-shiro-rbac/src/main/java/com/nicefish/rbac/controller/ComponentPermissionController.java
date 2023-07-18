@@ -5,6 +5,7 @@ import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Api("Component Permission Management")
 @RestController
 @RequestMapping("/nicefish/auth/component-permission")
+@RequiresPermissions("sys:manage:component-permission")
 public class ComponentPermissionController {
     private static final Logger logger = LoggerFactory.getLogger(ComponentPermissionController.class);
 
