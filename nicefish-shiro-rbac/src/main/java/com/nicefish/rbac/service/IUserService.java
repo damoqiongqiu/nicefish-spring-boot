@@ -23,6 +23,8 @@ public interface IUserService {
 
     AjaxResult updateUser(UserEntity userEntity);
 
+    AjaxResult updateUserRoleRelation(UserEntity userEntity);
+
     Page<UserEntity> getUserList(UserEntity userEntity, Pageable pageable);
 
     Page<UserEntity> getAllocatedList(RoleEntity roleEntity, UserEntity userEntity, Pageable pageable);

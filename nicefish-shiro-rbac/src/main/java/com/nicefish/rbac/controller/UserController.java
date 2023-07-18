@@ -62,6 +62,12 @@ public class UserController {
         return AjaxResult.success(userService.saveUser(userEntity));
     }
 
+    @RequestMapping(value = "/update-user-role-relation",method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult updateUserRoleRelation(@RequestBody UserEntity userEntity){
+        return this.userService.updateUserRoleRelation(userEntity);
+    }
+
     @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
     @ResponseBody
     public Page<UserEntity> getUserList(@RequestBody UserEntity userEntity, @PathVariable(value="page",required = true) int page) {
