@@ -35,10 +35,8 @@ public class NiceFishLogoutFilter extends LogoutFilter {
         httpServletResponse.setHeader("XDomainRequestAllowed","1");
 
         Subject subject = getSubject(request, response);
-
         // Check if POST only logout is enabled
         if (isPostOnlyLogout()) {
-
             // check if the current request's method is a POST, if not redirect
             if (!WebUtils.toHttp(request).getMethod().toUpperCase(Locale.ENGLISH).equals("POST")) {
                 return onLogoutRequestNotAPost(request, response);

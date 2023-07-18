@@ -53,7 +53,7 @@ public class NiceFishSessionEntity implements Serializable {
     private Long timeout;
 
     @Column(name="expired")
-    private String expired;
+    private Boolean expired=false;
 
     @Column(name="host",nullable = false)
     private String host;
@@ -67,6 +67,10 @@ public class NiceFishSessionEntity implements Serializable {
     @Column(name="userAgent",nullable = false)
     private String userAgent;
 
+    /**
+     * Session 中的所有 K-V 都序列化在这个 JSON 字符串中。
+     * 为了跨项目场景下反序列化失败，此 JSON 字符串中的数据只包含 Java 基本类型，不处理自定义的类。
+     */
     @Lob
     @Column(name="session_data",columnDefinition="text")
     private String sessionData;
@@ -135,11 +139,11 @@ public class NiceFishSessionEntity implements Serializable {
         this.timeout = timeout;
     }
 
-    public String getExpired() {
+    public boolean isExpired() {
         return expired;
     }
 
-    public void setExpired(String expired) {
+    public void setExpired(boolean expired) {
         this.expired = expired;
     }
 
