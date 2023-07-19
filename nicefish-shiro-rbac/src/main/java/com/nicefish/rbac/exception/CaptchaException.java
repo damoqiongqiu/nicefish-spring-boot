@@ -12,6 +12,6 @@ public class CaptchaException extends NiceFishBaseException {
     private static final long serialVersionUID = 1L;
 
     public CaptchaException() {
-        super("user.jcaptcha.error");
+        super();
     }
 }

@@ -1,36 +1,44 @@
 package com.nicefish.core.exception;
 
 /**
- *
+ * NiceFish 的基础异常类，所有业务异常都应该继承此类。
+ * NiceFish 的日志分析工具可以针对此异常类的格式进行日志分析和审计。
  * @author 大漠穷秋
  */
 public class NiceFishBaseException extends RuntimeException {
+    //异常所属的业务模块
     private String module;
-    private String code;
-    private Object[] args;
-    private String defaultMessage;
 
-    public NiceFishBaseException(String module, String code, Object[] args, String defaultMessage) {
+    //异常代码
+    private String code;
+
+    //异常消息
+    private String message;
+
+    public NiceFishBaseException() {
+        super();
+    }
+
+    public NiceFishBaseException(Throwable cause) {
+        super(cause);
+    }
+
+    public NiceFishBaseException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public NiceFishBaseException(String module, String code, String message) {
         this.module = module;
         this.code = code;
-        this.args = args;
-        this.defaultMessage = defaultMessage;
+        this.message = message;
     }
 
-    public NiceFishBaseException(String module, String code, Object[] args) {
-        this(module, code, args, null);
+    public NiceFishBaseException(String message) {
+        this(null, null, message);
     }
 
-    public NiceFishBaseException(String module, String defaultMessage) {
-        this(module, null, null, defaultMessage);
-    }
-
-    public NiceFishBaseException(String code, Object[] args) {
-        this(null, code, args, null);
-    }
-
-    public NiceFishBaseException(String defaultMessage) {
-        this(null, null, null, defaultMessage);
+    public NiceFishBaseException(String module, String code) {
+        this(module, code, null);
     }
 
     public String getModule() {
@@ -41,11 +49,8 @@ public class NiceFishBaseException extends RuntimeException {
         return code;
     }
 
-    public Object[] getArgs() {
-        return args;
-    }
-
-    public String getDefaultMessage() {
-        return defaultMessage;
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

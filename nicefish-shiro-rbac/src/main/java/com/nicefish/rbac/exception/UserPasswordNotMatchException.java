@@ -8,8 +8,4 @@ import com.nicefish.core.exception.NiceFishBaseException;
  */
 public class UserPasswordNotMatchException extends NiceFishBaseException {
     private static final long serialVersionUID = 1L;
-
-    public UserPasswordNotMatchException() {
-        super("user.password.not.match");
-    }
 }

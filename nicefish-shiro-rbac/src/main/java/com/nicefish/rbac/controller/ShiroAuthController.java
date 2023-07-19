@@ -1,6 +1,9 @@
 package com.nicefish.rbac.controller;
 
 import com.nicefish.core.utils.AjaxResult;
+import com.nicefish.rbac.exception.CellphoneDuplicateException;
+import com.nicefish.rbac.exception.EmailDuplicateException;
+import com.nicefish.rbac.exception.UserNameDuplicateException;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import com.nicefish.rbac.service.IUserService;
@@ -41,7 +44,21 @@ public class ShiroAuthController {
         //TODO:与前端代码对接，让前端先加密一次传输过来
         userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
         userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
-        return userService.createUser(userEntity);
+
+        try {
+            userService.createUser(userEntity);
+        }catch (UserNameDuplicateException e){
+            logger.debug(e.toString());
+            return AjaxResult.failure("用户名或者邮箱已存在");
+        }catch (EmailDuplicateException e){
+            logger.debug(e.toString());
+            return AjaxResult.failure("相同的邮箱已存在");
+        }catch (CellphoneDuplicateException e){
+            logger.debug(e.toString());
+            return AjaxResult.failure("相同的手机号已存在");
+        }
+
+        return AjaxResult.success(userEntity);
     }
     
     /**
@@ -92,4 +109,5 @@ public class ShiroAuthController {
     public AjaxResult getMenus(@PathVariable(value = "userId",required = true) Integer userId){
         return this.componentPermissionService.getComponentPermissionByUserId(userId);
     }
+
 }
