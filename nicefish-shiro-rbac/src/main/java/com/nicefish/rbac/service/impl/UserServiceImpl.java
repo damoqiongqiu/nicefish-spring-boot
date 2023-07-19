@@ -1,14 +1,15 @@
 package com.nicefish.rbac.service.impl;
 
 import com.nicefish.core.utils.AjaxResult;
-import com.nicefish.core.utils.ServletUtil;
 import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.*;
 import com.nicefish.rbac.jpa.repository.IUserRepository;
 import com.nicefish.rbac.jpa.repository.IUserRoleRepository;
 import com.nicefish.rbac.service.IUserService;
+import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -276,25 +277,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserEntity checkUser(String userName, String password) throws UserNotExistsException,
-            CaptchaException, UserPasswordNotMatchException,
-            UserDeleteException, UserBlockedException {
-        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
-            throw new UserNotExistsException();
-        }
-        if (!StringUtils.isEmpty(ServletUtil.getRequest().getAttribute(NiceFishAuthConstants.CURRENT_CAPTCHA))) {
-            throw new CaptchaException();
-        }
-        if (password.length() < NiceFishAuthConstants.PASSWORD_MIN_LENGTH
-                || password.length() > NiceFishAuthConstants.PASSWORD_MAX_LENGTH) {
-            throw new UserPasswordNotMatchException();
-        }
-        if (userName.length() < NiceFishAuthConstants.USERNAME_MIN_LENGTH
-                || userName.length() > NiceFishAuthConstants.USERNAME_MAX_LENGTH) {
-            throw new UserPasswordNotMatchException();
-        }
-
+            UserPasswordNotMatchException,UserDeleteException, UserBlockedException {
         UserEntity userEntity = null;
-
         if(userName.matches(NiceFishAuthConstants.EMAIL_PATTERN)){
             userEntity = this.getUserByEmail(userName);
         }else if(userName.matches(NiceFishAuthConstants.MOBILE_PHONE_NUMBER_PATTERN)){
@@ -303,7 +287,7 @@ public class UserServiceImpl implements IUserService {
             userEntity=this.getUserByUserName(userName);
         }
 
-        if (userEntity == null) {
+        if (ObjectUtils.isEmpty(userEntity)) {
             throw new UserNotExistsException();
         }
 
@@ -312,7 +296,10 @@ public class UserServiceImpl implements IUserService {
             throw new UserPasswordNotMatchException();
         }
 
-        this.saveUser(userEntity);
+        Session session= NiceFishSecurityUtils.getSession();
+        session.setAttribute("userId",userEntity.getUserId());
+        session.setAttribute("userName",userEntity.getUserName());
+
         return userEntity;
     }
 

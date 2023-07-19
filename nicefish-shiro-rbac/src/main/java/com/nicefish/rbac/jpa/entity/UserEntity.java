@@ -49,8 +49,8 @@ public class UserEntity implements Serializable {
     @Column(name="salt")
     private String salt;
 
-    @Column(name="status",columnDefinition = "int default 1")
-    private Integer status=1;
+    @Column(name="status",columnDefinition = "int default 0")
+    private Integer status=0;
 
     @Column(name="remark")
     private String remark;

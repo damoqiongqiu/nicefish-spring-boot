@@ -60,8 +60,7 @@ public interface IUserService {
     String encryptPassword(String username, String password, String salt);
 
     UserEntity checkUser(String userName, String password)
-            throws UserNotExistsException,
-            CaptchaException, UserPasswordNotMatchException,
+            throws UserNotExistsException,UserPasswordNotMatchException,
             UserDeleteException, UserBlockedException;
 
     /**
@@ -70,5 +69,4 @@ public interface IUserService {
      * @return
      */
     Set<String> getPermStringsByUserId(Integer userId);
-
 }
