@@ -21,6 +21,7 @@ logging:
         com.nicefish: debug
         org.springframework: debug
         org.hibernate.SQL: debug
+        org.hibernate.type.descriptor.sql: TRACE
         org.hibernate.engine.QueryParameters: debug
         org.hibernate.engine.query.HQLQueryPlan: debug
         org.hibernate.type.descriptor.sql.BasicBinder: trace
@@ -52,11 +53,12 @@ spring:
     jpa:
         properties:
             hibernate:
-                hbm2ddl:
-                    auto: validate
                 dialect: org.hibernate.dialect.MySQL5InnoDBDialect
                 order_inserts: true
                 order_updates: true
+                format_sql: true
+                hbm2ddl:
+                    auto: validate
                 jdbc:
                     batch_size: 500
                     batch_versioned_data: true
