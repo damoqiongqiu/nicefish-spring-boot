@@ -11,6 +11,6 @@ public class RoleBlockedException extends NiceFishBaseException {
     private static final long serialVersionUID = 1L;
 
     public RoleBlockedException() {
-        super("role.blocked");
+        super();
     }
 }

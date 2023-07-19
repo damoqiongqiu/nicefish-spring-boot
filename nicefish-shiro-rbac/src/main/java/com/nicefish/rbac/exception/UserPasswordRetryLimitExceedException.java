@@ -10,7 +10,7 @@ import com.nicefish.core.exception.NiceFishBaseException;
 public class UserPasswordRetryLimitExceedException extends NiceFishBaseException {
     private static final long serialVersionUID = 1L;
 
-    public UserPasswordRetryLimitExceedException(int retryLimitCount) {
-        super("user.password.retry.limit.exceed", new Object[]{retryLimitCount});
+    public UserPasswordRetryLimitExceedException() {
+        super();
     }
 }

@@ -10,7 +10,7 @@ import com.nicefish.core.exception.NiceFishBaseException;
 public class LoginLimitException extends NiceFishBaseException {
     private static final long serialVersionUID = 1L;
 
-    public LoginLimitException(int retryLimitCount) {
-        super("user.password.retry.limit.count", new Object[]{retryLimitCount});
+    public LoginLimitException() {
+        super();
     }
 }
