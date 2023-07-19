@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 @Api("User Controller")
 @RestController
 @RequestMapping("/nicefish/auth/user")
-@RequiresPermissions("sys:manage:user")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -55,12 +54,14 @@ public class UserController {
 
     @PostMapping(value = "/update-user-role-relation")
     @ResponseBody
+    @RequiresPermissions("sys:manage:user")
     public AjaxResult updateUserRoleRelation(@RequestBody UserEntity userEntity){
         return this.userService.updateUserRoleRelation(userEntity);
     }
 
     @PostMapping(value = "/list/{page}")
     @ResponseBody
+    @RequiresPermissions("sys:manage:user")
     public Page<UserEntity> getUserList(@RequestBody UserEntity userEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10);
         Page<UserEntity> userList = userService.getUserList(userEntity,pageable);
@@ -69,6 +70,7 @@ public class UserController {
 
     @PostMapping(value = "/delete/{userId}")
     @ResponseBody
+    @RequiresPermissions("sys:manage:user")
     public AjaxResult deleteUser(@PathVariable(value="userId",required = true)Integer userId){
         //TODO:合法性校验，关联表操作校验，业务逻辑校验
         int affected=userService.deleteByUserId(userId);
@@ -100,6 +102,7 @@ public class UserController {
 
     @PostMapping("/remove")
     @ResponseBody
+    @RequiresPermissions("sys:manage:user")
     public AjaxResult delUser(Integer[] ids) {
         try {
             return AjaxResult.success(userService.deleteByIds(ids));
@@ -110,6 +113,7 @@ public class UserController {
 
     @PostMapping("/changeStatus")
     @ResponseBody
+    @RequiresPermissions("sys:manage:user")
     public AjaxResult changeStatus(UserEntity userEntity) {
         return AjaxResult.success(userService.setUserStatus(userEntity));
     }

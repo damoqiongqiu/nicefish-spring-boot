@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public interface IUserService {
 
-    AjaxResult createUser(UserEntity userEntity);
+    UserEntity createUser(UserEntity userEntity);
 
     AjaxResult resetPwd(Integer userId);
 

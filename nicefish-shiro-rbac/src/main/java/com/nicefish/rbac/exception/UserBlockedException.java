@@ -9,8 +9,4 @@ import com.nicefish.core.exception.NiceFishBaseException;
  */
 public class UserBlockedException extends NiceFishBaseException {
     private static final long serialVersionUID = 1L;
-
-    public UserBlockedException() {
-        super();
-    }
 }

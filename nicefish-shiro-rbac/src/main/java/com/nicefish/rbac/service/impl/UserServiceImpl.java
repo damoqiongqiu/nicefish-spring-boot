@@ -96,35 +96,25 @@ public class UserServiceImpl implements IUserService {
 
     @Transactional
     @Override
-    public AjaxResult createUser(UserEntity userEntity){
-        String msg="";
-        boolean isSuccess=true;
+    public UserEntity createUser(UserEntity userEntity){
+        UserEntity temp=this.userRepository.findDistinctByUserName(userEntity.getUserName());
 
-        if(this.userRepository.findDistinctByUserName(userEntity.getUserName())!=null){
-            msg="用户名已存在";
-            isSuccess=false;
-        }
-        if(this.userRepository.findDistinctByEmail(userEntity.getEmail())!=null){
-            msg="邮箱已存在";
-            isSuccess=false;
+        if(!ObjectUtils.isEmpty(temp)){
+            throw new UserNameDuplicateException();
         }
 
-        if(!StringUtils.isEmpty(userEntity.getCellphone()) && !ObjectUtils.isEmpty(this.userRepository.findDistinctTopByCellphone(userEntity.getCellphone()))){
-            msg="手机号已存在";
-            isSuccess=false;
+        temp=this.userRepository.findDistinctByEmail(userEntity.getEmail());
+        if(!ObjectUtils.isEmpty(temp)){
+            throw new EmailDuplicateException();
         }
 
-        AjaxResult ajaxResult =null;
-        if(!isSuccess){
-            ajaxResult =new AjaxResult(false,msg);
-            logger.info("用户信息校验失败，"+ ajaxResult.toString());
-            return ajaxResult;
+        temp=this.userRepository.findDistinctTopByCellphone(userEntity.getCellphone());
+        if(!ObjectUtils.isEmpty(temp)){
+            throw new CellphoneDuplicateException();
         }
 
-        //保存用户数据
         userEntity=this.userRepository.save(userEntity);
-        ajaxResult =new AjaxResult(true,userEntity);
-        return ajaxResult;
+        return userEntity;
     }
     
     @Override
