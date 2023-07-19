@@ -15,4 +15,6 @@ public interface IComponentPermissionRepository extends PagingAndSortingReposito
     ComponentPermissionEntity findDistinctByCompPermId(Integer compPermId);
 
     Iterable<ComponentPermissionEntity> findAllByRoleEntitiesIn(List<RoleEntity> roleEntityList);
+
+    Iterable<ComponentPermissionEntity> findDistinctByRoleEntitiesIn(List<RoleEntity> roleEntityList);
 }

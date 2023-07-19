@@ -28,7 +28,7 @@ public class ApiPermissionController {
     @Autowired
     protected IApiPermissionService apiPermService;
 
-    @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
+    @PostMapping(value = "/list/{page}")
     @ResponseBody
     public Page<ApiPermissionEntity> getPermissionList(@RequestBody ApiPermissionEntity apiPermissionEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10);
@@ -36,37 +36,37 @@ public class ApiPermissionController {
         return permList;
     }
 
-    @RequestMapping(value = "/list-all",method = RequestMethod.POST)
+    @PostMapping(value = "/list-all")
     @ResponseBody
     public Iterable<ApiPermissionEntity> getPermissionListAll(@RequestBody ApiPermissionEntity apiPermissionEntity) {
         return apiPermService.getPermListAll(apiPermissionEntity);
     }
 
-    @RequestMapping(value = "/list-all-by-role",method = RequestMethod.POST)
+    @PostMapping(value = "/list-all-by-role")
     @ResponseBody
     public Iterable<ApiPermissionEntity> getPermissionListByRole(@RequestBody RoleEntity roleEntity) {
         return apiPermService.getPermListAllByRole(roleEntity);
     }
 
-    @RequestMapping(value = "/detail/{apiPermissionId}",method = RequestMethod.GET)
+    @GetMapping(value = "/detail/{apiPermissionId}")
     @ResponseBody
     public AjaxResult getApiPermissionDetail(@PathVariable(value = "apiPermissionId",required = true) Integer apiPermissionId){
         return AjaxResult.success(this.apiPermService.getApiPermissionById(apiPermissionId));
     }
 
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     @ResponseBody
     public AjaxResult createApiPermission(@RequestBody ApiPermissionEntity apiPermissionEntity){
         return this.apiPermService.createApiPermission(apiPermissionEntity);
     }
 
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     @ResponseBody
     public AjaxResult updatePermission(@RequestBody ApiPermissionEntity apiPermissionEntity){
         return this.apiPermService.updatePermission(apiPermissionEntity);
     }
 
-    @RequestMapping(value = "/delete/{apiPermissionId}",method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/delete/{apiPermissionId}")
     @ResponseBody
     public AjaxResult deleteByApiId(@PathVariable(value="apiPermissionId",required = true)Integer apiPermissionId){
         //TODO:数据校验，数据关联性测试

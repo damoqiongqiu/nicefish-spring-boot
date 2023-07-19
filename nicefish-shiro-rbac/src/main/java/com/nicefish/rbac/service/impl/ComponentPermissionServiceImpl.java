@@ -4,7 +4,9 @@ package com.nicefish.rbac.service.impl;
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
+import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.jpa.repository.IComponentPermissionRepository;
+import com.nicefish.rbac.jpa.repository.IUserRepository;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,9 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
 
     @Autowired
     private IComponentPermissionRepository componentPermissionRepository;
+
+    @Autowired
+    private IUserRepository userRepository;
 
     /**
      * 此方法从根节点开始，包含所有层级上的子节点，带分页
@@ -88,8 +93,10 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
     public AjaxResult updateComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
         //TODO:数据校验
         ComponentPermissionEntity oldEntity=this.componentPermissionRepository.findDistinctByCompPermId(componentPermissionEntity.getCompPermId());
-        componentPermissionEntity.setParentEntity(oldEntity.getParentEntity());
-        componentPermissionEntity.setChildren(oldEntity.getChildren());
+        if(!ObjectUtils.isEmpty(oldEntity)){
+            componentPermissionEntity.setParentEntity(oldEntity.getParentEntity());
+            componentPermissionEntity.setChildren(oldEntity.getChildren());
+        }
         this.componentPermissionRepository.save(componentPermissionEntity);
         return AjaxResult.success("保存成功");
     }
@@ -98,5 +105,13 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
     public AjaxResult deleteComponentPermission(Integer compPermId) {
         this.componentPermissionRepository.deleteById(compPermId);
         return AjaxResult.success();
+    }
+
+    @Override
+    public AjaxResult getComponentPermissionByUserId(Integer userId) {
+        UserEntity userEntity=this.userRepository.findDistinctByUserId(userId);
+        List<RoleEntity> roleEntities=userEntity.getRoleEntities();
+        Iterable<ComponentPermissionEntity> componentPermissionEntities=this.componentPermissionRepository.findDistinctByRoleEntitiesIn(roleEntities);
+        return AjaxResult.success(componentPermissionEntities);
     }
 }

@@ -17,6 +17,7 @@ import java.util.List;
  * - 后端权限是指在后端 API 接口上的权限控制，比如一个 API 接口是否需要登录才能访问，是否需要某个角色才能访问，是否需要某个权限才能访问等。
  * 
  * ApiPermissionEntity 用来定义服务端 API 接口的权限，对应数据库中的 nicefish_rbac_api 表。
+ * 需要被保护的服务端 API 接口使用此 Entity 进行权限定义，不需要保护的接口由业务代码自行处理。
  * 
  * @see ComponentPermissionEntity
  * @author 大漠穷秋

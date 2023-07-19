@@ -44,7 +44,7 @@ public class RoleController {
     @Autowired
     protected IComponentPermissionService componentService;
 
-    @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
+    @PostMapping(value = "/list/{page}")
     @ResponseBody
     public Page<RoleEntity> getRoleList(@RequestBody RoleEntity roleEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10);
@@ -52,7 +52,7 @@ public class RoleController {
         return roleList;
     }
 
-    @RequestMapping(value = "/list-by-api-id/{apiPermissionId}",method = RequestMethod.GET)
+    @GetMapping(value = "/list-by-api-id/{apiPermissionId}")
     @ResponseBody
     public AjaxResult findRoleListByApiId(@PathVariable(value="apiPermissionId",required = true) int apiPermissionId){
         ApiPermissionEntity apiPermissionEntity =this.apiPermissionService.getApiPermissionById(apiPermissionId);
@@ -60,7 +60,7 @@ public class RoleController {
         return AjaxResult.success(roleEntities);
     }
 
-    @RequestMapping(value = "/list-by-component-id/{compPermId}",method = RequestMethod.GET)
+    @GetMapping(value = "/list-by-component-id/{compPermId}")
     @ResponseBody
     public AjaxResult findRoleListByComponentId(@PathVariable(value="compPermId",required = true) int compPermId){
         ComponentPermissionEntity componentPermissionEntity =this.componentService.getComponentPermissionDetail(compPermId);
@@ -68,7 +68,7 @@ public class RoleController {
         return AjaxResult.success(roleEntities);
     }
 
-    @RequestMapping(value = "/list-by-user-id/{userId}",method = RequestMethod.GET)
+    @GetMapping(value = "/list-by-user-id/{userId}")
     @ResponseBody
     public AjaxResult findRoleListByUserId(@PathVariable(value="userId",required = true) int userId){
         UserEntity userEntity=this.userService.getUserByUserId(userId);
@@ -76,19 +76,19 @@ public class RoleController {
         return AjaxResult.success(roleEntities);
     }
 
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     @ResponseBody
     public AjaxResult createRole(@RequestBody RoleEntity roleEntity){
         return this.roleService.createRole(roleEntity);
     }
 
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     @ResponseBody
     public AjaxResult updateRole(@RequestBody RoleEntity roleEntity){
         return this.roleService.updateRole(roleEntity);
     }
 
-    @RequestMapping(value = "/delete/{roleId}",method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/delete/{roleId}")
     @ResponseBody
     public AjaxResult deleteRole(@PathVariable(value="roleId",required = true)Integer roleId){
         int affected= this.roleService.deleteRole(roleId);
@@ -99,13 +99,13 @@ public class RoleController {
         }
     }
     
-    @RequestMapping(value = "/detail/{roleId}",method = RequestMethod.GET)
+    @GetMapping(value = "/detail/{roleId}")
     @ResponseBody
     public RoleEntity getRoleDetail(@PathVariable(value = "roleId",required = true) Integer roleId){
         return this.roleService.getRoleById(roleId);
     }
 
-    @RequestMapping(value = "/add-auth-users/{roleId}/{userIds}",method = RequestMethod.POST)
+    @PostMapping(value = "/add-auth-users/{roleId}/{userIds}")
     @ResponseBody
     public AjaxResult addAuthUsers(
             @PathVariable(value = "roleId",required = true) Integer roleId,
@@ -114,7 +114,7 @@ public class RoleController {
         return this.roleService.addAuthUsers(roleId,userIds);
     }
 
-    @RequestMapping(value = "/del-auth-users/{roleId}/{userIds}",method = RequestMethod.POST)
+    @PostMapping(value = "/del-auth-users/{roleId}/{userIds}")
     @ResponseBody
     public AjaxResult delAuthUsers(
             @PathVariable(value = "roleId",required = true) Integer roleId,
