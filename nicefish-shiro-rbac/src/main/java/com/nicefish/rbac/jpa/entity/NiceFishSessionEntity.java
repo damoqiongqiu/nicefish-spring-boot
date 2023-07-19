@@ -49,6 +49,7 @@ public class NiceFishSessionEntity implements Serializable {
     @Column(name="max_inactive_interval")
     private Integer maxInactiveInteval;
 
+    //Session 有效时间，单位 ms
     @Column(name="timeout")
     private Long timeout;
 

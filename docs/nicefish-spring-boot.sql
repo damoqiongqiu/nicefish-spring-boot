@@ -246,7 +246,8 @@ CREATE TABLE `nicefish_rbac_session` (
 /*Data for the table `nicefish_rbac_session` */
 
 insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_name`,`creation_time`,`expiry_time`,`last_access_time`,`max_inactive_interval`,`timeout`,`expired`,`host`,`os`,`browser`,`user_agent`,`session_data`) values 
-('421922c4-23eb-46eb-b48d-6992059d529c',NULL,2,'admin@126.com','2023-07-18 21:38:25',NULL,'2023-07-18 21:41:03',NULL,300000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL);
+('963ed165-4738-4470-8616-07345e9cdce7',NULL,2,'admin@126.com','2023-07-19 13:16:30',NULL,'2023-07-19 13:17:12',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('dfd402e3-6c7d-4ff2-961b-f1c6cc85701c',NULL,NULL,NULL,'2023-07-19 13:18:09',NULL,'2023-07-19 13:18:37',NULL,300000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL);
 
 /*Table structure for table `nicefish_rbac_user` */
 

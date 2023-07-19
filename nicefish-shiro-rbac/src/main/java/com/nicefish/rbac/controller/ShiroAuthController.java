@@ -11,7 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Shiro 认证和授权相关的 API 。
@@ -57,5 +62,24 @@ public class ShiroAuthController {
         }
     }
 
-    //logout 由 NiceFishLogoutFilter 过滤器处理。
+    @GetMapping("/logout")
+    @ResponseBody
+    public AjaxResult logout(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            NiceFishSecurityUtils.getSubject().logout();
+
+            //把请求端的所有 cookie 全部标记成失效
+            Cookie[] cookies=request.getCookies();
+            if(!ObjectUtils.isEmpty(cookies)){
+                for(Cookie cookie:cookies){
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+
+            return AjaxResult.success();
+        } catch (AuthenticationException e) {
+            return AjaxResult.failure(e.getMessage());
+        }
+    }
 }

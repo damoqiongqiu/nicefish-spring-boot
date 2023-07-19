@@ -4,8 +4,6 @@ import com.google.code.kaptcha.Constants;
 import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -20,14 +18,6 @@ public class NiceFishCaptchaValidateFilter extends AccessControlFilter {
 
     private String captchaType = "math";
 
-    public void setCaptchaEnabled(boolean captchaEnabled) {
-        this.captchaEnabled = captchaEnabled;
-    }
-
-    public void setCaptchaType(String captchaType) {
-        this.captchaType = captchaType;
-    }
-
     @Override
     public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         request.setAttribute(NiceFishAuthConstants.CURRENT_ENABLED, captchaEnabled);
@@ -37,21 +27,15 @@ public class NiceFishCaptchaValidateFilter extends AccessControlFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        if (captchaEnabled == false || !"post".equals(httpServletRequest.getMethod().toLowerCase())) {
-            return true;
+        if (!this.captchaEnabled)  return true;
+
+        HttpServletRequest httpReq = (HttpServletRequest) request;
+        String code = (String)NiceFishSecurityUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        String validateCode=httpReq.getParameter(NiceFishAuthConstants.CURRENT_VALIDATECODE);
+        if (!code.equalsIgnoreCase(validateCode)) {
+            return false;
         }
 
-        Object obj = NiceFishSecurityUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-        if(ObjectUtils.isEmpty(obj)){
-            return false;
-        }else{
-            String code = String.valueOf(obj);
-            String validateCode=httpServletRequest.getParameter(NiceFishAuthConstants.CURRENT_VALIDATECODE);
-            if (StringUtils.isEmpty(validateCode) || !validateCode.equalsIgnoreCase(code)) {
-                return false;
-            }
-        }
         return true;
     }
 
@@ -59,5 +43,21 @@ public class NiceFishCaptchaValidateFilter extends AccessControlFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         request.setAttribute(NiceFishAuthConstants.CURRENT_CAPTCHA, NiceFishAuthConstants.CAPTCHA_ERROR);
         return true;
+    }
+
+    public boolean isCaptchaEnabled() {
+        return captchaEnabled;
+    }
+
+    public void setCaptchaEnabled(boolean captchaEnabled) {
+        this.captchaEnabled = captchaEnabled;
+    }
+
+    public String getCaptchaType() {
+        return captchaType;
+    }
+
+    public void setCaptchaType(String captchaType) {
+        this.captchaType = captchaType;
     }
 }
