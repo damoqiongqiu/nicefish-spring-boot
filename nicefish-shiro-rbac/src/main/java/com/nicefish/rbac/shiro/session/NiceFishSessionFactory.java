@@ -1,13 +1,13 @@
 package com.nicefish.rbac.shiro.session;
 
 import com.nicefish.core.utils.IPUtil;
-import com.nicefish.core.utils.ServletUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SimpleSessionFactory;
 import org.apache.shiro.web.session.mgt.WebSessionContext;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -26,14 +26,17 @@ public class NiceFishSessionFactory extends SimpleSessionFactory {
             String ip= IPUtil.getIpAddr(request);
             session.setAttribute("host",ip);
 
-            String userAgentString=ServletUtil.getRequest().getHeader("User-Agent");
-            session.setAttribute("userAgent",userAgentString);
+            ServletRequest servletRequest=sessionContext.getServletRequest();
+            if(servletRequest instanceof HttpServletRequest){
+                String userAgentString=((HttpServletRequest)servletRequest).getHeader("User-Agent");
+                session.setAttribute("userAgent",userAgentString);
 
-            UserAgent userAgent = UserAgent.parseUserAgentString(userAgentString);
-            String os = userAgent.getOperatingSystem().getName();
-            String browser = userAgent.getBrowser().getName();
-            session.setAttribute("os",os);
-            session.setAttribute("browser",browser);
+                UserAgent userAgent = UserAgent.parseUserAgentString(userAgentString);
+                String os = userAgent.getOperatingSystem().getName();
+                String browser = userAgent.getBrowser().getName();
+                session.setAttribute("os",os);
+                session.setAttribute("browser",browser);
+            }
         }
         return session;
     }

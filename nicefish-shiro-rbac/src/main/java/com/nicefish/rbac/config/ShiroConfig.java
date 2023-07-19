@@ -2,12 +2,9 @@ package com.nicefish.rbac.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.nicefish.rbac.shiro.filter.NiceFishCaptchaValidateFilter;
-import com.nicefish.rbac.shiro.filter.NiceFishLogoutFilter;
-import com.nicefish.rbac.shiro.filter.NiceFishUserFilter;
 import com.nicefish.rbac.shiro.realm.NiceFishMySQLRealm;
 import com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO;
 import com.nicefish.rbac.shiro.session.NiceFishSessionFactory;
-
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -82,9 +79,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
-        filters.put("captchaValidate", captchaValidateFilter());
-        filters.put("user", userFilter());
-        filters.put("fishLogoutFilter",logoutFilter());
+        filters.put("captchaValidateFilter", captchaValidateFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
         //TODO:所有静态资源交给Nginx管理，删掉这里关于静态资源的配置
@@ -103,18 +98,15 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         filterChainDefinitionMap.put("/swagger-resources", "anon");
         filterChainDefinitionMap.put("/nicefish/auth/captcha/captchaImage**", "anon");
-        filterChainDefinitionMap.put("/nicefish/auth/shiro/logout", "fishLogoutFilter");
 
         //需要加验证码保护的接口
         //TODO:前端需要改成动态显示验证码的方式，默认不显示验证码，当访问次数过于频繁的时候，才显示验证码。
-        filterChainDefinitionMap.put("/nicefish/cms/post/write-post", "captchaValidate");
-        filterChainDefinitionMap.put("/nicefish/cms/post/update-post", "captchaValidate");
-        filterChainDefinitionMap.put("/nicefish/cms/comment/write-comment", "captchaValidate");
-        filterChainDefinitionMap.put("/nicefish/auth/user/register", "anon,captchaValidate");
-        filterChainDefinitionMap.put("/nicefish/auth/shiro/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/nicefish/cms/post/write-post", "captchaValidateFilter");
+        filterChainDefinitionMap.put("/nicefish/cms/post/update-post", "captchaValidateFilter");
+        filterChainDefinitionMap.put("/nicefish/cms/comment/write-comment", "captchaValidateFilter");
+        filterChainDefinitionMap.put("/nicefish/auth/user/register", "anon,captchaValidateFilter");
+        filterChainDefinitionMap.put("/nicefish/auth/shiro/login", "anon,captchaValidateFilter");
 
-        //其它所有请求全部交给userFilter过滤
-        filterChainDefinitionMap.put("/*", "user");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
@@ -220,16 +212,6 @@ public class ShiroConfig {
         return niceFishCaptchaValidateFilter;
     }
 
-    public NiceFishLogoutFilter logoutFilter(){
-        NiceFishLogoutFilter niceFishLogoutFilter =new NiceFishLogoutFilter();
-        return niceFishLogoutFilter;
-    }
-
-    public NiceFishUserFilter userFilter(){
-        NiceFishUserFilter niceFishUserFilter =new NiceFishUserFilter();
-        return niceFishUserFilter;
-    }
-
     public SimpleCookie rememberMeCookie() {
         SimpleCookie cookie = new SimpleCookie("rememberMe");
         cookie.setDomain(domain);
@@ -242,7 +224,7 @@ public class ShiroConfig {
     public CookieRememberMeManager rememberMeManager() {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
-        cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));
+        cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));//FIXME:Generate Cipher Key
         return cookieRememberMeManager;
     }
 

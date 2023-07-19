@@ -5,6 +5,8 @@ import com.nicefish.rbac.service.INiceFishSessionService;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 
@@ -23,6 +25,8 @@ import java.util.Date;
  * @author 大漠穷秋
  */
 public class NiceFishMySQLSessionDAO extends EnterpriseCacheSessionDAO {
+    private static final Logger logger = LoggerFactory.getLogger(NiceFishMySQLSessionDAO.class);
+
     @Autowired
     private INiceFishSessionService sessionService;
 
@@ -66,6 +70,7 @@ public class NiceFishMySQLSessionDAO extends EnterpriseCacheSessionDAO {
      */
     @Override
     protected void doUpdate(Session session) {
+        logger.debug("update session..."+session.toString());
         SimpleSession simpleSession=(SimpleSession)session;
         NiceFishSessionEntity entity =new NiceFishSessionEntity();
         entity.setSessionId((String)simpleSession.getId());
@@ -93,6 +98,7 @@ public class NiceFishMySQLSessionDAO extends EnterpriseCacheSessionDAO {
      */
     @Override
     protected void doDelete(Session session) {
+        logger.debug("delete session..."+session.toString());
         NiceFishSessionEntity sessionEntity=this.sessionService.findDistinctBySessionId((String)session.getId());
         sessionEntity.setExpired(true);
         this.sessionService.saveSession(sessionEntity);
