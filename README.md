@@ -32,6 +32,8 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 - 修改 application.yml 配置文件，把 MySQL 改成你自己的配置
 - 配置 Maven ，使用阿里云的源
 - 启动 nicefish-cms 模块下的 NiceFishApplication.java
+- Swagger 接口文档地址：http://localhost:8080/swagger-ui.html
+- druid 监控地址：http://localhost:8080/druid/sql.html
 
 ## 4.项目模块依赖关系
 
