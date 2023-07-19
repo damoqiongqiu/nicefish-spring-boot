@@ -2,7 +2,7 @@ package com.nicefish.rbac.shiro.filter;
 
 import com.google.code.kaptcha.Constants;
 import com.nicefish.rbac.constant.NiceFishAuthConstants;
-import org.apache.shiro.SecurityUtils;
+import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -42,7 +42,7 @@ public class NiceFishCaptchaValidateFilter extends AccessControlFilter {
             return true;
         }
 
-        Object obj = SecurityUtils.getSubject().getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        Object obj = NiceFishSecurityUtils.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if(ObjectUtils.isEmpty(obj)){
             return false;
         }else{

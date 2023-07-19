@@ -5,15 +5,12 @@ import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import io.swagger.annotations.Api;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,30 +26,6 @@ public class ShiroAuthController {
     @Autowired
     protected IUserService userService;
 
-    @PostMapping("/login")
-    @ResponseBody
-    public AjaxResult login(String userName, String password, Boolean rememberMe) {
-        try {
-            UsernamePasswordToken token = new UsernamePasswordToken(userName, password, rememberMe);
-            //调用 Shiro 的 API 尝试登录。
-            SecurityUtils.getSubject().login(token);
-
-            //查库，返回完整的用户信息，TODO:不返回密码
-            UserEntity userInDB=this.userService.getUserByUserName(userName);
-            if(ObjectUtils.isEmpty(userInDB)){
-                return AjaxResult.failure("登录失败，用户名或密码错误。");
-            }
-
-            Session session=NiceFishSecurityUtils.getSession();
-            session.setAttribute("userId",userInDB.getUserId());
-            session.setAttribute("userName",userInDB.getUserName());
-
-            return AjaxResult.success(userInDB);
-        } catch (AuthenticationException e) {
-            return AjaxResult.failure(e.getMessage());
-        }
-    }
-
     @PostMapping("/register")
     @ResponseBody
     public AjaxResult register(@RequestBody UserEntity userEntity) {
@@ -61,9 +34,28 @@ public class ShiroAuthController {
         userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
         return userService.createUser(userEntity);
     }
-
-    @GetMapping("/unauth")
-    public String unauth() {
-        return "error/unauth";
+    
+    /**
+     * 调用 Shiro 的 API 尝试登录，Shiro 会在内部调用 NiceFishMySQLRealm.doGetAuthenticationInfo 进行验证。
+     * 关键调用轨迹：ShiroAuthController.login->NiceFishMySQLRealm.doGetAuthenticationInfo->UserServiceImpl.checkUser
+     * TODO:要求前端代码对 password 先进行一次加密再调用此接口登录。
+     * @param userName   用户名
+     * @param password   密码
+     * @param rememberMe 记住我
+     * @return
+     */
+    @PostMapping("/login")
+    @ResponseBody
+    public AjaxResult login(String userName, String password, Boolean rememberMe) {
+        try {
+            UsernamePasswordToken token = new UsernamePasswordToken(userName, password, rememberMe);
+            NiceFishSecurityUtils.getSubject().login(token);
+            UserEntity userEntity=NiceFishSecurityUtils.getUserEntity();
+            return AjaxResult.success(userEntity);
+        } catch (AuthenticationException e) {
+            return AjaxResult.failure(e.getMessage());
+        }
     }
+
+    //logout 由 NiceFishLogoutFilter 过滤器处理。
 }
