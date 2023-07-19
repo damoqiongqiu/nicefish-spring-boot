@@ -96,6 +96,7 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
         if(!ObjectUtils.isEmpty(oldEntity)){
             componentPermissionEntity.setParentEntity(oldEntity.getParentEntity());
             componentPermissionEntity.setChildren(oldEntity.getChildren());
+            componentPermissionEntity.setRoleEntities(oldEntity.getRoleEntities());
         }
         this.componentPermissionRepository.save(componentPermissionEntity);
         return AjaxResult.success("保存成功");
