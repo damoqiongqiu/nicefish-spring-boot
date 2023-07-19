@@ -26,6 +26,15 @@ public class ShiroAuthController {
     @Autowired
     protected IUserService userService;
 
+    @PostMapping("/register")
+    @ResponseBody
+    public AjaxResult register(@RequestBody UserEntity userEntity) {
+        //TODO:与前端代码对接，让前端先加密一次传输过来
+        userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
+        userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
+        return userService.createUser(userEntity);
+    }
+    
     /**
      * 调用 Shiro 的 API 尝试登录，Shiro 会在内部调用 NiceFishMySQLRealm.doGetAuthenticationInfo 进行验证。
      * 关键调用轨迹：ShiroAuthController.login->NiceFishMySQLRealm.doGetAuthenticationInfo->UserServiceImpl.checkUser
@@ -48,17 +57,5 @@ public class ShiroAuthController {
         }
     }
 
-    @PostMapping("/register")
-    @ResponseBody
-    public AjaxResult register(@RequestBody UserEntity userEntity) {
-        //TODO:与前端代码对接，让前端先加密一次传输过来
-        userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
-        userEntity.setPassword(userService.encryptPassword(userEntity.getUserName(), userEntity.getPassword(), userEntity.getSalt()));
-        return userService.createUser(userEntity);
-    }
-
-    @GetMapping("/unauth")
-    public String unauth() {
-        return "error/unauth";
-    }
+    //logout 由 NiceFishLogoutFilter 过滤器处理。
 }
