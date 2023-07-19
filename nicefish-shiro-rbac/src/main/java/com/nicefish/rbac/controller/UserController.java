@@ -53,13 +53,13 @@ public class UserController {
         return AjaxResult.success(userService.saveUser(userEntity));
     }
 
-    @RequestMapping(value = "/update-user-role-relation",method = RequestMethod.POST)
+    @PostMapping(value = "/update-user-role-relation")
     @ResponseBody
     public AjaxResult updateUserRoleRelation(@RequestBody UserEntity userEntity){
         return this.userService.updateUserRoleRelation(userEntity);
     }
 
-    @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
+    @PostMapping(value = "/list/{page}")
     @ResponseBody
     public Page<UserEntity> getUserList(@RequestBody UserEntity userEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10);
@@ -67,7 +67,7 @@ public class UserController {
         return userList;
     }
 
-    @RequestMapping(value = "/delete/{userId}",method = RequestMethod.DELETE)
+    @PostMapping(value = "/delete/{userId}")
     @ResponseBody
     public AjaxResult deleteUser(@PathVariable(value="userId",required = true)Integer userId){
         //TODO:合法性校验，关联表操作校验，业务逻辑校验
@@ -80,7 +80,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/detail/{userId}",method = RequestMethod.GET)
+    @GetMapping(value = "/detail/{userId}")
     @ResponseBody
     public AjaxResult getUserDetail(@PathVariable(value = "userId",required = true) Integer userId){
         UserEntity userEntity=userService.getUserByUserId(userId);

@@ -2,6 +2,7 @@ package com.nicefish.rbac.controller;
 
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.UserEntity;
+import com.nicefish.rbac.service.IComponentPermissionService;
 import com.nicefish.rbac.service.IUserService;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import io.swagger.annotations.Api;
@@ -30,6 +31,9 @@ public class ShiroAuthController {
 
     @Autowired
     protected IUserService userService;
+
+    @Autowired
+    protected IComponentPermissionService componentPermissionService;
 
     @PostMapping("/register")
     @ResponseBody
@@ -81,5 +85,11 @@ public class ShiroAuthController {
         } catch (AuthenticationException e) {
             return AjaxResult.failure(e.getMessage());
         }
+    }
+
+    @GetMapping(value = "/menu/{userId}")
+    @ResponseBody
+    public AjaxResult getMenus(@PathVariable(value = "userId",required = true) Integer userId){
+        return this.componentPermissionService.getComponentPermissionByUserId(userId);
     }
 }

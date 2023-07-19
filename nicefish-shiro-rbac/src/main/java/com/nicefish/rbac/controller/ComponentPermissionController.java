@@ -29,7 +29,7 @@ public class ComponentPermissionController {
     @Autowired
     private IComponentPermissionService componentService;
 
-    @RequestMapping(value = "/list/{page}",method = RequestMethod.POST)
+    @PostMapping(value = "/list/{page}")
     @ResponseBody
     public Page<ComponentPermissionEntity> getPermissionList(@RequestBody ComponentPermissionEntity componentPermissionEntity, @PathVariable(value="page",required = true) int page) {
         Pageable pageable= PageRequest.of(page-1,10,new Sort(Sort.Direction.ASC,"displayOrder"));
@@ -38,31 +38,31 @@ public class ComponentPermissionController {
         return compoPermList;
     }
 
-    @RequestMapping(value = "/list-all-by-role",method = RequestMethod.POST)
+    @PostMapping(value = "/list-all-by-role")
     @ResponseBody
     public Iterable<ComponentPermissionEntity> getPermissionListByRole(@RequestBody RoleEntity roleEntity) {
         return this.componentService.getPermListAllByRole(roleEntity);
     }
 
-    @RequestMapping(value = "/detail/{compPermId}",method = RequestMethod.GET)
+    @GetMapping(value = "/detail/{compPermId}")
     @ResponseBody
     public ComponentPermissionEntity getCompPermDetail(@PathVariable(value = "compPermId",required = true) Integer compPermId){
         return this.componentService.getComponentPermissionDetail(compPermId);
     }
 
-    @RequestMapping(value = "/delete/{compPermId}",method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/delete/{compPermId}")
     @ResponseBody
     public AjaxResult deleteComponentPermission(@PathVariable(value="compPermId",required = true)Integer compPermId){
         return this.componentService.deleteComponentPermission(compPermId);
     }
 
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     @ResponseBody
     public AjaxResult createComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
         return this.componentService.createComponentPermission(componentPermission);
     }
 
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     @ResponseBody
     public AjaxResult updateComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
         return this.componentService.updateComponentPermission(componentPermission);

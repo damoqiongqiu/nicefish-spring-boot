@@ -26,4 +26,6 @@ public interface IComponentPermissionService {
     AjaxResult updateComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
     AjaxResult deleteComponentPermission(Integer compPermId);
+
+    AjaxResult getComponentPermissionByUserId(Integer userId);
 }
