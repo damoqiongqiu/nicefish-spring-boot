@@ -20,6 +20,7 @@ import java.util.List;
  * - 后端权限是指在后端 API 接口上的权限控制，比如一个 API 接口是否需要登录才能访问，是否需要某个角色才能访问，是否需要某个权限才能访问等。
  * 
  * ComponentPermissionEntity 用来定义前端页面的权限，对应数据库中的 nicefish_rbac_component 表。
+ * 需要被保护的前端组件使用此 Entity 进行权限定义，不需要保护的组件由前端自行管理。
  * 
  * @see ApiPermissionEntity
  * @author: 大漠穷秋

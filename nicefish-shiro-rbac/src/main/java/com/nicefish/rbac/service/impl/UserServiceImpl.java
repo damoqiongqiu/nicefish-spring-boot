@@ -296,6 +296,7 @@ public class UserServiceImpl implements IUserService {
             throw new UserPasswordNotMatchException();
         }
 
+        //FIXME:设置 session 属性之后，有时候不能同步到数据库
         Session session= NiceFishSecurityUtils.getSession();
         session.setAttribute("userId",userEntity.getUserId());
         session.setAttribute("userName",userEntity.getUserName());
