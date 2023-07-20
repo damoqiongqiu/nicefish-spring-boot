@@ -1,7 +1,6 @@
 package com.nicefish.rbac.service.impl;
 
 
-import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.repository.IApiPermissionRepository;
@@ -62,18 +61,17 @@ public class ApiPermissionServiceImpl implements IApiPermissionService {
     }
 
     @Override
-    public AjaxResult createApiPermission(ApiPermissionEntity permEntity) {
-        permEntity=this.apiPermRepository.save(permEntity);
-        return new AjaxResult(true,permEntity);
+    public ApiPermissionEntity createApiPermission(ApiPermissionEntity permEntity) {
+        return this.apiPermRepository.save(permEntity);
     }
 
     @Override
-    public AjaxResult updatePermission(ApiPermissionEntity permEntity) {
+    public ApiPermissionEntity updatePermission(ApiPermissionEntity permEntity) {
         //TODO:数据校验
         ApiPermissionEntity permEntityDB=this.apiPermRepository.findDistinctByApiPermissionId(permEntity.getApiPermissionId());
         BeanUtils.copyProperties(permEntity,permEntityDB);
         this.apiPermRepository.save(permEntity);
-        return new AjaxResult(true,"保存成功");
+        return permEntity;
     }
 
     @Override
