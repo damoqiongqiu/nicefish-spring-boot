@@ -11,7 +11,8 @@ import java.util.UUID;
 
 /**
  * 此实体类用于持久化 Session 到 MySQL 数据库。
- * 关于 Session 数据结构的注意点 @see com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO
+ * 关于 Session 数据结构的注意点
+ * @see com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO
  */
 @Entity
 @DynamicInsert

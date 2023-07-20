@@ -1,6 +1,5 @@
 package com.nicefish.rbac.service.impl;
 
-import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.constant.NiceFishAuthConstants;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.*;
@@ -44,14 +43,22 @@ public class UserServiceImpl implements IUserService {
     private IUserRoleRepository userRoleRepository;
 
     @Override
-    public AjaxResult resetPwd(Integer userId){
+    public int resetPwd(Integer userId){
         //TODO:生成随机密码
 
         //TODO:生成密文链接
 
         //TODO:发送验证邮件
 
-        return new AjaxResult(true,"密码重置成功");
+        return 0;
+    }
+
+    @Override
+    public UserEntity resetPwd(UserEntity userEntity) {
+        //TODO:需要发送验证邮件
+        UserEntity oldEntity=this.userRepository.findDistinctByUserId(userEntity.getUserId());
+        oldEntity.setPassword(userEntity.getPassword());
+        return this.userRepository.save(oldEntity);
     }
 
     @Override
@@ -64,12 +71,12 @@ public class UserServiceImpl implements IUserService {
 
     //TODO:消息国际化
     @Override
-    public AjaxResult updateUser(UserEntity userEntity){
+    public UserEntity updateUser(UserEntity userEntity){
         if(!this.userRepository.existsById(userEntity.getUserId())){
-            return new AjaxResult(false,"不存在指定的用户ID");
+            throw new UserNotExistsException();
         }
         userEntity=this.userRepository.save(userEntity);
-        return new AjaxResult(true,userEntity);
+        return userEntity;
     }
 
     /**
@@ -78,7 +85,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public AjaxResult updateUserRoleRelation(UserEntity userEntity) {
+    public UserEntity updateUserRoleRelation(UserEntity userEntity) {
         //先删除现有的关联关系记录
         this.userRoleRepository.deleteByUserId(userEntity.getUserId());
         //创建新的关联关系
@@ -91,7 +98,7 @@ public class UserServiceImpl implements IUserService {
             userRoleEntityList.add(userRoleEntity);
         });
         this.userRoleRepository.saveAll(userRoleEntityList);
-        return AjaxResult.success("保存成功");
+        return userEntity;
     }
 
     @Transactional
@@ -221,13 +228,7 @@ public class UserServiceImpl implements IUserService {
         return this.userRepository.save(userEntity);
     }
 
-    @Override
-    public UserEntity resetPwd(UserEntity userEntity) {
-        //TODO:需要发送验证邮件
-        UserEntity oldEntity=this.userRepository.findDistinctByUserId(userEntity.getUserId());
-        oldEntity.setPassword(userEntity.getPassword());
-        return this.userRepository.save(oldEntity);
-    }
+
 
     @Override
     public boolean isUserNameUnique(String userName) {

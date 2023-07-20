@@ -1,7 +1,6 @@
 package com.nicefish.rbac.service.impl;
 
 
-import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
@@ -72,7 +71,7 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
      * @return
      */
     @Override
-    public AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
+    public ComponentPermissionEntity createComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
         if(!ObjectUtils.isEmpty(componentPermissionEntity.getParentEntity())){
             Integer pId=componentPermissionEntity.getParentEntity().getCompPermId();
             ComponentPermissionEntity parentEntity=this.componentPermissionRepository.findDistinctByCompPermId(pId);
@@ -80,7 +79,7 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
         }
         componentPermissionEntity.setChildren(new ArrayList<>());
         componentPermissionEntity=this.componentPermissionRepository.save(componentPermissionEntity);
-        return AjaxResult.success(componentPermissionEntity);
+        return componentPermissionEntity;
     }
 
     /**
@@ -90,7 +89,7 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
      * @return
      */
     @Override
-    public AjaxResult updateComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
+    public ComponentPermissionEntity updateComponentPermission(ComponentPermissionEntity componentPermissionEntity) {
         //TODO:数据校验
         ComponentPermissionEntity oldEntity=this.componentPermissionRepository.findDistinctByCompPermId(componentPermissionEntity.getCompPermId());
         if(!ObjectUtils.isEmpty(oldEntity)){
@@ -99,20 +98,20 @@ public class ComponentPermissionServiceImpl implements IComponentPermissionServi
             componentPermissionEntity.setRoleEntities(oldEntity.getRoleEntities());
         }
         this.componentPermissionRepository.save(componentPermissionEntity);
-        return AjaxResult.success("保存成功");
+        return componentPermissionEntity;
     }
 
     @Override
-    public AjaxResult deleteComponentPermission(Integer compPermId) {
+    public int deleteComponentPermission(Integer compPermId) {
         this.componentPermissionRepository.deleteById(compPermId);
-        return AjaxResult.success();
+        return 0;
     }
 
     @Override
-    public AjaxResult getComponentPermissionByUserId(Integer userId) {
+    public Iterable<ComponentPermissionEntity> getComponentPermissionsByUserId(Integer userId) {
         UserEntity userEntity=this.userRepository.findDistinctByUserId(userId);
         List<RoleEntity> roleEntities=userEntity.getRoleEntities();
         Iterable<ComponentPermissionEntity> componentPermissionEntities=this.componentPermissionRepository.findDistinctByRoleEntitiesIn(roleEntities);
-        return AjaxResult.success(componentPermissionEntities);
+        return componentPermissionEntities;
     }
 }

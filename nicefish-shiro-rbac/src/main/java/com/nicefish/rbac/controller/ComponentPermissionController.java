@@ -53,18 +53,25 @@ public class ComponentPermissionController {
     @DeleteMapping(value = "/delete/{compPermId}")
     @ResponseBody
     public AjaxResult deleteComponentPermission(@PathVariable(value="compPermId",required = true)Integer compPermId){
-        return this.componentService.deleteComponentPermission(compPermId);
+        int result=this.componentService.deleteComponentPermission(compPermId);
+        if(result==0){
+            return AjaxResult.success();
+        }else{
+            return AjaxResult.failure();
+        }
     }
 
     @PostMapping(value = "/create")
     @ResponseBody
     public AjaxResult createComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
-        return this.componentService.createComponentPermission(componentPermission);
+        componentPermission=this.componentService.createComponentPermission(componentPermission);
+        return AjaxResult.success(componentPermission);
     }
 
     @PostMapping(value = "/update")
     @ResponseBody
     public AjaxResult updateComponentPermission(@RequestBody ComponentPermissionEntity componentPermission){
-        return this.componentService.updateComponentPermission(componentPermission);
+        componentPermission=this.componentService.updateComponentPermission(componentPermission);
+        return AjaxResult.success(componentPermission);
     }
 }
