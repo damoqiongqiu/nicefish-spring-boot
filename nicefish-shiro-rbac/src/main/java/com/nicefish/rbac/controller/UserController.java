@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户管理
- * TODO:完成整合和重构，包括权限 shiro 控制的部分
  * @author 大漠穷秋
  */
 @Api("User Controller")
@@ -33,7 +32,7 @@ public class UserController {
      * 在前后端分离的模式下，前端可以通过此接口来测试Session中是否还存在已登录的用户。
      * @return
      */
-    @GetMapping("/getSessionUser")
+    @GetMapping("/get-session-user")
     @ResponseBody
     public UserEntity getSessionUser(){
         return NiceFishSecurityUtils.getUserEntity();
@@ -92,7 +91,7 @@ public class UserController {
     }
 
     //TODO:重新定义权限，管理员可以重置任意密码，用户自己只能重置自己的密码
-    @PostMapping("/resetPwd")
+    @PostMapping("/reset-pwd")
     @ResponseBody
     public AjaxResult resetPwd(UserEntity userEntity) {
         userEntity.setSalt(NiceFishSecurityUtils.randomSalt());
@@ -112,26 +111,26 @@ public class UserController {
         }
     }
 
-    @PostMapping("/changeStatus")
+    @PostMapping("/change-status")
     @ResponseBody
     @RequiresPermissions("sys:manage:user")
     public AjaxResult changeStatus(UserEntity userEntity) {
         return AjaxResult.success(userService.setUserStatus(userEntity));
     }
 
-    @PostMapping("/isUserNameUnique")
+    @PostMapping("/is-user-name-unique")
     @ResponseBody
     public String isUserNameUnique(UserEntity userEntity) {
         return userService.isUserNameUnique(userEntity.getUserName())?"0":"1";
     }
 
-    @PostMapping("/isPhoneUnique")
+    @PostMapping("/is-phone-unique")
     @ResponseBody
     public String isPhoneUnique(UserEntity userEntity) {
         return userService.isPhoneUnique(userEntity.getCellphone())?"0":"1";
     }
 
-    @PostMapping("/isEmailUnique")
+    @PostMapping("/is-email-unique")
     @ResponseBody
     public String isEmailUnique(UserEntity userEntity) {
         return userService.isEmailUnique(userEntity.getEmail())?"0":"1";
