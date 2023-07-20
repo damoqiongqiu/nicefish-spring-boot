@@ -1,6 +1,5 @@
 package com.nicefish.rbac.service.impl;
 
-import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.*;
 import com.nicefish.rbac.jpa.repository.*;
 import com.nicefish.rbac.service.IRoleService;
@@ -74,12 +73,12 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public AjaxResult createRole(RoleEntity newRoleEntity) {
+    public RoleEntity createRole(RoleEntity newRoleEntity) {
         //TODO:数据校验
         this.saveRoleApiPermissions(newRoleEntity);
         this.saveRoleComponentPermissions(newRoleEntity);
         newRoleEntity=this.roleRepository.save(newRoleEntity);
-        return AjaxResult.success(newRoleEntity);
+        return newRoleEntity;
     }
 
     /**
@@ -90,7 +89,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     @Transactional
-    public AjaxResult updateRole(RoleEntity newRoleEntity) {
+    public RoleEntity updateRole(RoleEntity newRoleEntity) {
         //TODO:数据校验
 
         RoleEntity oldEntity=this.roleRepository.findDistinctByRoleId(newRoleEntity.getRoleId());
@@ -104,8 +103,7 @@ public class RoleServiceImpl implements IRoleService {
         this.saveRoleComponentPermissions(newRoleEntity);
 
         //TODO:处理用户角色关联关系
-        this.roleRepository.save(newRoleEntity);
-        return AjaxResult.success("保存成功");
+        return this.roleRepository.save(newRoleEntity);
     }
 
     /**
@@ -147,14 +145,14 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public AjaxResult deleteAuthUsers(Integer roleId, Integer[] userIds) {
+    public int deleteAuthUsers(Integer roleId, Integer[] userIds) {
         this.userRoleRepository.deleteByRoleIdAndUserIdIsIn(roleId,userIds);
-        return new AjaxResult(true,"删除成功");
+        return 0;
     }
 
     @Override
     @Transactional
-    public AjaxResult addAuthUsers(Integer roleId, Integer[] userIds) {
+    public int addAuthUsers(Integer roleId, Integer[] userIds) {
         List<UserRoleEntity> list=new ArrayList<>();
         for(int i=0;i<userIds.length;i++){
             UserRoleEntity userRoleEntity=new UserRoleEntity();
@@ -163,6 +161,6 @@ public class RoleServiceImpl implements IRoleService {
             list.add(userRoleEntity);
         }
         this.userRoleRepository.saveAll(list);
-        return new AjaxResult(true,"保存成功");
+        return 0;
     }
 }

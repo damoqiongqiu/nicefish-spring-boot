@@ -55,7 +55,7 @@ public class RoleController {
     @GetMapping(value = "/list-by-api-id/{apiPermissionId}")
     @ResponseBody
     public AjaxResult findRoleListByApiId(@PathVariable(value="apiPermissionId",required = true) int apiPermissionId){
-        ApiPermissionEntity apiPermissionEntity =this.apiPermissionService.getApiPermissionById(apiPermissionId);
+        ApiPermissionEntity apiPermissionEntity =apiPermissionService.getApiPermissionById(apiPermissionId);
         List<RoleEntity> roleEntities= apiPermissionEntity.getRoleEntities();
         return AjaxResult.success(roleEntities);
     }
@@ -63,7 +63,7 @@ public class RoleController {
     @GetMapping(value = "/list-by-component-id/{compPermId}")
     @ResponseBody
     public AjaxResult findRoleListByComponentId(@PathVariable(value="compPermId",required = true) int compPermId){
-        ComponentPermissionEntity componentPermissionEntity =this.componentService.getComponentPermissionDetail(compPermId);
+        ComponentPermissionEntity componentPermissionEntity =componentService.getComponentPermissionDetail(compPermId);
         List<RoleEntity> roleEntities= componentPermissionEntity.getRoleEntities();
         return AjaxResult.success(roleEntities);
     }
@@ -71,7 +71,7 @@ public class RoleController {
     @GetMapping(value = "/list-by-user-id/{userId}")
     @ResponseBody
     public AjaxResult findRoleListByUserId(@PathVariable(value="userId",required = true) int userId){
-        UserEntity userEntity=this.userService.getUserByUserId(userId);
+        UserEntity userEntity=userService.getUserByUserId(userId);
         List<RoleEntity> roleEntities= userEntity.getRoleEntities();
         return AjaxResult.success(roleEntities);
     }
@@ -79,19 +79,21 @@ public class RoleController {
     @PostMapping(value = "/create")
     @ResponseBody
     public AjaxResult createRole(@RequestBody RoleEntity roleEntity){
-        return this.roleService.createRole(roleEntity);
+        roleEntity=roleService.createRole(roleEntity);
+        return AjaxResult.success(roleEntity);
     }
 
     @PostMapping(value = "/update")
     @ResponseBody
     public AjaxResult updateRole(@RequestBody RoleEntity roleEntity){
-        return this.roleService.updateRole(roleEntity);
+        roleEntity=roleService.updateRole(roleEntity);
+        return AjaxResult.success(roleEntity);
     }
 
     @DeleteMapping(value = "/delete/{roleId}")
     @ResponseBody
     public AjaxResult deleteRole(@PathVariable(value="roleId",required = true)Integer roleId){
-        int affected= this.roleService.deleteRole(roleId);
+        int affected= roleService.deleteRole(roleId);
         if(affected==0){
             return AjaxResult.failure("删除失败，系统内置角色或者正在使用中。");
         }else{
@@ -102,7 +104,7 @@ public class RoleController {
     @GetMapping(value = "/detail/{roleId}")
     @ResponseBody
     public RoleEntity getRoleDetail(@PathVariable(value = "roleId",required = true) Integer roleId){
-        return this.roleService.getRoleById(roleId);
+        return roleService.getRoleById(roleId);
     }
 
     @PostMapping(value = "/add-auth-users/{roleId}/{userIds}")
@@ -111,7 +113,12 @@ public class RoleController {
             @PathVariable(value = "roleId",required = true) Integer roleId,
             @PathVariable(value = "userIds",required = true) Integer[] userIds
     ){
-        return this.roleService.addAuthUsers(roleId,userIds);
+        int result=roleService.addAuthUsers(roleId,userIds);
+        if(result==0){
+            return AjaxResult.success();
+        }else {
+            return AjaxResult.failure();
+        }
     }
 
     @PostMapping(value = "/del-auth-users/{roleId}/{userIds}")
@@ -120,6 +127,11 @@ public class RoleController {
             @PathVariable(value = "roleId",required = true) Integer roleId,
             @PathVariable(value = "userIds",required = true) Integer[] userIds
     ){
-        return this.roleService.deleteAuthUsers(roleId,userIds);
+        int result=roleService.deleteAuthUsers(roleId,userIds);
+        if(result==0){
+            return AjaxResult.success();
+        }else {
+            return AjaxResult.failure();
+        }
     }
 }
