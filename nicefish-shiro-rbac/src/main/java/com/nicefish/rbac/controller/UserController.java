@@ -56,7 +56,8 @@ public class UserController {
     @ResponseBody
     @RequiresPermissions("sys:manage:user")
     public AjaxResult updateUserRoleRelation(@RequestBody UserEntity userEntity){
-        return this.userService.updateUserRoleRelation(userEntity);
+        userEntity=this.userService.updateUserRoleRelation(userEntity);
+        return AjaxResult.success(userEntity);
     }
 
     @PostMapping(value = "/list/{page}")

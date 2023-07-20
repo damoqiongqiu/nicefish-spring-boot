@@ -1,7 +1,9 @@
 package com.nicefish.rbac.service;
 
-import com.nicefish.core.utils.AjaxResult;
-import com.nicefish.rbac.exception.*;
+import com.nicefish.rbac.exception.UserBlockedException;
+import com.nicefish.rbac.exception.UserDeleteException;
+import com.nicefish.rbac.exception.UserNotExistsException;
+import com.nicefish.rbac.exception.UserPasswordNotMatchException;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import org.springframework.data.domain.Page;
@@ -17,13 +19,15 @@ public interface IUserService {
 
     UserEntity createUser(UserEntity userEntity);
 
-    AjaxResult resetPwd(Integer userId);
+    int resetPwd(Integer userId);
+
+    UserEntity resetPwd(UserEntity userEntity);
 
     UserEntity setUserStatus(UserEntity userEntity);
 
-    AjaxResult updateUser(UserEntity userEntity);
+    UserEntity updateUser(UserEntity userEntity);
 
-    AjaxResult updateUserRoleRelation(UserEntity userEntity);
+    UserEntity updateUserRoleRelation(UserEntity userEntity);
 
     Page<UserEntity> getUserList(UserEntity userEntity, Pageable pageable);
 
@@ -45,7 +49,6 @@ public interface IUserService {
 
     UserEntity saveUser(UserEntity userEntity);
 
-    UserEntity resetPwd(UserEntity userEntity);
 
     boolean isUserNameUnique(String userName);
 
