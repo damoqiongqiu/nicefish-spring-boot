@@ -4,6 +4,7 @@ import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.exception.CellphoneDuplicateException;
 import com.nicefish.rbac.exception.EmailDuplicateException;
 import com.nicefish.rbac.exception.UserNameDuplicateException;
+import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import com.nicefish.rbac.service.IUserService;
@@ -107,7 +108,8 @@ public class ShiroAuthController {
     @GetMapping(value = "/menu/{userId}")
     @ResponseBody
     public AjaxResult getMenus(@PathVariable(value = "userId",required = true) Integer userId){
-        return this.componentPermissionService.getComponentPermissionByUserId(userId);
+        Iterable<ComponentPermissionEntity> list = this.componentPermissionService.getComponentPermissionsByUserId(userId);
+        return AjaxResult.success(list);
     }
 
 }

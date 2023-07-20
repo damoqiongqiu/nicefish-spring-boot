@@ -1,6 +1,5 @@
 package com.nicefish.rbac.service;
 
-import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import org.springframework.data.domain.Page;
@@ -21,11 +20,11 @@ public interface IComponentPermissionService {
 
     ComponentPermissionEntity getComponentPermissionDetail(Integer compPermId);
 
-    AjaxResult createComponentPermission(ComponentPermissionEntity componentPermissionEntity);
+    ComponentPermissionEntity createComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
-    AjaxResult updateComponentPermission(ComponentPermissionEntity componentPermissionEntity);
+    ComponentPermissionEntity updateComponentPermission(ComponentPermissionEntity componentPermissionEntity);
 
-    AjaxResult deleteComponentPermission(Integer compPermId);
+    int deleteComponentPermission(Integer compPermId);
 
-    AjaxResult getComponentPermissionByUserId(Integer userId);
+    Iterable<ComponentPermissionEntity> getComponentPermissionsByUserId(Integer userId);
 }
