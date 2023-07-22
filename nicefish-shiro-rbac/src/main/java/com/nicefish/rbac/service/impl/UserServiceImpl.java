@@ -115,9 +115,11 @@ public class UserServiceImpl implements IUserService {
             throw new EmailDuplicateException();
         }
 
-        temp=this.userRepository.findDistinctTopByCellphone(userEntity.getCellphone());
-        if(!ObjectUtils.isEmpty(temp)){
-            throw new CellphoneDuplicateException();
+        if(!StringUtils.isEmpty(userEntity.getCellphone())){
+            temp=this.userRepository.findDistinctTopByCellphone(userEntity.getCellphone());
+            if(!ObjectUtils.isEmpty(temp)){
+                throw new CellphoneDuplicateException();
+            }
         }
 
         userEntity=this.userRepository.save(userEntity);
