@@ -72,8 +72,12 @@ public class NiceFishMySQLSessionDAO extends EnterpriseCacheSessionDAO {
     protected void doUpdate(Session session) {
         logger.debug("update session..."+session.toString());
         SimpleSession simpleSession=(SimpleSession)session;
-        NiceFishSessionEntity entity =new NiceFishSessionEntity();
-        entity.setSessionId((String)simpleSession.getId());
+        String sessionId=(String)simpleSession.getId();
+        NiceFishSessionEntity entity=this.sessionService.findDistinctBySessionId(sessionId);
+        if(ObjectUtils.isEmpty(entity)){
+            entity=new NiceFishSessionEntity();
+            entity.setSessionId((String)simpleSession.getId());
+        }
         entity.setHost(simpleSession.getHost());
         entity.setCreationTime(simpleSession.getStartTimestamp());
         entity.setLastAccessTime(simpleSession.getLastAccessTime());

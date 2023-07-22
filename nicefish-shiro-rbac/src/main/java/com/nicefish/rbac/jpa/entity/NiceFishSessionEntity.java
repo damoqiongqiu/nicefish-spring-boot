@@ -7,7 +7,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * 此实体类用于持久化 Session 到 MySQL 数据库。
@@ -21,7 +20,7 @@ import java.util.UUID;
 public class NiceFishSessionEntity implements Serializable {
     @Id
     @Column(name = "session_id")
-    private String sessionId= UUID.randomUUID().toString();
+    private String sessionId;
 
     @Column(name="app_name",nullable = false)
     private String appName;
