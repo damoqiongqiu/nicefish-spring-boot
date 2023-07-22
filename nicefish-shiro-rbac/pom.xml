@@ -165,4 +165,13 @@
             <version>1.0.2</version>
         </dependency>
     </dependencies>
+
+    <!-- 阿里云 Maven 源 -->
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
 </project>
