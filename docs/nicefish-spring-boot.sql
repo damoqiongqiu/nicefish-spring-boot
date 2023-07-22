@@ -52,7 +52,6 @@ insert  into `nicefish_cms_comment`(`comment_id`,`post_id`,`content`,`comment_ti
 (8,5,'44444444444444444444','2023-07-18 14:34:39',NULL,NULL,2,'admin@126.com','admin',NULL,NULL),
 (9,5,'44444444444444444444','2023-07-18 14:34:48',NULL,NULL,2,'admin@126.com','admin',NULL,NULL),
 (10,6,'55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555','2023-07-18 15:07:17',NULL,NULL,2,'admin@126.com','admin',NULL,NULL),
-(11,6,'55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555','2023-07-18 15:07:20',NULL,NULL,2,'admin@126.com','admin',NULL,NULL),
 (12,6,'55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555','2023-07-18 15:07:27',NULL,NULL,2,'admin@126.com','admin',NULL,NULL),
 (13,7,'6666666666666666666666666666','2023-07-18 16:19:39',NULL,NULL,2,'admin@126.com','admin',NULL,NULL),
 (14,7,'6666666666666666666666666666','2023-07-18 16:19:46',NULL,NULL,2,'admin@126.com','admin',NULL,NULL),
@@ -144,7 +143,7 @@ CREATE TABLE `nicefish_rbac_api` (
   `update_time` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `remark` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`api_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='用来定义服务端 API 接口的权限。';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='用来定义服务端 API 接口的权限。';
 
 /*Data for the table `nicefish_rbac_api` */
 
@@ -154,7 +153,9 @@ insert  into `nicefish_rbac_api`(`api_id`,`api_name`,`url`,`permission`,`create_
 (7,'管理用户','','sys:manage:user','2023-07-19 13:48:36','2023-07-19 13:48:36','管理用户'),
 (8,'管理角色','','sys:manage:role','2023-07-19 13:51:50','2023-07-19 13:51:50','管理角色'),
 (9,'管理后端接口权限','','sys:manage:api-permission','2023-07-19 13:53:00','2023-07-19 13:53:00','拥有此权限代码的角色，可以维护后端接口权限。'),
-(10,'管理前端页面权限','','sys:manage:component-permission','2023-07-19 13:53:43','2023-07-19 13:53:43','拥有此权限代码的角色可以管理前端页面权限。');
+(10,'管理前端页面权限','','sys:manage:component-permission','2023-07-19 13:53:43','2023-07-19 13:53:43','拥有此权限代码的角色可以管理前端页面权限。'),
+(11,'测试数据-没有用','','*','2023-07-22 16:55:40','2023-07-22 16:55:40','测试数据-没有用'),
+(12,'测试数据-没有用','','*','2023-07-22 16:55:50','2023-07-22 16:55:50','测试数据-没有用');
 
 /*Table structure for table `nicefish_rbac_component` */
 
@@ -173,7 +174,7 @@ CREATE TABLE `nicefish_rbac_component` (
   `visiable` int(11) NOT NULL DEFAULT 1 COMMENT '菜单是否可见，1 可见，0 不可见',
   `remark` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`component_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COMMENT='用来定义前端页面上的组件权限，\r\ncomponent 可以是菜单、按钮，甚至可以细致到一个 HTML 元素。\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COMMENT='用来定义前端页面上的组件权限，\r\ncomponent 可以是菜单、按钮，甚至可以细致到一个 HTML 元素。\r\n';
 
 /*Data for the table `nicefish_rbac_component` */
 
@@ -182,7 +183,8 @@ insert  into `nicefish_rbac_component`(`component_id`,`p_id`,`component_name`,`i
 (43,NULL,'角色管理',NULL,'role-table/page/1',2,'menu:view:role-management','2023-07-19 14:14:18','2023-07-19 14:31:58',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【角色管理】菜单项。'),
 (44,NULL,'后端接口权限',NULL,'api-permission-table/page/1',3,'menu:view:api-permission-management','2023-07-19 14:14:54','2023-07-19 14:32:12',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【后端接口权限】菜单项。'),
 (45,NULL,'前端页面权限',NULL,'component-permission-table/page/1',4,'menu:view:component-permission-management','2023-07-19 14:15:18','2023-07-19 14:32:26',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【前端页面权限】菜单项。'),
-(46,NULL,'系统设置',NULL,'sys-settings',5,'menu:view:sys-settings','2023-07-19 14:15:48','2023-07-19 14:32:38',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【系统设置】菜单项。');
+(46,NULL,'系统设置',NULL,'sys-settings',5,'menu:view:sys-settings','2023-07-19 14:15:48','2023-07-19 14:32:38',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【系统设置】菜单项。'),
+(49,NULL,'测试数据-没有用',NULL,NULL,100,'*','2023-07-22 16:56:02','2023-07-22 16:56:02',1,'测试数据-没有用');
 
 /*Table structure for table `nicefish_rbac_role` */
 
@@ -268,10 +270,13 @@ CREATE TABLE `nicefish_rbac_session` (
 /*Data for the table `nicefish_rbac_session` */
 
 insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_name`,`creation_time`,`expiry_time`,`last_access_time`,`max_inactive_interval`,`timeout`,`expired`,`host`,`os`,`browser`,`user_agent`,`session_data`) values 
+('0a56b0e6-4f31-4d4a-bf20-8bb834f3938b',NULL,2,'admin@126.com','2023-07-22 16:49:00',NULL,'2023-07-22 16:56:03',NULL,300000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('0e7d07f5-dfb9-433d-ac63-439decc4fdcf',NULL,NULL,NULL,'2023-07-19 13:49:26',NULL,'2023-07-19 13:50:11',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('1252070d-1fbe-4131-b964-071d02d9df45',NULL,2,'admin@126.com','2023-07-19 17:35:14',NULL,'2023-07-19 17:45:14',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('12ccf51e-264e-4ceb-b5ef-51481c9ba110',NULL,NULL,NULL,'2023-07-19 21:20:38',NULL,'2023-07-19 21:20:49',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('2230e1ba-33c0-4c14-ba74-073c2b4159b3',NULL,2,'admin@126.com','2023-07-20 16:59:08',NULL,'2023-07-20 16:59:37',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('309d21f8-936d-4b0f-8ec9-d7972c2f6bf6',NULL,8,'user5@126.com','2023-07-19 21:34:13',NULL,'2023-07-19 21:40:05',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('3bb25a44-85ba-4ec4-81ad-88c8c957ee6d',NULL,2,'admin@126.com','2023-07-20 10:16:17',NULL,'2023-07-20 10:25:25',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('45b17074-7c61-4c21-b8c0-c7761b4617f4',NULL,2,'admin@126.com','2023-07-19 18:27:53',NULL,'2023-07-19 18:39:53',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('481d110f-dd24-41fe-91aa-305d2b1efb84',NULL,NULL,NULL,'2023-07-19 17:22:31',NULL,'2023-07-19 17:22:55',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('55230afc-908d-4159-a9e1-e0bfdda7679f',NULL,2,'admin@126.com','2023-07-19 13:42:44',NULL,'2023-07-19 13:44:07',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
@@ -280,12 +285,18 @@ insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_nam
 ('7368e3d1-013c-48f4-b60c-10177239d110',NULL,NULL,NULL,'2023-07-19 14:04:03',NULL,'2023-07-19 14:05:37',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('7c2dbf3e-35ec-4172-a500-80dc26a51aad',NULL,NULL,NULL,'2023-07-19 17:50:17',NULL,'2023-07-19 18:27:42',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('7d1cff7c-1358-46b7-85ba-383d7529c4d2',NULL,4,'user1@126.com','2023-07-19 17:21:49',NULL,'2023-07-19 17:22:23',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('83fa28fb-dd0f-47c3-a7a3-6ded27d465cc',NULL,NULL,NULL,'2023-07-22 12:28:30',NULL,'2023-07-22 12:29:47',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('89198d8b-1dd7-49d2-9ad7-ed7e4cc5a870',NULL,NULL,NULL,'2023-07-19 13:46:18',NULL,'2023-07-19 13:49:20',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('924c731c-74c4-4a02-aaa9-1b7eb0a361f1',NULL,NULL,NULL,'2023-07-19 20:35:02',NULL,'2023-07-19 20:35:02',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('9fe47947-e3fc-45ac-b846-0391cb3d854c',NULL,NULL,NULL,'2023-07-19 14:53:13',NULL,'2023-07-19 15:16:11',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('a97212d9-8f02-4030-a565-1faf56a81bd2',NULL,NULL,NULL,'2023-07-20 09:09:54',NULL,'2023-07-20 09:10:14',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('ba17db0b-7d50-45cf-9596-e0a311f4b1da',NULL,2,'admin@126.com','2023-07-20 08:57:26',NULL,'2023-07-20 08:58:14',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('c6c6adcf-e7bb-4e9a-9b28-04a4b2ca9001',NULL,4,'user1@126.com','2023-07-19 13:44:21',NULL,'2023-07-19 13:46:08',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('cc910dd5-90d3-4d14-b1ef-6fd6104fbff9',NULL,NULL,NULL,'2023-07-22 16:47:52',NULL,'2023-07-22 16:48:00',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
 ('ceff3ddf-2a38-492e-bc28-042d71f7b31b',NULL,2,'admin@126.com','2023-07-19 17:19:24',NULL,'2023-07-19 17:21:37',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
-('f1cb2ee6-85c1-4bb9-8114-26dbcaef5cff',NULL,NULL,NULL,'2023-07-19 14:13:24',NULL,'2023-07-19 14:34:51',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL);
+('dcfb0301-f6a7-4a7e-916b-34d4d411a709',NULL,NULL,NULL,'2023-07-20 10:25:28',NULL,'2023-07-20 10:25:41',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('f1cb2ee6-85c1-4bb9-8114-26dbcaef5cff',NULL,NULL,NULL,'2023-07-19 14:13:24',NULL,'2023-07-19 14:34:51',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL),
+('fbdfb01c-f2ab-4089-a3f2-8c8adca9d84d',NULL,NULL,NULL,'2023-07-22 15:47:17',NULL,'2023-07-22 15:47:25',NULL,300000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL);
 
 /*Table structure for table `nicefish_rbac_user` */
 
@@ -305,7 +316,7 @@ CREATE TABLE `nicefish_rbac_user` (
   `status` int(11) DEFAULT 1 COMMENT '-1 特权用户不能删除 0正常 1禁用 2删除',
   `remark` varchar(500) DEFAULT '',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nicefish_rbac_user` */
 
@@ -315,7 +326,7 @@ insert  into `nicefish_rbac_user`(`user_id`,`user_name`,`nick_name`,`password`,`
 (5,'user2@126.com','user2','4f9c512e8ca73e1285a5617fb843e609','user2@126.com','',0,'','558d9a','2023-07-18 15:10:22',1,''),
 (6,'user3@126.com','user3','ae2a2f18656334fab7d3ea71c6bc55ce','user3@126.com','',0,'','ec764e','2023-07-18 16:20:58',1,''),
 (7,'user4@126.com','user4','9ee2e0077263167a2c1f62fa7f993da1','user4@126.com','',2,'','3cb61c','2023-07-18 20:24:12',1,''),
-(8,'user5@126.com','user5','25d366d104093e9d8d494b0c127576be','user5@126.com','',0,'','ebd9aa','2023-07-19 21:35:23',0,'');
+(9,'user5@126.com','user5','b69a226e05bde6d412c7733b4ef188b1','user5@126.com','',2,'','9bfb41','2023-07-22 16:55:01',1,'user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5user5');
 
 /*Table structure for table `nicefish_rbac_user_role` */
 

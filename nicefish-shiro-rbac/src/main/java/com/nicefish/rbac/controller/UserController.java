@@ -68,7 +68,7 @@ public class UserController {
         return userList;
     }
 
-    @PostMapping(value = "/delete/{userId}")
+    @DeleteMapping(value = "/delete/{userId}")
     @ResponseBody
     @RequiresPermissions("sys:manage:user")
     public AjaxResult deleteUser(@PathVariable(value="userId",required = true)Integer userId){
