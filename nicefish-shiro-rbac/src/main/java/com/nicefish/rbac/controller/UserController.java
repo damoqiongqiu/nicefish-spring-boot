@@ -1,5 +1,6 @@
 package com.nicefish.rbac.controller;
 
+import com.nicefish.core.i18n.I18nUtil;
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
@@ -74,11 +75,10 @@ public class UserController {
     public AjaxResult deleteUser(@PathVariable(value="userId",required = true)Integer userId){
         //TODO:合法性校验，关联表操作校验，业务逻辑校验
         int affected=userService.deleteByUserId(userId);
-        //TODO:消息国际化
         if(affected==0){
-            return new AjaxResult(false,"删除失败，内置用户或者正在使用中。");
+            return new AjaxResult(false, I18nUtil.getMessage("user.del.failure"));
         }else{
-            return new AjaxResult(true,"删除成功");
+            return new AjaxResult(true,"common.del.success");
         }
     }
 

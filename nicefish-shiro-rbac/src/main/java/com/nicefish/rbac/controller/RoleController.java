@@ -1,5 +1,6 @@
 package com.nicefish.rbac.controller;
 
+import com.nicefish.core.i18n.I18nUtil;
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
@@ -95,9 +96,9 @@ public class RoleController {
     public AjaxResult deleteRole(@PathVariable(value="roleId",required = true)Integer roleId){
         int affected= roleService.deleteRole(roleId);
         if(affected==0){
-            return AjaxResult.failure("删除失败，系统内置角色或者正在使用中。");
+            return AjaxResult.failure(I18nUtil.getMessage("role.del.failure"));
         }else{
-            return AjaxResult.success("删除成功");
+            return AjaxResult.success("common.del.success");
         }
     }
     

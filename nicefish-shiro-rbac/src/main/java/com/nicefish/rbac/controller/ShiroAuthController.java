@@ -1,5 +1,6 @@
 package com.nicefish.rbac.controller;
 
+import com.nicefish.core.i18n.I18nUtil;
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.exception.CellphoneDuplicateException;
 import com.nicefish.rbac.exception.EmailDuplicateException;
@@ -50,13 +51,13 @@ public class ShiroAuthController {
             userService.createUser(userEntity);
         }catch (UserNameDuplicateException e){
             logger.debug(e.toString());
-            return AjaxResult.failure("用户名或者邮箱已存在");
+            return AjaxResult.failure(I18nUtil.getMessage("auth.register.user.mail.failure"));
         }catch (EmailDuplicateException e){
             logger.debug(e.toString());
-            return AjaxResult.failure("相同的邮箱已存在");
+            return AjaxResult.failure(I18nUtil.getMessage("auth.register.mail.failure"));
         }catch (CellphoneDuplicateException e){
             logger.debug(e.toString());
-            return AjaxResult.failure("相同的手机号已存在");
+            return AjaxResult.failure(I18nUtil.getMessage("auth.register.phone.failure"));
         }
 
         return AjaxResult.success(userEntity);

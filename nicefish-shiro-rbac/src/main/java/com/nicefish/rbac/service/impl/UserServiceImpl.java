@@ -73,6 +73,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserEntity updateUser(UserEntity userEntity){
         if(!this.userRepository.existsById(userEntity.getUserId())){
+            // TODO 等 BigMo 定义模块常量
             throw new UserNotExistsException();
         }
         userEntity=this.userRepository.save(userEntity);
