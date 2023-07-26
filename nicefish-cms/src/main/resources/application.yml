@@ -82,10 +82,10 @@ shiro:
         domain:
         path: /
         httpOnly: false
-        maxAge: 72 #Hours，利用 cookie 免登录。
+        maxAge: 259200000 #ms
         secure: false
     session:
-        timeout: 300000 #ms
+        timeout: 259200000 #ms
         dbSyncPeriod: 1
         validationInterval: 10000 #ms
         maxSession: -1

@@ -217,7 +217,7 @@ public class ShiroConfig {
         cookie.setDomain(domain);
         cookie.setPath(path);
         cookie.setHttpOnly(httpOnly);
-        cookie.setMaxAge(maxAge * 60 * 60 *1000);
+        cookie.setMaxAge(maxAge);
         return cookie;
     }
 
