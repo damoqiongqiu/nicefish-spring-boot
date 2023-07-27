@@ -82,33 +82,16 @@ public class ShiroConfig {
         filters.put("captchaValidateFilter", captchaValidateFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
-        //TODO:所有静态资源交给Nginx管理，删掉这里关于静态资源的配置
+        //所有静态资源交给Nginx管理，这里只配置与 shiro 相关的过滤器。
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/**.ico**", "anon");
-        filterChainDefinitionMap.put("/**.png**", "anon");
-        filterChainDefinitionMap.put("/**.jpg**", "anon");
-        filterChainDefinitionMap.put("/**.jpeg**", "anon");
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/docs/**", "anon");
-        filterChainDefinitionMap.put("/fonts/**", "anon");
-        filterChainDefinitionMap.put("/img/**", "anon");
-        filterChainDefinitionMap.put("/ajax/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/druid/**", "anon");
-        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-        filterChainDefinitionMap.put("/swagger-resources", "anon");
-        filterChainDefinitionMap.put("/nicefish/auth/captcha/captchaImage**", "anon");
-
-        //需要加验证码保护的接口
-        //TODO:前端需要改成动态显示验证码的方式，默认不显示验证码，当访问次数过于频繁的时候，才显示验证码。
         filterChainDefinitionMap.put("/nicefish/cms/post/write-post", "captchaValidateFilter");
         filterChainDefinitionMap.put("/nicefish/cms/post/update-post", "captchaValidateFilter");
         filterChainDefinitionMap.put("/nicefish/cms/comment/write-comment", "captchaValidateFilter");
         filterChainDefinitionMap.put("/nicefish/auth/user/register", "anon,captchaValidateFilter");
         filterChainDefinitionMap.put("/nicefish/auth/shiro/login", "anon,captchaValidateFilter");
+        filterChainDefinitionMap.put("/**", "anon");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-
         return shiroFilterFactoryBean;
     }
 
