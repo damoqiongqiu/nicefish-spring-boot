@@ -347,6 +347,15 @@ insert  into `nicefish_rbac_user_role`(`user_id`,`role_id`) values
 (7,10),
 (7,11);
 
+DROP TABLE IF EXISTS `nicefish_attachment`;
+CREATE TABLE `nicefish_attachment` (
+   `id` int(50) NOT NULL AUTO_INCREMENT COMMENT '主建',
+   `path` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '文件路径',
+   `name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '文件名',
+   `suffix` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '后缀',
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
