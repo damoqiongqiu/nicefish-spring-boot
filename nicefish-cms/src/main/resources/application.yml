@@ -4,8 +4,8 @@ nicefish:
     copyrightYear: 2019
     demoEnabled: true
     # 文件上传目录，请根据自己服务器情况配置
-#    uploadPath: C:/nicefish/uploadPath
-    uploadPath: /Users/nanke/workSpace/uploadDir
+    uploadPath: C:/nicefish/upload
+    #uploadPath: /Users/nanke/workSpace/uploadDir
     addressEnabled: true
 
 server:
