@@ -8,6 +8,7 @@ nicefish:
 
 server:
     port: 8080
+    max-http-header-size: 65535
     servlet:
         context-path: /
     use-forward-headers: true
