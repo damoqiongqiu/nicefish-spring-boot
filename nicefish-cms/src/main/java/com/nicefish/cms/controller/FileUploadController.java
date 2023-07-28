@@ -18,9 +18,10 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("/nicefish/cms/file")
 public class FileUploadController {
     private static final String FILE_DOWNLOAD_HEADER_NAME = "Content-Disposition";
-    private static final String FILE_DOWNLOAD_HEADER_VALUE = "attachment;filename=";
+    private static final String FILE_DOWNLOAD_HEADER_VALUE = "upload;filename=";
+
     @Autowired
-    private IFileUploadService attachmentService;
+    private IFileUploadService fileUploadService;
 
     /**
      * 文件上传
@@ -33,12 +34,13 @@ public class FileUploadController {
             return AjaxResult.failure("请上传附件");
         }
         //上传文件
-        return AjaxResult.success(attachmentService.upload(file));
+        return AjaxResult.success(fileUploadService.upload(file));
     }
 
     @GetMapping(value = "/download/{id}")
     public AjaxResult download(@PathVariable("id") Integer id, HttpServletResponse resp) throws UnsupportedEncodingException {
-        FileUploadEntity fileUploadEntity = attachmentService.getFileById(id);
+        //TODO:下面的逻辑需要根据表结构重构一下
+        FileUploadEntity fileUploadEntity = fileUploadService.getFileById(id);
         File storedFile = new File(fileUploadEntity.getPath());
         if (storedFile.exists()) {
             String fileNameEncode = URLEncoder.encode(storedFile.getName(), StandardCharsets.UTF_8.name());

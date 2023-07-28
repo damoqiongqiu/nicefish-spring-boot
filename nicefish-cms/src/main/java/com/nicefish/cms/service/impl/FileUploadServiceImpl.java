@@ -25,7 +25,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private String uploadPath;
 
     @Autowired
-    private IFileUploadRepository attachmentRepository;
+    private IFileUploadRepository fileUploadRepository;
 
     @Override
     public FileUploadEntity upload(MultipartFile file) {
@@ -54,7 +54,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
             fileEntity.setPath(targetFile.getPath());
             fileEntity.setFileSize(file.getSize());
             fileEntity.setFileSuffix(suffix);
-            return attachmentRepository.save(fileEntity);
+            return fileUploadRepository.save(fileEntity);
         } catch (IOException e) {
             e.printStackTrace();
             logger.error(e.getStackTrace().toString());
@@ -64,7 +64,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
     @Override
     public FileUploadEntity getFileById(Integer id) {
-        FileUploadEntity fileUploadEntity = attachmentRepository.findDistinctById(id);
+        FileUploadEntity fileUploadEntity = fileUploadRepository.findDistinctById(id);
         return fileUploadEntity;
     }
 }
