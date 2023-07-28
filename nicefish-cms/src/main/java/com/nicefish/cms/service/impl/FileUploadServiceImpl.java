@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @Service
@@ -28,33 +30,43 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private IFileUploadRepository fileUploadRepository;
 
     @Override
-    public FileUploadEntity upload(MultipartFile file) {
+    public List<FileUploadEntity> upload(MultipartFile[] files) {
         try {
-            //取文件名
-            String name = file.getOriginalFilename();
-            if (StringUtils.isEmpty(name)) {
-                return null;
+            //确保目录存在
+            File targetDir = new File(uploadPath);
+            if (!targetDir.exists()) {
+                targetDir.mkdirs();
             }
 
-            //后缀
-            String suffix = StringUtils.isNotBlank(FilenameUtils.getExtension(name)) ? FilenameUtils.getExtension(name) : "";
+            List<FileUploadEntity> resultList=new ArrayList<>();
+            for(MultipartFile file:files){
+                //取文件名
+                String name = file.getOriginalFilename();
+                if (StringUtils.isEmpty(name)) {
+                    return null;
+                }
 
-            //文件重命名，防止覆盖，TODO:用 hash 生成文件名
-            String targetFileName = System.currentTimeMillis() + "." + suffix;
-            File targetFile = new File(uploadPath, targetFileName);
-            if (!targetFile.getParentFile().exists()) {
-                targetFile.getParentFile().mkdirs();
+                //取文件后缀
+                String suffix = StringUtils.isNotBlank(FilenameUtils.getExtension(name)) ? FilenameUtils.getExtension(name) : "";
+
+                //文件重命名，防止同目录文件覆盖
+                //TODO:用 hash 生成文件名
+                String targetFileName = System.currentTimeMillis() + "." + suffix;
+                File targetFile = new File(uploadPath, targetFileName);
+                file.transferTo(targetFile);
+
+                //TODO:表里面还有其它字段，这里需要补全
+                FileUploadEntity fileEntity = new FileUploadEntity();
+                fileEntity.setDisplayName(name.replaceAll("."+suffix,""));
+                fileEntity.setFileName(targetFileName);
+                fileEntity.setPath(targetFile.getPath());
+                fileEntity.setFileSize(file.getSize());
+                fileEntity.setFileSuffix(suffix);
+                fileEntity=fileUploadRepository.save(fileEntity);
+
+                resultList.add(fileEntity);
             }
-            file.transferTo(targetFile);
-
-            //TODO:表里面还有其它字段，这里需要补全
-            FileUploadEntity fileEntity = new FileUploadEntity();
-            fileEntity.setDisplayName(name);
-            fileEntity.setFileName(targetFileName);
-            fileEntity.setPath(targetFile.getPath());
-            fileEntity.setFileSize(file.getSize());
-            fileEntity.setFileSuffix(suffix);
-            return fileUploadRepository.save(fileEntity);
+            return resultList;
         } catch (IOException e) {
             e.printStackTrace();
             logger.error(e.getStackTrace().toString());

@@ -1,5 +1,7 @@
 package com.nicefish.cms.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -47,6 +49,15 @@ public class FileUploadEntity implements Serializable {
     //上传此文件的用户 id ，用户必须登录才能上传文件
     @Column(name = "user_id")
     private Integer userId;
+
+    @JoinTable(
+            name="nicefish_cms_post_file_upload",
+            joinColumns={@JoinColumn(name="up_id",referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="post_id",referencedColumnName="post_id")}
+    )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore //防止 Jackson 因为循环依赖导致转 JSON 字符串时 stackoverflow
+    private PostEntity postEntity;
 
     public Integer getId() {
         return id;
@@ -134,5 +145,13 @@ public class FileUploadEntity implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public PostEntity getPostEntity() {
+        return postEntity;
+    }
+
+    public void setPostEntity(PostEntity postEntity) {
+        this.postEntity = postEntity;
     }
 }

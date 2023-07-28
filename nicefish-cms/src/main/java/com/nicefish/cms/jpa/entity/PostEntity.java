@@ -1,10 +1,12 @@
 package com.nicefish.cms.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 大漠穷秋
@@ -74,6 +76,11 @@ public class PostEntity implements Serializable {
     
     @Column(name="status")
     private Integer status=4;
+
+    //TODO:业务限制，每篇文章最多上传 9 张图片，或者 1 个视频。
+    //TODO:需要测试，保存时需要更新关联表。
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "postEntity")
+    private List<FileUploadEntity> fileUploadEntities;
 
     public String getTitle() {
         return title;
@@ -225,5 +232,14 @@ public class PostEntity implements Serializable {
 
     public void setEnableComment(String enableComment) {
         this.enableComment = enableComment;
+    }
+
+    public List<FileUploadEntity> getFileUploadEntities() {
+        return fileUploadEntities;
+    }
+
+    @JsonProperty
+    public void setFileUploadEntities(List<FileUploadEntity> fileUploadEntities) {
+        this.fileUploadEntities = fileUploadEntities;
     }
 }
