@@ -3,7 +3,9 @@ nicefish:
     version: 1.1.0
     copyrightYear: 2019
     demoEnabled: true
-    profile: D:/nicefish/uploadPath
+    # 文件上传目录，请根据自己服务器情况配置
+#    uploadPath: C:/nicefish/uploadPath
+    uploadPath: /Users/nanke/workSpace/uploadDir
     addressEnabled: true
 
 server:
@@ -45,8 +47,9 @@ spring:
         active: druid
     servlet:
         multipart:
-            max-file-size: 10MB
-            max-request-size: 20MB
+            # 单个文件上传大小限制
+            max-file-size: 100MB
+            max-request-size: 500MB
     devtools:
         restart:
             enabled: true
