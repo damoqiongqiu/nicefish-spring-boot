@@ -70,7 +70,7 @@ CREATE TABLE `nicefish_cms_file_upload` (
   `up_time` datetime NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=311 DEFAULT CHARSET=utf8mb4 COMMENT='上传文件的记录。';
+) ENGINE=InnoDB AUTO_INCREMENT=315 DEFAULT CHARSET=utf8mb4 COMMENT='上传文件的记录。';
 
 /*Data for the table `nicefish_cms_file_upload` */
 
@@ -80,7 +80,7 @@ DROP TABLE IF EXISTS `nicefish_cms_post`;
 
 CREATE TABLE `nicefish_cms_post` (
   `post_id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_title` varchar(128) NOT NULL,
+  `post_title` varchar(128) DEFAULT NULL,
   `post_summary` varchar(1024) DEFAULT NULL COMMENT '摘要，文章列表页需要使用',
   `post_content` text DEFAULT NULL COMMENT '内容',
   `original_url` varchar(512) DEFAULT NULL COMMENT '原文链接，如果有这个字段，说明是翻译文章',
@@ -98,7 +98,7 @@ CREATE TABLE `nicefish_cms_post` (
   `enable_comment` varchar(32) NOT NULL DEFAULT '1' COMMENT '是否可评论\n            0不可\n            1可',
   `status` int(11) NOT NULL DEFAULT 4 COMMENT '状态：\n            1、已删除\n            2、已归档，已归档的内容禁止评论，文章不可删除\n            3、草稿\n            4、已发布\n            5、精华-->精华文章不可删除\n            6、已推至首页\n            ',
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
 /*Data for the table `nicefish_cms_post` */
 
@@ -119,7 +119,10 @@ insert  into `nicefish_cms_post`(`post_id`,`post_title`,`post_summary`,`post_con
 (25,'测试文件上传6666666666666',NULL,'测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666测试文件上传6666666666666','',NULL,NULL,'2023-07-28 22:51:00','2023-07-28 22:51:00','0',1,0,0,2,'admin@126.com','admin','Y',4),
 (26,'测试文件上传777777777777777777',NULL,'测试文件上传777777777777777777测试文件上传777777777777777777测试文件上传777777777777777777测试文件上传777777777777777777测试文件上传777777777777777777测试文件上传777777777777777777测试文件上传777777777777777777测试文件上传777777777777777777测试文件上传777777777777777777','',NULL,NULL,'2023-07-28 22:55:36','2023-07-28 22:55:36','0',1,0,0,2,'admin@126.com','admin','Y',4),
 (27,'测试图片上传88888888',NULL,'测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888测试图片上传88888888','',NULL,NULL,'2023-07-28 22:58:06','2023-07-28 22:58:06','0',1,0,0,2,'admin@126.com','admin','Y',4),
-(28,'测试上传图片8888888888',NULL,'测试上传图片8888888888','',NULL,NULL,'2023-07-28 23:00:43','2023-07-28 23:00:43','0',1,0,0,2,'admin@126.com','admin','Y',4);
+(28,'测试上传图片8888888888',NULL,'测试上传图片8888888888','',NULL,NULL,'2023-07-28 23:00:43','2023-07-28 23:00:43','0',1,0,0,2,'admin@126.com','admin','Y',4),
+(29,'测试图片上传',NULL,'测试图片上传','',NULL,NULL,'2023-07-28 23:33:12','2023-07-28 23:33:12','0',1,0,0,2,'admin@126.com','admin','Y',4),
+(30,'测试图片比例',NULL,'测试图片比例测试图片比例测试图片比例','',NULL,NULL,'2023-07-29 13:35:47','2023-07-29 13:35:47','0',1,0,0,2,'admin@126.com','admin','Y',4),
+(31,'',NULL,'测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容测试无标题内容','',NULL,NULL,'2023-07-29 13:56:58','2023-07-29 13:56:58','0',1,0,0,2,'admin@126.com','admin','Y',4);
 
 /*Table structure for table `nicefish_cms_post_file_upload` */
 
@@ -287,7 +290,7 @@ CREATE TABLE `nicefish_rbac_session` (
 /*Data for the table `nicefish_rbac_session` */
 
 insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_name`,`creation_time`,`expiry_time`,`last_access_time`,`max_inactive_interval`,`timeout`,`expired`,`host`,`os`,`browser`,`user_agent`,`session_data`) values 
-('885139c4-16cc-44f2-aea6-047a84c6b48f',NULL,NULL,NULL,'2023-07-28 15:09:12',NULL,'2023-07-28 23:25:58',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL);
+('885139c4-16cc-44f2-aea6-047a84c6b48f',NULL,NULL,NULL,'2023-07-28 15:09:12',NULL,'2023-07-29 13:57:05',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',NULL);
 
 /*Table structure for table `nicefish_rbac_user` */
 
