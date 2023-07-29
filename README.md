@@ -31,6 +31,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 -   用 IDEA 导入根目录下的 pom.xml
 -   在 MySQL 中执行 docs/nicefish-spring-boot.sql 脚本（包含测试数据)
 -   修改 application.yml 配置文件，把 MySQL 改成你自己的配置
+-   修改 application.yml 配置文件，把上传文件的目录 uploadPath 改成你本地的目录
 -   配置 Maven ，使用阿里云的源
 -   启动 nicefish-cms 模块下的 NiceFishApplication.java
 -   Swagger 接口文档地址：http://localhost:8080/swagger-ui.html
