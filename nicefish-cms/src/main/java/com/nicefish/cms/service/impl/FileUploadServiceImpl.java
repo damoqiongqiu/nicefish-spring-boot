@@ -3,6 +3,7 @@ package com.nicefish.cms.service.impl;
 import com.nicefish.cms.jpa.entity.FileUploadEntity;
 import com.nicefish.cms.jpa.repository.IFileUploadRepository;
 import com.nicefish.cms.service.IFileUploadService;
+import com.nicefish.cms.util.HashUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -50,8 +51,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 String suffix = StringUtils.isNotBlank(FilenameUtils.getExtension(name)) ? FilenameUtils.getExtension(name) : "";
 
                 //文件重命名，防止同目录文件覆盖
-                //TODO:用 hash 生成文件名
-                String targetFileName = System.currentTimeMillis() + "." + suffix;
+                String targetFileName = HashUtils.generateSaltedSha256() + "." + suffix;
                 File targetFile = new File(uploadPath, targetFileName);
                 file.transferTo(targetFile);
 
