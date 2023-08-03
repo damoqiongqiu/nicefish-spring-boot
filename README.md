@@ -14,7 +14,12 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 1.简述
 
-此项目主要基于 spring-boot 和 Apache Shiro，为 NiceFish 的前端界面提供服务，对应的前端代码在这里： http://git.oschina.net/mumu-osc/NiceFish/ 。
+此项目主要基于 spring-boot 和 Apache Shiro，目的是为 NiceFish 的前端界面提供服务，以下两个版本的前端都已经与 nicefish-spring-boot 对接好：
+
+-   基于 Angular 框架的前端界面：http://git.oschina.net/mumu-osc/NiceFish/
+-   基于 React 框架的前端界面：https://gitee.com/mumu-osc/NiceFish-React
+
+推荐使用 React 版本，因为最近几个月这个版本向前改了很多。
 
 **注意：本项目与具体的前端框架无关，所有接口都是 Restful 的，可以使用任意前端框架来接入。**
 
@@ -24,6 +29,8 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 -   开发工具 IDEA
 -   构建工具 Maven
 -   MySQL >=5 or MariaDB >=10
+
+**没有其它依赖，装好数据库，拉下代码就能运行。**
 
 ## 3.用法
 
@@ -77,19 +84,23 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 8.前端界面截图
 
-<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/1.png">
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/1.png">
 
-<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/2.png">
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/2.png">
 
-<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/3.png">
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/3.png">
 
-<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/4.png">
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/4.png">
 
-<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/5.png">
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/5.png">
 
-<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/6.png">
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/6.png">
 
-<img src="https://gitee.com/mumu-osc/NiceFish/raw/master/src/assets/imgs/7.png">
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/7.png">
+
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/8.png">
+
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/9.png">
 
 ## 9.开源许可证
 
