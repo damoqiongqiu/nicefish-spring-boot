@@ -111,9 +111,11 @@ public class UserServiceImpl implements IUserService {
             throw new UserNameDuplicateException();
         }
 
-        temp=this.userRepository.findDistinctByEmail(userEntity.getEmail());
-        if(!ObjectUtils.isEmpty(temp)){
-            throw new EmailDuplicateException();
+        if(!StringUtils.isEmpty(userEntity.getEmail())){
+            temp=this.userRepository.findDistinctByEmail(userEntity.getEmail());
+            if(!ObjectUtils.isEmpty(temp)){
+                throw new EmailDuplicateException();
+            }
         }
 
         if(!StringUtils.isEmpty(userEntity.getCellphone())){
@@ -230,8 +232,6 @@ public class UserServiceImpl implements IUserService {
     public UserEntity saveUser(UserEntity userEntity) {
         return this.userRepository.save(userEntity);
     }
-
-
 
     @Override
     public boolean isUserNameUnique(String userName) {
