@@ -374,7 +374,7 @@ insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_nam
 ('5d9d9697-4701-41ed-8803-cd0dffc84663',NULL,2,'admin@126.com','2023-08-13 21:54:36',NULL,'2023-08-13 21:59:23',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Chrome 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',NULL),
 ('78a6bc73-464f-440d-9b07-dc5676e34489',NULL,NULL,NULL,'2023-08-14 14:37:19',NULL,'2023-08-14 15:08:07',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('9c3ab919-ff8a-4eac-b060-ce3a4b3d99bc',NULL,NULL,NULL,'2023-08-18 13:03:00',NULL,'2023-08-18 20:59:36',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
-('af1216eb-6c9a-4c57-bfbf-85a6f97840b2',NULL,2,'admin@126.com','2023-08-20 15:50:50',NULL,'2023-08-20 15:54:59',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
+('af1216eb-6c9a-4c57-bfbf-85a6f97840b2',NULL,2,'admin@126.com','2023-08-20 15:50:50',NULL,'2023-08-20 17:40:35',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('bd29d2d2-74e0-46c5-9cad-ecc1cdc84a8c',NULL,NULL,NULL,'2023-08-13 21:54:36',NULL,'2023-08-13 21:54:36',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Chrome 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',NULL),
 ('d5872822-8eec-43f8-a723-ae5f6e3a4e6d',NULL,NULL,NULL,'2023-08-13 14:25:10',NULL,'2023-08-14 13:36:12',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('f220742d-14b1-4adb-9679-88d1f19cb9cb',NULL,2,'admin@126.com','2023-08-14 14:18:26',NULL,'2023-08-14 14:37:18',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL);
@@ -391,6 +391,8 @@ CREATE TABLE `nicefish_rbac_user` (
   `email` varchar(64) DEFAULT '',
   `cellphone` varchar(32) DEFAULT '',
   `gender` int(11) DEFAULT 0 COMMENT '0男 1女 2未知',
+  `city` varchar(128) DEFAULT NULL,
+  `education` varchar(128) DEFAULT NULL,
   `avatar_url` varchar(64) DEFAULT '' COMMENT '用户头像 URL',
   `salt` varchar(32) DEFAULT '',
   `create_time` datetime DEFAULT current_timestamp(),
@@ -401,16 +403,16 @@ CREATE TABLE `nicefish_rbac_user` (
 
 /*Data for the table `nicefish_rbac_user` */
 
-insert  into `nicefish_rbac_user`(`user_id`,`user_name`,`nick_name`,`password`,`email`,`cellphone`,`gender`,`avatar_url`,`salt`,`create_time`,`status`,`remark`) values 
-(2,'admin@126.com','admin','7f9091af32f1f34b430998540d9b8cfc','admin@126.com','13813838338',2,'','850bf8','2023-07-17 23:02:37',1,'adminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin'),
-(4,'user1@126.com','测试用户-1','5f077f98795ddfe4d353e4c2a0acbdd0','user1@126.com','',1,'','596a69','2023-07-18 13:58:04',1,''),
-(5,'user2@126.com','user2','4f9c512e8ca73e1285a5617fb843e609','user2@126.com','',0,'','558d9a','2023-07-18 15:10:22',1,''),
-(6,'user3@126.com','user3','ae2a2f18656334fab7d3ea71c6bc55ce','user3@126.com','',0,'','ec764e','2023-07-18 16:20:58',1,''),
-(7,'user4@126.com','user4','9ee2e0077263167a2c1f62fa7f993da1','user4@126.com','',2,'','3cb61c','2023-07-18 20:24:12',1,''),
-(10,'user5@126.com','user5','2513aac029d2863024ad16133ced58c1','','',1,'','7ce10d','2023-07-26 15:18:53',0,'user5'),
-(11,'user6@126.com','user6','773d107cf9d07154d954a9630bcc9002','user6@126.com','',0,'','29322b','2023-07-27 13:14:13',1,'【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】'),
-(12,'test22@126.com','','e0f543b23b37a0c9ace53eed201f915f','test22@126.com','',0,'','483c0e','2023-08-12 00:11:03',1,''),
-(13,'test3333@126.com','test3333','85e162e858e8a8493e37bf1b29907a72','test3333@126.com','',0,'','1ea4a8','2023-08-13 14:12:13',1,'test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333');
+insert  into `nicefish_rbac_user`(`user_id`,`user_name`,`nick_name`,`password`,`email`,`cellphone`,`gender`,`city`,`education`,`avatar_url`,`salt`,`create_time`,`status`,`remark`) values 
+(2,'admin@126.com','admin','7f9091af32f1f34b430998540d9b8cfc','admin@126.com','13813838338',2,NULL,NULL,'','850bf8','2023-07-17 23:02:37',1,'adminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin'),
+(4,'user1@126.com','测试用户-1','5f077f98795ddfe4d353e4c2a0acbdd0','user1@126.com','',1,NULL,NULL,'','596a69','2023-07-18 13:58:04',1,''),
+(5,'user2@126.com','user2','4f9c512e8ca73e1285a5617fb843e609','user2@126.com','',0,NULL,NULL,'','558d9a','2023-07-18 15:10:22',1,''),
+(6,'user3@126.com','user3','ae2a2f18656334fab7d3ea71c6bc55ce','user3@126.com','',0,NULL,NULL,'','ec764e','2023-07-18 16:20:58',1,''),
+(7,'user4@126.com','user4','9ee2e0077263167a2c1f62fa7f993da1','user4@126.com','',2,NULL,NULL,'','3cb61c','2023-07-18 20:24:12',1,''),
+(10,'user5@126.com','user5','2513aac029d2863024ad16133ced58c1','','',1,NULL,NULL,'','7ce10d','2023-07-26 15:18:53',0,'user5'),
+(11,'user6@126.com','user6','773d107cf9d07154d954a9630bcc9002','user6@126.com','',0,NULL,NULL,'','29322b','2023-07-27 13:14:13',1,'【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】【user6】'),
+(12,'test22@126.com','','e0f543b23b37a0c9ace53eed201f915f','test22@126.com','',0,NULL,NULL,'','483c0e','2023-08-12 00:11:03',1,''),
+(13,'test3333@126.com','test3333','85e162e858e8a8493e37bf1b29907a72','test3333@126.com','',0,NULL,NULL,'','1ea4a8','2023-08-13 14:12:13',1,'test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333test3333');
 
 /*Table structure for table `nicefish_rbac_user_role` */
 

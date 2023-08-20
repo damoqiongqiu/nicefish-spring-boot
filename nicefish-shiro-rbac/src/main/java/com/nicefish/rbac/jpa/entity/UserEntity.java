@@ -38,6 +38,12 @@ public class UserEntity implements Serializable {
     @Column(name="gender",columnDefinition = "int default 0")
     private Integer gender=0;
 
+    @Column(name="city")
+    private String city;
+
+    @Column(name="education")
+    private String education;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="create_time",updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -166,5 +172,21 @@ public class UserEntity implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
     }
 }
