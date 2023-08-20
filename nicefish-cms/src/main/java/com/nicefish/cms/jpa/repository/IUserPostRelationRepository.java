@@ -10,29 +10,58 @@ import java.util.List;
 
 @Repository
 public interface IUserPostRelationRepository extends JpaRepository<UserPostRelationEntity, Integer> {
-
     /**
      * 根据用户ID和帖子ID查找关系记录
+     * @param userId
+     * @param postId
+     * @return
      */
     UserPostRelationEntity findByUserIdAndPostId(Integer userId, Integer postId);
 
     /**
+     * 判断用户与帖子之间是否存在点赞与收藏关系
+     * @param userId
+     * @param postId
+     * @param relationType
+     * @return
+     */
+    boolean existsByUserIdAndPostIdAndRelationType(@Param("userId") Integer userId, @Param("postId") Integer postId, @Param("relationType") Integer relationType);
+
+    /**
+     * 根据 userId, postId, relationType 查找关系记录
+     * @param userId
+     * @param postId
+     * @param relationType
+     * @return
+     */
+    UserPostRelationEntity findByUserIdAndPostIdAndRelationType(Integer userId, Integer postId, Integer relationType);
+
+    /**
      * 根据用户ID查找所有关系记录
+     * @param userId
+     * @return
      */
     List<UserPostRelationEntity> findAllByUserId(Integer userId);
 
     /**
      * 根据帖子ID查找所有关系记录
+     * @param postId
+     * @return
      */
     List<UserPostRelationEntity> findAllByPostId(Integer postId);
 
     /**
      * 根据帖子ID和关系类型统计数量
+     * @param postId
+     * @param relationType
+     * @return
      */
     int countByPostIdAndRelationType(Integer postId, Integer relationType);
 
     /**
      * 根据用户ID查询该用户的帖子被点赞的总数（使用原生SQL）
+     * @param userId
+     * @return
      */
     @Query(value =
             "SELECT COUNT(*) AS COUNT FROM nicefish_cms_user_post_relation r " +

@@ -1,8 +1,11 @@
 package com.nicefish.cms.controller;
 
+import com.nicefish.cms.jpa.entity.UserFollowEntity;
 import com.nicefish.cms.service.IUserFollowService;
+import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,5 +38,22 @@ public class UserFollowController {
     @RequestMapping(value = "/following-count/{userId}",method = RequestMethod.GET)
     public Long countFollowingByUserId(@PathVariable(value="userId",required = true) Integer userId) {
         return userFollowService.countFollowingByUserId(userId);
+    }
+
+    /**
+     * 创建关注关系
+     */
+    @PostMapping("/follow")
+    public AjaxResult createFollowRelation(@RequestBody UserFollowEntity userFollowEntity) {
+        UserFollowEntity result=userFollowService.createFollowRelation(userFollowEntity);
+        return ObjectUtils.isEmpty(result)?AjaxResult.failure():AjaxResult.success();
+    }
+    
+    /**
+     * 删除关注关系
+     */
+    @PostMapping("/unfollow")
+    public void deleteFollowRelation(@RequestBody UserFollowEntity userFollowEntity) {
+        userFollowService.deleteFollowRelation(userFollowEntity);
     }
 }

@@ -21,7 +21,7 @@ public class UserPostRelationEntity implements Serializable {
     private Integer relationType;
 
     @Column(name = "time", nullable = false)
-    private Date time;
+    private Date time=new Date();
 
     public Integer getId() {
         return id;

@@ -39,11 +39,6 @@ public class UserPostRelationServiceImpl implements IUserPostRelationService {
     }
 
     @Override
-    public void deleteUserPostRelation(UserPostRelationEntity userPostRelation) {
-        userPostRelationRepository.delete(userPostRelation);
-    }
-
-    @Override
     public int countByPostIdAndRelationType(Integer postId, Integer relationType) {
         return userPostRelationRepository.countByPostIdAndRelationType(postId, relationType);
     }
@@ -51,5 +46,27 @@ public class UserPostRelationServiceImpl implements IUserPostRelationService {
     @Override
     public int countLikesForUserPosts(Integer userId) {
         return userPostRelationRepository.countLikesForUserPosts(userId);
+    }
+
+    @Override
+    public boolean existsRelation(UserPostRelationEntity userPostRelationEntity) {
+        return userPostRelationRepository.existsByUserIdAndPostIdAndRelationType(
+                userPostRelationEntity.getUserId(),
+                userPostRelationEntity.getPostId(),
+                userPostRelationEntity.getRelationType()
+        );
+    }
+
+    @Override
+    public void deleteUserPostRelation(UserPostRelationEntity userPostRelation) {
+        UserPostRelationEntity temp = userPostRelationRepository.findByUserIdAndPostIdAndRelationType(
+                userPostRelation.getUserId(),
+                userPostRelation.getPostId(),
+                userPostRelation.getRelationType()
+        );
+
+        if (temp != null) {
+            userPostRelationRepository.delete(temp);
+        }
     }
 }
