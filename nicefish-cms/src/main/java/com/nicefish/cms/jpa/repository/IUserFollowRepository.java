@@ -5,11 +5,12 @@ import com.nicefish.rbac.jpa.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface IUserFollowRepository extends JpaRepository<UserFollowEntity, Integer> {
-
     @Query("SELECT u FROM UserFollowEntity uf JOIN UserEntity u ON uf.fromId = u.userId WHERE uf.toId = :userId")
     List<UserEntity> findFollowersByUserId(@Param("userId") Integer userId);
 
