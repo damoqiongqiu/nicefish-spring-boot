@@ -216,7 +216,7 @@ CREATE TABLE `nicefish_cms_user_follow` (
   `to_id` int(11) DEFAULT NULL,
   `follow_time` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nicefish_cms_user_follow` */
 
@@ -224,7 +224,8 @@ insert  into `nicefish_cms_user_follow`(`id`,`from_id`,`to_id`,`follow_time`) va
 (1,2,4,'2023-08-20 15:46:32'),
 (2,2,5,'2023-08-20 15:46:37'),
 (3,2,6,'2023-08-20 15:46:43'),
-(4,2,7,'2023-08-20 15:46:46');
+(4,2,7,'2023-08-20 15:46:46'),
+(12,2,2,'2023-08-21 10:54:08');
 
 /*Table structure for table `nicefish_cms_user_post_relation` */
 
@@ -237,7 +238,7 @@ CREATE TABLE `nicefish_cms_user_post_relation` (
   `relation_type` int(11) DEFAULT NULL COMMENT '1 表示喜欢；2 表示收藏',
   `time` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nicefish_cms_user_post_relation` */
 
@@ -247,7 +248,8 @@ insert  into `nicefish_cms_user_post_relation`(`id`,`user_id`,`post_id`,`relatio
 (11,2,47,2,'2023-08-20 23:01:48'),
 (12,2,45,1,'2023-08-20 23:01:52'),
 (15,2,44,1,'2023-08-20 23:05:09'),
-(16,2,40,2,'2023-08-20 23:05:11');
+(16,2,40,2,'2023-08-20 23:05:11'),
+(18,2,47,1,'2023-08-21 10:14:39');
 
 /*Table structure for table `nicefish_rbac_api` */
 
@@ -397,7 +399,7 @@ insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_nam
 ('5d9d9697-4701-41ed-8803-cd0dffc84663',NULL,2,'admin@126.com','2023-08-13 21:54:36',NULL,'2023-08-13 21:59:23',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Chrome 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',NULL),
 ('78a6bc73-464f-440d-9b07-dc5676e34489',NULL,NULL,NULL,'2023-08-14 14:37:19',NULL,'2023-08-14 15:08:07',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('9c3ab919-ff8a-4eac-b060-ce3a4b3d99bc',NULL,NULL,NULL,'2023-08-18 13:03:00',NULL,'2023-08-18 20:59:36',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
-('af1216eb-6c9a-4c57-bfbf-85a6f97840b2',NULL,2,'admin@126.com','2023-08-20 15:50:50',NULL,'2023-08-20 23:05:19',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
+('af1216eb-6c9a-4c57-bfbf-85a6f97840b2',NULL,2,'admin@126.com','2023-08-20 15:50:50',NULL,'2023-08-21 10:54:08',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('bd29d2d2-74e0-46c5-9cad-ecc1cdc84a8c',NULL,NULL,NULL,'2023-08-13 21:54:36',NULL,'2023-08-13 21:54:36',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Chrome 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',NULL),
 ('d5872822-8eec-43f8-a723-ae5f6e3a4e6d',NULL,NULL,NULL,'2023-08-13 14:25:10',NULL,'2023-08-14 13:36:12',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('f220742d-14b1-4adb-9679-88d1f19cb9cb',NULL,2,'admin@126.com','2023-08-14 14:18:26',NULL,'2023-08-14 14:37:18',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL);
