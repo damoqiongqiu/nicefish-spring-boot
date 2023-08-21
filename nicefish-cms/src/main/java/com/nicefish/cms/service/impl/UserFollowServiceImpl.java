@@ -45,6 +45,21 @@ public class UserFollowServiceImpl implements IUserFollowService {
     @Override
     @Transactional
     public void deleteFollowRelation(UserFollowEntity userFollowEntity) {
-        userFollowRepository.delete(userFollowEntity);
+        UserFollowEntity temp = userFollowRepository.findByFromIdAndToId(
+                userFollowEntity.getFromId(),
+                userFollowEntity.getToId()
+        );
+
+        if (temp != null) {
+            userFollowRepository.delete(temp);
+        }
+    }
+
+    @Override
+    public boolean existsFollow(UserFollowEntity userFollowEntity) {
+        return userFollowRepository.existsByFromIdAndToId(
+                userFollowEntity.getFromId(),
+                userFollowEntity.getToId()
+        );
     }
 }

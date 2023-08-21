@@ -52,8 +52,13 @@ public class UserFollowController {
     /**
      * 删除关注关系
      */
-    @PostMapping("/unfollow")
+    @DeleteMapping("/unfollow")
     public void deleteFollowRelation(@RequestBody UserFollowEntity userFollowEntity) {
         userFollowService.deleteFollowRelation(userFollowEntity);
+    }
+
+    @PostMapping("/exists-follow")
+    public boolean existsFollow(@RequestBody UserFollowEntity userFollowEntity) {
+        return userFollowService.existsFollow(userFollowEntity);
     }
 }

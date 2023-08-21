@@ -19,4 +19,20 @@ public interface IUserFollowRepository extends JpaRepository<UserFollowEntity, I
 
     @Query("SELECT COUNT(uf) FROM UserFollowEntity uf WHERE uf.fromId = :userId")
     Long countFollowingByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 根据 fromId 和 toId 查找
+     * @param fromId
+     * @param toId
+     * @return
+     */
+    UserFollowEntity findByFromIdAndToId(@Param("userId")Integer fromId,@Param("userId")Integer toId);
+
+    /**
+     * 是否存在关注关系
+     * @param fromId
+     * @param toId
+     * @return
+     */
+    boolean existsByFromIdAndToId(@Param("userId")Integer fromId,@Param("userId")Integer toId);
 }

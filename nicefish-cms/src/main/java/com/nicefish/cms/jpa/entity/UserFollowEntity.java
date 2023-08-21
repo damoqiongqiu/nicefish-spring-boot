@@ -20,7 +20,7 @@ public class UserFollowEntity implements Serializable {
     private Integer toId;
 
     @Column(name = "follow_time")
-    private Date followTime;
+    private Date followTime=new Date();
 
     public Integer getId() {
         return id;

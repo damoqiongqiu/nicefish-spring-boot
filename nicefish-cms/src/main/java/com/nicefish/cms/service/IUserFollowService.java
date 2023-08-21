@@ -16,4 +16,6 @@ public interface IUserFollowService {
     UserFollowEntity createFollowRelation(UserFollowEntity userFollowEntity);
 
     void deleteFollowRelation(UserFollowEntity userFollowEntity);
+
+    boolean existsFollow(UserFollowEntity userFollowEntity);
 }
