@@ -1,5 +1,6 @@
 package com.nicefish.cms.jpa.repository;
 
+import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.jpa.entity.UserPostRelationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -68,4 +69,14 @@ public interface IUserPostRelationRepository extends JpaRepository<UserPostRelat
             "LEFT OUTER JOIN nicefish_cms_post p ON r.post_id = p.post_id " +
             "WHERE r.relation_type=1 AND p.user_id = :userId", nativeQuery = true)
     int countLikesForUserPosts(@Param("userId") Integer userId);
+
+    /**
+     * 根据 userId 查找此用户收藏或者点赞的所有帖子
+     * TODO:分页
+     * @param userId
+     * @param relationType
+     * @return
+     */
+    @Query("SELECT p FROM UserPostRelationEntity upr JOIN PostEntity p ON upr.postId = p.postId WHERE upr.userId = :userId AND upr.relationType = :relationType")
+    List<PostEntity> findUserRelatedPosts(@Param("userId") Integer userId, @Param("relationType") Integer relationType);
 }

@@ -1,5 +1,6 @@
 package com.nicefish.cms.controller;
 
+import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.jpa.entity.UserPostRelationEntity;
 import com.nicefish.cms.service.IUserPostRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +91,13 @@ public class UserPostRelationController {
     @DeleteMapping("/delete-relation")
     public void deleteUserPostRelation(@RequestBody UserPostRelationEntity userPostRelation) {
         userPostRelationService.deleteUserPostRelation(userPostRelation);
+    }
+
+    /**
+     * 根据用户ID查询该用户点赞或者收藏的帖子列表
+     */
+    @PostMapping("/find-user-related-posts")
+    public List<PostEntity> findUserRelatedPosts(@RequestBody UserPostRelationEntity userPostRelation) {
+        return userPostRelationService.findUserRelatedPosts(userPostRelation.getUserId(),userPostRelation.getRelationType());
     }
 }

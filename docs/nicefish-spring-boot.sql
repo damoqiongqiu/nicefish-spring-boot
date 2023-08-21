@@ -75,7 +75,7 @@ CREATE TABLE `nicefish_cms_file_upload` (
   `up_time` datetime NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=348 DEFAULT CHARSET=utf8mb4 COMMENT='上传文件的记录。';
+) ENGINE=InnoDB AUTO_INCREMENT=349 DEFAULT CHARSET=utf8mb4 COMMENT='上传文件的记录。';
 
 /*Data for the table `nicefish_cms_file_upload` */
 
@@ -111,7 +111,8 @@ insert  into `nicefish_cms_file_upload`(`id`,`file_name`,`display_name`,`file_su
 (344,'bad30b4a2c6856683ae15446c9a8536ec13060d9f5f3b7816476aa7a8f004eef.mp4','flower','mp4',1128375,'C:\\nicefish\\upload\\bad30b4a2c6856683ae15446c9a8536ec13060d9f5f3b7816476aa7a8f004eef.mp4',NULL,NULL,1,'2023-08-09 19:18:44',NULL),
 (345,'f4e40210a40f6c2d29f5ec1651351105b17b9780567c10b80d5b7bca6a2e2467.mp4','flower','mp4',1128375,'C:\\nicefish\\upload\\f4e40210a40f6c2d29f5ec1651351105b17b9780567c10b80d5b7bca6a2e2467.mp4',NULL,NULL,1,'2023-08-09 19:47:54',NULL),
 (346,'6534212b8279f085b0452511c3ca638c86eddf01b2d62e7e7c4f502f59f43a45.mp4','flower','mp4',1128375,'C:\\nicefish\\upload\\6534212b8279f085b0452511c3ca638c86eddf01b2d62e7e7c4f502f59f43a45.mp4',NULL,NULL,1,'2023-08-12 13:32:04',NULL),
-(347,'8b80cac1545a56a74fe9114a8ddbb6678aa45e03f6620dd063ac75e58b03b46a.mp4','flower','mp4',1128375,'C:\\nicefish\\upload\\8b80cac1545a56a74fe9114a8ddbb6678aa45e03f6620dd063ac75e58b03b46a.mp4',NULL,NULL,1,'2023-08-14 12:27:15',NULL);
+(347,'8b80cac1545a56a74fe9114a8ddbb6678aa45e03f6620dd063ac75e58b03b46a.mp4','flower','mp4',1128375,'C:\\nicefish\\upload\\8b80cac1545a56a74fe9114a8ddbb6678aa45e03f6620dd063ac75e58b03b46a.mp4',NULL,NULL,1,'2023-08-14 12:27:15',NULL),
+(348,'3cb556c93216916c8ea3e086e1b7fbedddc5351768b0dd3c416303873a148eab.mp4','flower','mp4',1128375,'C:\\nicefish\\upload\\3cb556c93216916c8ea3e086e1b7fbedddc5351768b0dd3c416303873a148eab.mp4',NULL,NULL,1,'2023-08-21 12:13:04',NULL);
 
 /*Table structure for table `nicefish_cms_post` */
 
@@ -137,7 +138,7 @@ CREATE TABLE `nicefish_cms_post` (
   `enable_comment` varchar(32) NOT NULL DEFAULT '1' COMMENT '是否可评论\n            0不可\n            1可',
   `status` int(11) NOT NULL DEFAULT 4 COMMENT '状态：\n            1、已删除\n            2、已归档，已归档的内容禁止评论，文章不可删除\n            3、草稿\n            4、已发布\n            5、精华-->精华文章不可删除\n            6、已推至首页\n            ',
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
 /*Data for the table `nicefish_cms_post` */
 
@@ -156,7 +157,8 @@ insert  into `nicefish_cms_post`(`post_id`,`post_title`,`post_summary`,`post_con
 (44,'',NULL,'测试发布视频内容测试发布视频内容测试发布视频内容测试发布视频内容测试发布视频内容','',NULL,NULL,'2023-08-09 19:18:58','2023-08-09 19:18:58','0',1,0,0,2,'admin@126.com','admin','Y',4),
 (45,'',NULL,'测试视频内容测试视频内容测试视频内容测试视频内容测试视频内容测试视频内容测试视频内容测试视频内容','',NULL,NULL,'2023-08-09 19:48:04','2023-08-09 19:48:04','0',1,0,0,2,'admin@126.com','admin','Y',4),
 (46,'',NULL,'测试表单校验','',NULL,NULL,'2023-08-12 13:32:17','2023-08-12 13:32:17','0',1,0,0,2,'admin@126.com','admin','Y',4),
-(47,'',NULL,'啊','',NULL,NULL,'2023-08-14 12:27:17','2023-08-14 12:27:17','0',1,0,0,2,'admin@126.com','admin','Y',4);
+(47,'',NULL,'啊','',NULL,NULL,'2023-08-14 12:27:17','2023-08-14 12:27:17','0',1,0,0,2,'admin@126.com','admin','Y',4),
+(48,'',NULL,'testtesttesttesttesttesttesttesttesttesttest','',NULL,NULL,'2023-08-21 12:13:13','2023-08-21 12:13:13','0',1,0,0,4,'user1@126.com','测试用户-1','Y',4);
 
 /*Table structure for table `nicefish_cms_post_file_upload` */
 
@@ -191,7 +193,8 @@ insert  into `nicefish_cms_post_file_upload`(`post_id`,`up_id`) values
 (44,344),
 (45,345),
 (46,346),
-(47,347);
+(47,347),
+(48,348);
 
 /*Table structure for table `nicefish_cms_sys_params` */
 
@@ -216,7 +219,7 @@ CREATE TABLE `nicefish_cms_user_follow` (
   `to_id` int(11) DEFAULT NULL,
   `follow_time` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nicefish_cms_user_follow` */
 
@@ -225,7 +228,8 @@ insert  into `nicefish_cms_user_follow`(`id`,`from_id`,`to_id`,`follow_time`) va
 (2,2,5,'2023-08-20 15:46:37'),
 (3,2,6,'2023-08-20 15:46:43'),
 (4,2,7,'2023-08-20 15:46:46'),
-(12,2,2,'2023-08-21 10:54:08');
+(16,4,2,'2023-08-21 12:12:42'),
+(18,4,2,'2023-08-21 12:12:54');
 
 /*Table structure for table `nicefish_cms_user_post_relation` */
 
@@ -238,7 +242,7 @@ CREATE TABLE `nicefish_cms_user_post_relation` (
   `relation_type` int(11) DEFAULT NULL COMMENT '1 表示喜欢；2 表示收藏',
   `time` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nicefish_cms_user_post_relation` */
 
@@ -249,7 +253,10 @@ insert  into `nicefish_cms_user_post_relation`(`id`,`user_id`,`post_id`,`relatio
 (12,2,45,1,'2023-08-20 23:01:52'),
 (15,2,44,1,'2023-08-20 23:05:09'),
 (16,2,40,2,'2023-08-20 23:05:11'),
-(18,2,47,1,'2023-08-21 10:14:39');
+(18,2,47,1,'2023-08-21 10:14:39'),
+(19,2,43,1,'2023-08-21 11:01:47'),
+(20,2,43,2,'2023-08-21 11:01:50'),
+(21,2,42,2,'2023-08-21 14:41:52');
 
 /*Table structure for table `nicefish_rbac_api` */
 
@@ -399,10 +406,12 @@ insert  into `nicefish_rbac_session`(`session_id`,`app_name`,`user_id`,`user_nam
 ('5d9d9697-4701-41ed-8803-cd0dffc84663',NULL,2,'admin@126.com','2023-08-13 21:54:36',NULL,'2023-08-13 21:59:23',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Chrome 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',NULL),
 ('78a6bc73-464f-440d-9b07-dc5676e34489',NULL,NULL,NULL,'2023-08-14 14:37:19',NULL,'2023-08-14 15:08:07',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('9c3ab919-ff8a-4eac-b060-ce3a4b3d99bc',NULL,NULL,NULL,'2023-08-18 13:03:00',NULL,'2023-08-18 20:59:36',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
-('af1216eb-6c9a-4c57-bfbf-85a6f97840b2',NULL,2,'admin@126.com','2023-08-20 15:50:50',NULL,'2023-08-21 10:54:08',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
+('af1216eb-6c9a-4c57-bfbf-85a6f97840b2',NULL,2,'admin@126.com','2023-08-20 15:50:50',NULL,'2023-08-21 12:11:34',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
 ('bd29d2d2-74e0-46c5-9cad-ecc1cdc84a8c',NULL,NULL,NULL,'2023-08-13 21:54:36',NULL,'2023-08-13 21:54:36',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Chrome 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',NULL),
 ('d5872822-8eec-43f8-a723-ae5f6e3a4e6d',NULL,NULL,NULL,'2023-08-13 14:25:10',NULL,'2023-08-14 13:36:12',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
-('f220742d-14b1-4adb-9679-88d1f19cb9cb',NULL,2,'admin@126.com','2023-08-14 14:18:26',NULL,'2023-08-14 14:37:18',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL);
+('ec621aa3-fdf1-4b0c-a4a7-89173500def1',NULL,4,'user1@126.com','2023-08-21 12:11:53',NULL,'2023-08-21 12:13:30',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
+('f220742d-14b1-4adb-9679-88d1f19cb9cb',NULL,2,'admin@126.com','2023-08-14 14:18:26',NULL,'2023-08-14 14:37:18',NULL,259200000,1,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL),
+('fcf2c2c3-8686-472e-809f-6bfe16795c5d',NULL,2,'admin@126.com','2023-08-21 12:14:14',NULL,'2023-08-21 14:42:06',NULL,259200000,0,'0:0:0:0:0:0:0:1','Windows 10','Firefox 11','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',NULL);
 
 /*Table structure for table `nicefish_rbac_user` */
 

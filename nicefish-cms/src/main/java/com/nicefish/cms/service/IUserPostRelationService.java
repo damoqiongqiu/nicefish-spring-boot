@@ -1,5 +1,6 @@
 package com.nicefish.cms.service;
 
+import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.jpa.entity.UserPostRelationEntity;
 
 import java.util.List;
@@ -19,6 +20,15 @@ public interface IUserPostRelationService {
      * @return
      */
     List<UserPostRelationEntity> findAllByUserId(Integer userId);
+
+    /**
+     * 根据 userId 查找此用户收藏或者点赞的所有帖子
+     * TODO:分页
+     * @param userId
+     * @param relationType
+     * @return
+     */
+    List<PostEntity> findUserRelatedPosts(Integer userId,Integer relationType);
 
     /**
      * 根据帖子ID查找所有关系记录

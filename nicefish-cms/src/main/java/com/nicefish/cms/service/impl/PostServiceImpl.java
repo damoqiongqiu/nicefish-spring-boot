@@ -33,9 +33,9 @@ public class PostServiceImpl implements IPostService {
     private IPostFileUploadRepository postFileUploadRepository;
 
     @Override
-    @Cacheable(value="posts",key ="T(String).valueOf(#var1.pageNumber).concat('-').concat(#var1.pageSize)", unless="#result==null")
-    public Page getPostsPaging(Pageable var1) {
-        return postRepository.findAll(var1);
+    @Cacheable(value="posts",key ="T(String).valueOf(#pageable.pageNumber).concat('-').concat(#pageable.pageSize)", unless="#result==null")
+    public Page getPostsPaging(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     @Override
@@ -78,11 +78,12 @@ public class PostServiceImpl implements IPostService {
         return this.postRepository.deleteByPostId(postId);
     }
 
-    @Override
-    public Integer countByUserId(Integer userId) {
-        return postRepository.countByUserId(userId);
-    }
-
+    /**
+     * 根据 userId 查找此用户发表的内容列表，带分页
+     * @param userId
+     * @param pageable
+     * @return
+     */
     @Override
     public Page<PostEntity> getPostsByUserIdAndPaging(Integer userId,Pageable pageable) {
         return postRepository.findAllByUserId(userId,pageable);

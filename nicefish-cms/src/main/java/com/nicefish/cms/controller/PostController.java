@@ -31,7 +31,6 @@ public class PostController {
     @RequestMapping(value = "/post-list/{page}", method = RequestMethod.GET)
     public Page<PostEntity> getPostList(@PathVariable(value="page",required = false) Integer page) {
         Pageable pageable= PageRequest.of(page-1,10, new Sort(Sort.Direction.DESC,"postId"));
-
         return postService.getPostsPaging(pageable);
     }
 
@@ -66,7 +65,12 @@ public class PostController {
         return postService.savePost(postEntity);
     }
 
-    //TODO:管理员用户不过滤ID，获取全部文章并分页
+    /**
+     * 根据 userId 查找此用户发表的内容列表，带分页
+     * TODO:管理员用户不过滤ID，获取全部文章并分页
+     * @param page
+     * @return
+     */
     @ApiOperation("根据用户ID获取文章列表，带分页")
     @RequestMapping(value = "/manage/post-table/{page}", method = RequestMethod.GET)
     public Page<PostEntity> getPostListByUserId(@PathVariable(value="page",required = true) Integer page) {

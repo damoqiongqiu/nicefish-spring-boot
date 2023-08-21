@@ -1,5 +1,6 @@
 package com.nicefish.cms.service.impl;
 
+import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.jpa.entity.UserPostRelationEntity;
 import com.nicefish.cms.jpa.repository.IUserPostRelationRepository;
 import com.nicefish.cms.service.IUserPostRelationService;
@@ -31,6 +32,20 @@ public class UserPostRelationServiceImpl implements IUserPostRelationService {
     @Override
     public List<UserPostRelationEntity> findAllByUserId(Integer userId) {
         return userPostRelationRepository.findAllByUserId(userId);
+    }
+
+    /**
+     * 根据 userId 查找此用户收藏或者点赞的所有帖子
+     * TODO:分页
+     *
+     * @param userId
+     * @param relationType
+     *
+     * @return
+     */
+    @Override
+    public List<PostEntity> findUserRelatedPosts(Integer userId, Integer relationType) {
+        return userPostRelationRepository.findUserRelatedPosts(userId,relationType);
     }
 
     @Override
