@@ -68,14 +68,15 @@ public class PostController {
     /**
      * 根据 userId 查找此用户发表的内容列表，带分页
      * TODO:管理员用户不过滤ID，获取全部文章并分页
-     * @param page
      * @return
      */
     @ApiOperation("根据用户ID获取文章列表，带分页")
-    @RequestMapping(value = "/manage/post-table/{page}", method = RequestMethod.GET)
-    public Page<PostEntity> getPostListByUserId(@PathVariable(value="page",required = true) Integer page) {
+    @RequestMapping(value = "/manage/post-table/{userId}/{page}", method = RequestMethod.GET)
+    public Page<PostEntity> getPostTableByUserId(
+            @PathVariable(value="userId",required = true) Integer userId,
+            @PathVariable(value="page",required = true) Integer page
+    ) {
         Pageable pageable= PageRequest.of(page-1,10);
-        Integer userId= NiceFishSecurityUtils.getUserId();
         return this.postService.getPostsByUserIdAndPaging(userId,pageable);
     }
 
