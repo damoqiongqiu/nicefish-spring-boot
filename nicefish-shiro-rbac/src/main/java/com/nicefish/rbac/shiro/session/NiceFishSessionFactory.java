@@ -7,8 +7,8 @@ import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SimpleSessionFactory;
 import org.apache.shiro.web.session.mgt.WebSessionContext;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * NiceFish 自定义的 Session 工厂类，扩展 SimpleSessionFactory ，把一些额外的属性设置到 Session 实例的 attributes 里面，方便业务层使用。

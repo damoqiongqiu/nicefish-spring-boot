@@ -4,6 +4,7 @@ import com.nicefish.rbac.jpa.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see <a href="https://docs.spring.io/spring-data/jpa/docs/2.1.10.RELEASE/reference/html/">JPA DOC</a>
  * @author 大漠穷秋
  */
-public interface IUserRepository extends PagingAndSortingRepository<UserEntity, Integer>, JpaSpecificationExecutor {
+public interface IUserRepository extends PagingAndSortingRepository<UserEntity, Integer>, JpaSpecificationExecutor, JpaRepository<UserEntity, Integer> {
 
     UserEntity findDistinctByUserId(Integer userId);
 
@@ -27,8 +28,6 @@ public interface IUserRepository extends PagingAndSortingRepository<UserEntity, 
     Page<UserEntity> findAllByNickName(String nickName,Pageable pageable);
 
     Page<UserEntity> findAllByUserNameOrNickNameOrEmailOrCellphone(String userName,String nickName,String email,String cellphone, Pageable pageable);
-
-    Iterable<UserEntity> findAll(Sort sort);
 
     Page<UserEntity> findAll(Pageable pageable);
 

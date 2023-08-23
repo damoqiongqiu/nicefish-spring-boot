@@ -3,7 +3,7 @@ package com.nicefish.core.i18n;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 /**
  * 在静态工具类Util封装一下 i18nService，省去在要使用I18n对应方法时，每次都要在类中声明 I18nService 类型的 成员变量

@@ -53,7 +53,7 @@ spring:
     jpa:
         properties:
             hibernate:
-                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+                dialect: org.hibernate.dialect.MySQL8Dialect
                 order_inserts: true
                 order_updates: true
                 format_sql: true

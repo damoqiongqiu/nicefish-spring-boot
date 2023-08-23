@@ -19,14 +19,14 @@
         <nicefish.version>1.1-SNAPSHOT</nicefish.version>
         
         <!-- spring -->
-        <spring.boot.version>2.7.14</spring.boot.version>
+        <spring.boot.version>3.1.2</spring.boot.version>
         
         <!-- mysql-connector 和 druid 之间存在版本依赖关系-->
         <mysql.connector.version>8.0.33</mysql.connector.version>
         <druid.version>1.1.14</druid.version>
         
         <!-- shiro 与 springboot 版本存在依赖关系-->
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.11.0</shiro.version>
 
         <bitwalker.version>1.19</bitwalker.version>
         <kaptcha.version>2.3.2</kaptcha.version>
@@ -53,6 +53,12 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-properties-migrator</artifactId>
+                <scope>runtime</scope>
             </dependency>
 
             <dependency>
@@ -98,15 +104,40 @@
                 <version>${aspectjrt.version}</version>
             </dependency>
 
+            <!-- Shiro -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <classifier>jakarta</classifier>
+                <version>${shiro.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.shiro</groupId>
+                        <artifactId>shiro-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.shiro</groupId>
+                        <artifactId>shiro-web</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
+                <classifier>jakarta</classifier>
                 <version>${shiro.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-spring</artifactId>
+                <artifactId>shiro-web</artifactId>
+                <classifier>jakarta</classifier>
                 <version>${shiro.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.shiro</groupId>
+                        <artifactId>shiro-core</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.shiro</groupId>

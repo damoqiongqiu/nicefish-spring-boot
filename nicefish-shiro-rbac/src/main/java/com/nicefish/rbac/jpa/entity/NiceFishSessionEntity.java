@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,7 +28,7 @@ public class NiceFishSessionEntity implements Serializable {
     @Column(name="user_id")
     private Integer userId;
 
-    @Column(name="user_name",nullable = false)
+    @Column(name="user_name")
     private String userName;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,16 +56,16 @@ public class NiceFishSessionEntity implements Serializable {
     @Column(name="expired")
     private Boolean expired=false;
 
-    @Column(name="host",nullable = false)
+    @Column(name="host")
     private String host;
 
-    @Column(name="os",nullable = false)
+    @Column(name="os")
     private String os;
 
-    @Column(name="browser",nullable = false)
+    @Column(name="browser")
     private String browser;
 
-    @Column(name="userAgent",nullable = false)
+    @Column(name="userAgent")
     private String userAgent;
 
     /**
