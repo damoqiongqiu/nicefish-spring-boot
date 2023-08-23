@@ -54,12 +54,17 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- mysql-connector 和 druid 之间存在版本依赖关系-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.25</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
 
             <dependency>
@@ -136,12 +141,6 @@
             </dependency>
 
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${javax.validation.version}</version>
@@ -153,7 +152,6 @@
                 <version>${aspectjrt.version}</version>
             </dependency>
 
-            <!-- Shiro -->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
@@ -168,6 +166,16 @@
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-ehcache</artifactId>
                 <version>${shiro.version}</version>
+            </dependency>
+            <!--
+                用来监控 ehcache ，生产环境需要删掉
+                监控工具看起来有点老，需要一款新的工具来替代
+                https://www.ehcache.org/documentation/2.7/operations/monitor.html
+            -->
+            <dependency>
+                <groupId>org.terracotta</groupId>
+                <artifactId>ehcache-probe</artifactId>
+                <version>1.0.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
