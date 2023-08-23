@@ -18,7 +18,7 @@
         <spring.boot.version>2.1.1.RELEASE</spring.boot.version>
         <spring.webmvc.version>5.1.4.RELEASE</spring.webmvc.version>
         <java.version>1.8</java.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>2.0.0-alpha-2</shiro.version>
         <druid.version>1.1.14</druid.version>
         <bitwalker.version>1.19</bitwalker.version>
         <kaptcha.version>2.3.2</kaptcha.version>
@@ -57,7 +57,7 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.25</version>
+                <version>8.0.33</version>
             </dependency>
 
             <dependency>
