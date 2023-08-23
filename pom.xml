@@ -10,7 +10,7 @@
     <url>http://www.nicefish.org</url>
     <description>NiceFish 服务端代码</description>
 
-    <!--  所有 jar 包的版本都在这里管理  -->
+    <!--  所有 jar 包版本都在这里管理，子模块中不再定义版本  -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
