@@ -16,10 +16,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.nicefish</groupId>
             <artifactId>nicefish-core</artifactId>
             <version>${nicefish.version}</version>
