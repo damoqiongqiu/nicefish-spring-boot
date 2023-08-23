@@ -41,7 +41,6 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 -   修改 application.yml 配置文件，把上传文件的目录 uploadPath 改成你本地的目录
 -   配置 Maven ，使用阿里云的源
 -   启动 nicefish-cms 模块下的 NiceFishApplication.java
--   Swagger 接口文档地址：http://localhost:8080/swagger-ui.html
 -   druid 监控地址：http://localhost:8080/druid/sql.html
 
 ## 4.项目模块依赖关系
@@ -51,12 +50,6 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 -   nicefish-core: 提供通用的工具
 -   nicefish-shiro-rbac: 提供基于 Shiro 的通用认证和鉴权服务，RBAC 型。
 -   nicefish-cms: 基于以上基础模块的 CMS 应用
-
-## 5.Swagger 接口
-
-<img src="https://gitee.com/mumu-osc/nicefish-spring-boot/raw/master/docs/imgs/swagger.png">
-
--   项目起来之后访问 http://localhost:8080/swagger-ui.html
 
 ## 6.物理模型
 

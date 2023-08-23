@@ -3,7 +3,6 @@ package com.nicefish.cms.controller;
 import com.nicefish.cms.jpa.entity.FileUploadEntity;
 import com.nicefish.cms.service.IFileUploadService;
 import com.nicefish.core.utils.AjaxResult;
-import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 //TODO:加权限控制，没有登录的用户不能上传
-@Api("cms-附件上传")
 @RestController
 @RequestMapping("/nicefish/cms/file")
 public class FileUploadController {

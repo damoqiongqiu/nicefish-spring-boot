@@ -10,7 +10,6 @@ import com.nicefish.rbac.service.IApiPermissionService;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import com.nicefish.rbac.service.IRoleService;
 import com.nicefish.rbac.service.IUserService;
-import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,6 @@ import java.util.List;
  * 角色管理
  * @author 大漠穷秋
  */
-@Api("Role Controller")
 @RestController
 @RequestMapping("/nicefish/auth/role")
 @RequiresPermissions("sys:manage:role")

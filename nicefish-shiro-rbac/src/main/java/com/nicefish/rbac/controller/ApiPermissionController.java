@@ -4,7 +4,6 @@ import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ApiPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IApiPermissionService;
-import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
  * 服务端 API 权限管理
  * @author 大漠穷秋
  */
-@Api("Api Permission Controller")
 @RestController
 @RequestMapping("/nicefish/auth/api-permission")
 @RequiresPermissions("sys:manage:api-permission")

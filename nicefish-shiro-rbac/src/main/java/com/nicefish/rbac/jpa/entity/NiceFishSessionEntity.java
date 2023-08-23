@@ -22,7 +22,7 @@ public class NiceFishSessionEntity implements Serializable {
     @Column(name = "session_id")
     private String sessionId;
 
-    @Column(name="app_name",nullable = false)
+    @Column(name="app_name")
     private String appName;
 
     @Column(name="user_id")

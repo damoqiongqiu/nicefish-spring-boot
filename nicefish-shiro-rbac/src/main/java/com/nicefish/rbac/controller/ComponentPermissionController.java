@@ -4,7 +4,6 @@ import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.jpa.entity.ComponentPermissionEntity;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.service.IComponentPermissionService;
-import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
  * 前端页面组件权限管理
  * @author 大漠穷秋
  */
-@Api("Component Permission Management")
 @RestController
 @RequestMapping("/nicefish/auth/component-permission")
 @RequiresPermissions("sys:manage:component-permission")

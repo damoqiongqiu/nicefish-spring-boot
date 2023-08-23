@@ -2,8 +2,6 @@ package com.nicefish.rbac.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,6 @@ import java.io.IOException;
  * TODO:这款验证码组件有点老，需要换一个更新一点的。
  * @author 大漠穷秋
  */
-@Api("Captcha Controller")
 @Controller
 @RequestMapping("/nicefish/auth/captcha")
 public class CaptchaController {
@@ -48,7 +45,6 @@ public class CaptchaController {
      * @param response
      * @return
      */
-    @ApiOperation("获取验证码，有两种类型：math 或者 char")
     @GetMapping(value = "/captchaImage")
     public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) {
         ServletOutputStream out = null;

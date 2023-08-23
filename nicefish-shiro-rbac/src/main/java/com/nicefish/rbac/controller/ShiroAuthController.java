@@ -10,7 +10,6 @@ import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IComponentPermissionService;
 import com.nicefish.rbac.service.IUserService;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
-import io.swagger.annotations.Api;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.slf4j.Logger;
@@ -28,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
  * Shiro 认证和授权相关的 API 。
  * @author 大漠穷秋
  */
-@Api("Shiro Auth Controller")
 @Controller
 @RequestMapping("/nicefish/auth/shiro")
 public class ShiroAuthController {

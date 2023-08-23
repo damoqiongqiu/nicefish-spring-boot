@@ -30,8 +30,6 @@
 
         <bitwalker.version>1.19</bitwalker.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-        <swagger.version>1.5.21</swagger.version>
-        <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
         <pagehelper.boot.version>1.2.5</pagehelper.boot.version>
         <commons.io.version>2.13.0</commons.io.version>
         <commons.fileupload.version>1.5</commons.fileupload.version>
@@ -92,30 +90,6 @@
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>5.8.2</version>
                 <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-models</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${springfox.swagger2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox.swagger2.version}</version>
             </dependency>
 
             <dependency>
