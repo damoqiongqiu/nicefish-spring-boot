@@ -43,6 +43,7 @@
         <module>nicefish-core</module>
         <module>nicefish-shiro-rbac</module>
         <module>nicefish-cms</module>
+        <module>nicefish-elastic-search</module>
     </modules>
 
     <dependencyManagement>

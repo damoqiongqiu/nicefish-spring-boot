@@ -25,15 +25,14 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 2.开发环境
 
-| 名称        | 版本号                 | 描述                                              |
-| ----------- | ---------------------- | ------------------------------------------------- |
-| Spring Boot | 3.2                    | 发布于 2023 年 7 月                               |
-| JDK         | OpenJDK 20             | Spring Boot 3.2 要求至少 Java 17，不再支持 Java 8 |
-| IDEA        | 最新版本               | 无                                                |
-| Maven       | 3.8                    | Spring Boot 3.2 要求 Maven 3.6                    |
-| MySQL       | >=5（or MariaDB >=10） | 其它版本没有测试兼容性                            |
-
-**没有其它依赖，装好数据库，拉下代码就能运行。**
+| 名称                  | 版本号                 | 描述                                              |
+| --------------------- | ---------------------- | ------------------------------------------------- |
+| Spring Boot           | 3.2                    | 发布于 2023 年 7 月                               |
+| JDK                   | OpenJDK 20             | Spring Boot 3.2 要求至少 Java 17，不再支持 Java 8 |
+| IDEA                  | 最新版本               | 无                                                |
+| Maven                 | 3.8                    | Spring Boot 3.2 要求 Maven 3.6                    |
+| MySQL                 | >=5（or MariaDB >=10） | 其它版本没有测试兼容性                            |
+| ElasticSearch（可选） | 8.9（当前最新版）      | 其它版本没有测试兼容性                            |
 
 **目前 Spring 各个模块的版本兼容性比较复杂，如果能成功启动，最好不要修改版本。**
 
@@ -45,8 +44,19 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 -   修改 application.yml 配置文件，把 MySQL 改成你自己的配置
 -   修改 application.yml 配置文件，把上传文件的目录 uploadPath 改成你本地的目录
 -   配置 Maven ，使用阿里云的源
--   启动 nicefish-cms 模块下的 NiceFishApplication.java
+-   启动 nicefish-cms 模块下的 NiceFishCMSApplication.java
 -   druid 监控地址：http://localhost:8080/druid/sql.html
+
+[可选]：启用 ElasticSearch 搜索服务
+
+-   按照 ElasticSearch 官方文档安装 https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
+-   按照 ElasticSearch 官方文档安装 logstash https://www.elastic.co/guide/en/logstash/8.9/installing-logstash.html
+-   按照官方文档完成 ElasticSearch 和 logstash 的对接
+-   参考本项目中的 /docs/elastic-mysql-jdbc.conf 配置文件配置 logstash 并重启服务，注意修改其中的 IP 地址、端口号、用户名和密码
+-   修改 nicefish-elastic-search 模块下的 application.yml 配置文件，把 ElasticSearch 的 IP 地址和端口号改成你自己的
+-   启动 nicefish-elastic-search 模块下的 NiceFishSearchApplication.java
+-   打开浏览器，访问 http://localhost:8899/nicefish/search/user/getAll ，测试搜索服务是否正常，注意改成你自己配置的端口号
+-   在前端项目中设置代理，把带有 /search 前缀的服务全部转发给 nicefish-elastic-search 搜索服务
 
 ## 4.项目模块依赖关系
 
@@ -55,6 +65,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 -   nicefish-core: 提供通用的工具
 -   nicefish-shiro-rbac: 提供基于 Shiro 的通用认证和鉴权服务，RBAC 型。
 -   nicefish-cms: 基于以上基础模块的 CMS 应用
+-   nicefish-elastic-search: 提供基于 ElasticSearch 的搜索服务（可选，不是必须启动）
 
 ## 5.物理模型
 
