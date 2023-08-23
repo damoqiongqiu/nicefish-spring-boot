@@ -20,10 +20,6 @@
         
         <!-- spring -->
         <spring.boot.version>2.1.1.RELEASE</spring.boot.version>
-        <spring.webmvc.version>5.1.4.RELEASE</spring.webmvc.version>
-        <spring.boot.test.version>2.1.7.RELEASE</spring.boot.test.version>
-        <spring.test.version>5.1.9.RELEASE</spring.test.version>
-        <spring.boot.maven.plugin.version>3.1.1</spring.boot.maven.plugin.version>
         
         <!-- mysql-connector 和 druid 之间存在版本依赖关系-->
         <mysql.connector.version>8.0.33</mysql.connector.version>
