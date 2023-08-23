@@ -114,39 +114,28 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
-        <!-- nicefish-core -->
         <dependency>
             <groupId>com.nicefish</groupId>
             <artifactId>nicefish-core</artifactId>
             <version>${nicefish.version}</version>
         </dependency>
 
-        <!-- mysql & druid -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
         </dependency>
 
-        <!-- Shiro -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <!-- 
             用来监控 ehcache ，生产环境需要删掉 
@@ -159,13 +148,4 @@
             <version>1.0.2</version>
         </dependency>
     </dependencies>
-
-    <!-- 阿里云 Maven 源 -->
-    <repositories>
-        <repository>
-            <id>aliyunmaven</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </repository>
-    </repositories>
 </project>
