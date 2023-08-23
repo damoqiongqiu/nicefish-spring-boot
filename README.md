@@ -25,12 +25,15 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 ## 2.开发环境
 
--   JDK 1.8
--   开发工具 IDEA
--   构建工具 Maven
--   MySQL >=5 or MariaDB >=10
+| 名称  | 版本号                 | 描述                                              |
+| ----- | ---------------------- | ------------------------------------------------- |
+| JDK   | OpenJDK 20             | Spring Boot 3.2 要求至少 Java 17，不再支持 Java 8 |
+| IDEA  | 最新版本               | 无                                                |
+| Maven | 3.8                    | Spring Boot 3.2 要求 Maven 3.6                    |
+| MySQL | >=5（or MariaDB >=10） | 其它版本没有测试兼容性                            |
 
 **没有其它依赖，装好数据库，拉下代码就能运行。**
+**目前 Spring 各个模块的版本兼容性比较复杂，如果能成功启动，最好不要修改版本。**
 
 ## 3.用法
 
@@ -51,13 +54,13 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 -   nicefish-shiro-rbac: 提供基于 Shiro 的通用认证和鉴权服务，RBAC 型。
 -   nicefish-cms: 基于以上基础模块的 CMS 应用
 
-## 6.物理模型
+## 5.物理模型
 
 <img src="https://gitee.com/mumu-osc/nicefish-spring-boot/raw/master/docs/imgs/pdm.png">
 
 物理模型 pdm 文件在 docs 目录下，可以使用 PowerDesigner 打开，目前针对 MySQL 数据库。
 
-## 7.系列项目
+## 6.系列项目
 
 <h4>NiceFish 的客户端项目：</h4>
 
@@ -75,7 +78,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 | [nicefish-spring-boot](https://gitee.com/mumu-osc/nicefish-spring-boot)   | 用来示范前后端分离模式下，前端代码与后端服务的对接方式，已经完成了基线版本。以此为基础，你可以继续开发出适合自己业务场景的代码。 | <a href='https://gitee.com/mumu-osc/nicefish-spring-boot/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-boot/badge/star.svg?theme=dark' alt='star'></img></a>   |
 | [nicefish-spring-cloud](https://gitee.com/mumu-osc/nicefish-spring-cloud) | 用来示范前后端分离模式下，前端代码与分布式后端服务的对接方式。                                                                   | <a href='https://gitee.com/mumu-osc/nicefish-spring-cloud/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-cloud/badge/star.svg?theme=dark' alt='star'></img></a> |
 
-## 8.前端界面截图
+## 7.前端界面截图
 
 <img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/1.png">
 
@@ -95,7 +98,7 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 <img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/9.png">
 
-## 9.开源许可证
+## 8.开源许可证
 
 MIT
 
