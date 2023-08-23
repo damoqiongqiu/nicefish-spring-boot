@@ -32,7 +32,7 @@ public class ComponentPermissionController {
     @PostMapping(value = "/list/{page}")
     @ResponseBody
     public Page<ComponentPermissionEntity> getPermissionList(@RequestBody ComponentPermissionEntity componentPermissionEntity, @PathVariable(value="page",required = true) int page) {
-        Pageable pageable= PageRequest.of(page-1,10,new Sort(Sort.Direction.ASC,"displayOrder"));
+        Pageable pageable= PageRequest.of(page-1,10,Sort.by(Sort.Direction.ASC,"displayOrder"));
         Page<ComponentPermissionEntity> compoPermList = componentService.getComponentPermissionTree(componentPermissionEntity,pageable);
         logger.debug(compoPermList.toString());
         return compoPermList;

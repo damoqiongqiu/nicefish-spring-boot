@@ -30,7 +30,7 @@ public class CommentController {
     @ApiOperation("根据postId获取评论列表，按时间倒排，带分页")
 	@RequestMapping(value = "/post-id/{postId}/page/{page}", method = RequestMethod.GET)
 	public Page<CommentEntity> getCommentList(@PathVariable(value="postId",required = true) Integer postId, @PathVariable(value="page",required = true) Integer page) {
-        PageRequest pageRequest= PageRequest.of(page-1,10, new Sort(Sort.Direction.DESC,"id"));
+        PageRequest pageRequest= PageRequest.of(page-1,10, Sort.by(Sort.Direction.DESC,"id"));
         return commentService.findByPostId(postId,pageRequest);
 	}
 

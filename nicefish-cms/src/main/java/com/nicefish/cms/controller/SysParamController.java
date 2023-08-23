@@ -30,7 +30,7 @@ public class SysParamController {
     @ApiOperation("获取所有配置参数，带分页")
     @RequestMapping(value = "/list/{page}", method = RequestMethod.GET)
     public Page<SysParamEntity> getParamList(@PathVariable(value="page",required = false) Integer page) {
-        Pageable pageable= PageRequest.of(page-1,10, new Sort(Sort.Direction.DESC,"paramKey"));
+        Pageable pageable= PageRequest.of(page-1,10, Sort.by(Sort.Direction.DESC,"paramKey"));
         return this.sysParamService.getParamPaging(pageable);
     }
 

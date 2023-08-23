@@ -19,7 +19,7 @@
         <nicefish.version>1.1-SNAPSHOT</nicefish.version>
         
         <!-- spring -->
-        <spring.boot.version>2.1.1.RELEASE</spring.boot.version>
+        <spring.boot.version>2.7.14</spring.boot.version>
         
         <!-- mysql-connector 和 druid 之间存在版本依赖关系-->
         <mysql.connector.version>8.0.33</mysql.connector.version>

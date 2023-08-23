@@ -30,7 +30,7 @@ public class PostController {
     @ApiOperation("获取文章列表，按时间倒排，带分页")
     @RequestMapping(value = "/post-list/{page}", method = RequestMethod.GET)
     public Page<PostEntity> getPostList(@PathVariable(value="page",required = false) Integer page) {
-        Pageable pageable= PageRequest.of(page-1,10, new Sort(Sort.Direction.DESC,"postId"));
+        Pageable pageable= PageRequest.of(page-1,10, Sort.by(Sort.Direction.DESC,"postId"));
         return postService.getPostsPaging(pageable);
     }
 
