@@ -102,16 +102,8 @@
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.maven.plugin.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
-
-
 
     <build>
         <plugins>

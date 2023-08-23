@@ -1,6 +1,5 @@
 package com.nicefish.rbac.config;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.nicefish.rbac.shiro.filter.NiceFishCaptchaValidateFilter;
 import com.nicefish.rbac.shiro.realm.NiceFishMySQLRealm;
 import com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO;
@@ -209,11 +208,6 @@ public class ShiroConfig {
         cookieRememberMeManager.setCookie(rememberMeCookie());
         cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));//FIXME:Generate Cipher Key
         return cookieRememberMeManager;
-    }
-
-    @Bean
-    public ShiroDialect shiroDialect() {
-        return new ShiroDialect();
     }
 
     @Bean

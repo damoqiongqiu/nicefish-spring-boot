@@ -277,8 +277,8 @@ CREATE TABLE `nicefish_rbac_api` (
 
 insert  into `nicefish_rbac_api`(`api_id`,`api_name`,`url`,`permission`,`create_time`,`update_time`,`remark`) values 
 (5,'系统管理',NULL,'*','2023-07-18 08:59:45','2023-07-19 13:54:36','系统管理权限是最高权限，拥有此权限可以对系统进行任意操作，删除此权限会导致系统管理员无法对系统进行维护。根据 Apache Shiro 的权限规则，此权限代码拥有最高优先级，将会覆盖其它所有权限代码。'),
-(6,'关注用户','','user:follow','2023-07-18 14:30:04','2023-07-19 13:51:20','拥有此权限可以关注用户，否则不可以。【这是一条测试数据，无意义】'),
-(7,'管理用户','','sys:manage:user','2023-07-19 13:48:36','2023-07-19 13:48:36','管理用户'),
+(6,'关注用户','','userEntity:follow','2023-07-18 14:30:04','2023-07-19 13:51:20','拥有此权限可以关注用户，否则不可以。【这是一条测试数据，无意义】'),
+(7,'管理用户','','sys:manage:userEntity','2023-07-19 13:48:36','2023-07-19 13:48:36','管理用户'),
 (8,'管理角色','','sys:manage:role','2023-07-19 13:51:50','2023-07-19 13:51:50','管理角色'),
 (9,'管理后端接口权限','','sys:manage:api-permission','2023-07-19 13:53:00','2023-07-19 13:53:00','拥有此权限代码的角色，可以维护后端接口权限。'),
 (10,'管理前端页面权限','','sys:manage:component-permission','2023-07-19 13:53:43','2023-07-19 13:53:43','拥有此权限代码的角色可以管理前端页面权限。'),
@@ -307,7 +307,7 @@ CREATE TABLE `nicefish_rbac_component` (
 /*Data for the table `nicefish_rbac_component` */
 
 insert  into `nicefish_rbac_component`(`component_id`,`p_id`,`component_name`,`icon`,`url`,`display_order`,`permission`,`create_time`,`update_time`,`visiable`,`remark`) values 
-(42,NULL,'用户管理',NULL,'user-table/page/1',1,'menu:view:user-management','2023-07-19 14:13:59','2023-07-19 15:10:57',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【用户管理】菜单项。\n删除此项将会导致菜单入口消失。'),
+(42,NULL,'用户管理',NULL,'userEntity-table/page/1',1,'menu:view:userEntity-management','2023-07-19 14:13:59','2023-07-19 15:10:57',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【用户管理】菜单项。\n删除此项将会导致菜单入口消失。'),
 (43,NULL,'角色管理',NULL,'role-table/page/1',2,'menu:view:role-management','2023-07-19 14:14:18','2023-07-19 14:31:58',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【角色管理】菜单项。'),
 (44,NULL,'后端接口权限',NULL,'api-permission-table/page/1',3,'menu:view:api-permission-management','2023-07-19 14:14:54','2023-07-19 14:32:12',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【后端接口权限】菜单项。'),
 (45,NULL,'前端页面权限',NULL,'component-permission-table/page/1',4,'menu:view:component-permission-management','2023-07-19 14:15:18','2023-07-19 14:32:26',1,'拥有此权限代码的角色可以看到管理后台右侧边栏的【前端页面权限】菜单项。'),

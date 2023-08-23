@@ -34,10 +34,6 @@ user:
         maxRetryCount: 5
 
 spring:
-    thymeleaf:
-        mode: HTML
-        encoding: utf-8
-        cache: false
     messages:
         basename: static/i18n/messages
     jackson:
