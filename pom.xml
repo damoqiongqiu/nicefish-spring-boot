@@ -19,7 +19,6 @@
         <spring.webmvc.version>5.1.4.RELEASE</spring.webmvc.version>
         <java.version>1.8</java.version>
         <shiro.version>1.4.0</shiro.version>
-        <thymeleaf.extras.shiro.version>2.0.0</thymeleaf.extras.shiro.version>
         <druid.version>1.1.14</druid.version>
         <bitwalker.version>1.19</bitwalker.version>
         <kaptcha.version>2.3.2</kaptcha.version>
@@ -104,7 +103,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    
     <build>
         <plugins>
             <plugin>
