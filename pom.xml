@@ -12,14 +12,26 @@
 
     <!--  所有 jar 包的版本都在这里管理  -->
     <properties>
-        <nicefish.version>1.1-SNAPSHOT</nicefish.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <java.version>1.8</java.version>
+        <nicefish.version>1.1-SNAPSHOT</nicefish.version>
+        
+        <!-- spring -->
         <spring.boot.version>2.1.1.RELEASE</spring.boot.version>
         <spring.webmvc.version>5.1.4.RELEASE</spring.webmvc.version>
-        <java.version>1.8</java.version>
-        <shiro.version>2.0.0-alpha-2</shiro.version>
+        <spring.boot.test.version>2.1.7.RELEASE</spring.boot.test.version>
+        <spring.test.version>5.1.9.RELEASE</spring.test.version>
+        <spring.boot.maven.plugin.version>3.1.1</spring.boot.maven.plugin.version>
+        
+        <!-- mysql-connector 和 druid 之间存在版本依赖关系-->
+        <mysql.connector.version>8.0.33</mysql.connector.version>
         <druid.version>1.1.14</druid.version>
+        
+        <!-- shiro 与 springboot 版本存在依赖关系-->
+        <shiro.version>1.4.0</shiro.version>
+
         <bitwalker.version>1.19</bitwalker.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <swagger.version>1.5.21</swagger.version>
@@ -31,10 +43,7 @@
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <aspectjrt.version>1.8.13</aspectjrt.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <spring.boot.test.version>2.1.7.RELEASE</spring.boot.test.version>
-        <spring.test.version>5.1.9.RELEASE</spring.test.version>
         <junit.version>4.12</junit.version>
-        <spring.boot.maven.plugin.version>3.1.1</spring.boot.maven.plugin.version>
     </properties>
 
     <modules>
@@ -53,11 +62,10 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- mysql-connector 和 druid 之间存在版本依赖关系-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.33</version>
+                <version>${mysql.connector.version}</version>
             </dependency>
 
             <dependency>
