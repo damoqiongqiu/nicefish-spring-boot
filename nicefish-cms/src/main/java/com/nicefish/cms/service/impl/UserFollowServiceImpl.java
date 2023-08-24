@@ -38,6 +38,7 @@ public class UserFollowServiceImpl implements IUserFollowService {
     @Override
     @Transactional
     public UserFollowEntity createFollowRelation(UserFollowEntity userFollowEntity) {
+        //TODO:这里的删除有 bug，没有删除成功
         userFollowRepository.delete(userFollowEntity);
         return userFollowRepository.save(userFollowEntity);
     }

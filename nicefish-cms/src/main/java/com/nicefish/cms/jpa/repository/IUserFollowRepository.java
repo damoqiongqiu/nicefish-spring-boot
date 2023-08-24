@@ -26,7 +26,7 @@ public interface IUserFollowRepository extends JpaRepository<UserFollowEntity, I
      * @param toId
      * @return
      */
-    UserFollowEntity findByFromIdAndToId(@Param("userId")Integer fromId,@Param("userId")Integer toId);
+    UserFollowEntity findByFromIdAndToId(@Param("fromId")Integer fromId,@Param("toId")Integer toId);
 
     /**
      * 是否存在关注关系
@@ -34,5 +34,5 @@ public interface IUserFollowRepository extends JpaRepository<UserFollowEntity, I
      * @param toId
      * @return
      */
-    boolean existsByFromIdAndToId(@Param("userId")Integer fromId,@Param("userId")Integer toId);
+    boolean existsByFromIdAndToId(@Param("fromId")Integer fromId,@Param("toId")Integer toId);
 }

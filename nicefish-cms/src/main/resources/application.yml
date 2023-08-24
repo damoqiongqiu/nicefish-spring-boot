@@ -21,13 +21,13 @@ server:
 
 logging:
     level:
-        com.nicefish: debug
-        org.springframework: debug
-        org.hibernate.SQL: debug
+        com.nicefish: TRACE
+        org.springframework: TRACE
+        org.hibernate.SQL: TRACE
         org.hibernate.type.descriptor.sql: TRACE
-        org.hibernate.engine.QueryParameters: debug
-        org.hibernate.engine.query.HQLQueryPlan: debug
-        org.hibernate.type.descriptor.sql.BasicBinder: trace
+        org.hibernate.engine.QueryParameters: TRACE
+        org.hibernate.engine.query.HQLQueryPlan: TRACE
+        org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 user:
     password:
