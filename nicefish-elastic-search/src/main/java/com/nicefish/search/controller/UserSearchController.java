@@ -22,7 +22,7 @@ public class UserSearchController {
         return userSearchService.getAll();
     }
 
-    @GetMapping("/search/{keyword}/{page}/{size}")
+    @GetMapping("/q/{page}/{size}/{keyword}")
     public Page<UserSearchEntity> searchSimilar(@PathVariable String keyword, @PathVariable int page, @PathVariable int size) {
         UserSearchEntity entity = new UserSearchEntity();
         entity.setUserName(keyword);

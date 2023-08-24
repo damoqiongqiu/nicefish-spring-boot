@@ -111,6 +111,10 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 <img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/9.png">
 
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/11.png">
+
+<img src="https://gitee.com/mumu-osc/NiceFish-React/raw/master/src/assets/images/12.png">
+
 ## 8.开源许可证
 
 MIT

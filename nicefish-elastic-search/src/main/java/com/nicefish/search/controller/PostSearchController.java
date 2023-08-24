@@ -25,7 +25,7 @@ public class PostSearchController {
         return postSearchService.getAll();
     }
 
-    @GetMapping("/search/{keyword}/{page}/{size}")
+    @GetMapping("/q/{page}/{size}/{keyword}")
     public Page<PostSearchEntity> searchSimilar(@PathVariable String keyword, @PathVariable int page, @PathVariable int size) {
         PostSearchEntity entity = new PostSearchEntity();
         entity.setTitle(keyword);
