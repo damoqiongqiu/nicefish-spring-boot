@@ -24,9 +24,12 @@ public class PostController {
     private IPostService postService;
 
     //TODO:每页显示的条数改为系统配置项
-    @RequestMapping(value = "/post-list/{page}", method = RequestMethod.GET)
-    public Page<PostEntity> getPostList(@PathVariable(value="page",required = false) Integer page) {
-        Pageable pageable= PageRequest.of(page-1,10, Sort.by(Sort.Direction.DESC,"postId"));
+    @RequestMapping(value = "/post-list/{page}/{rows}", method = RequestMethod.GET)
+    public Page<PostEntity> getPostList(
+            @PathVariable(value="page",required = false) Integer page,
+            @PathVariable(value="rows",required = false) Integer rows
+    ) {
+        Pageable pageable= PageRequest.of(page-1,rows, Sort.by(Sort.Direction.DESC,"postId"));
         return postService.getPostsPaging(pageable);
     }
 
