@@ -10,10 +10,10 @@ nicefish:
 
 server:
     port: 8080
-    max-http-header-size: 65535
+    max-http-request-header-size: 65535
     servlet:
         context-path: /
-    use-forward-headers: true
+    forward-headers-strategy: NATIVE
     tomcat:
         uri-encoding: UTF-8
         max-threads: 800
