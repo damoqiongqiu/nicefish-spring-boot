@@ -1,6 +1,6 @@
 package com.nicefish.rbac.service.impl;
 
-import com.nicefish.rbac.constant.NiceFishAuthConstants;
+import com.nicefish.rbac.constant.AuthConstants;
 import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.*;
 import com.nicefish.rbac.jpa.repository.IUserRepository;
@@ -273,9 +273,9 @@ public class UserServiceImpl implements IUserService {
     public UserEntity checkUser(String userName, String password) throws UserNotExistsException,
             UserPasswordNotMatchException,UserDeleteException, UserBlockedException {
         UserEntity userEntity = null;
-        if(userName.matches(NiceFishAuthConstants.EMAIL_PATTERN)){
+        if(userName.matches(AuthConstants.EMAIL_PATTERN)){
             userEntity = this.getUserByEmail(userName);
-        }else if(userName.matches(NiceFishAuthConstants.MOBILE_PHONE_NUMBER_PATTERN)){
+        }else if(userName.matches(AuthConstants.MOBILE_PHONE_NUMBER_PATTERN)){
             userEntity=this.getUserByCellphone(userName);
         }else{
             userEntity=this.getUserByUserName(userName);
