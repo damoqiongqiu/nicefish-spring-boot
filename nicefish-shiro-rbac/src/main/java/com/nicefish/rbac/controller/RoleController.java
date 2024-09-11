@@ -51,6 +51,11 @@ public class RoleController {
         return roleList;
     }
 
+    /**
+     * 服务端 API 角色控制
+     * @param apiPermissionId
+     * @return
+     */
     @GetMapping(value = "/list-by-api-id/{apiPermissionId}")
     @ResponseBody
     public AjaxResult findRoleListByApiId(@PathVariable(value="apiPermissionId",required = true) int apiPermissionId){
@@ -59,6 +64,11 @@ public class RoleController {
         return AjaxResult.success(roleEntities);
     }
 
+    /**
+     * 前端页面组件角色控制
+     * @param compPermId
+     * @return
+     */
     @GetMapping(value = "/list-by-component-id/{compPermId}")
     @ResponseBody
     public AjaxResult findRoleListByComponentId(@PathVariable(value="compPermId",required = true) int compPermId){
