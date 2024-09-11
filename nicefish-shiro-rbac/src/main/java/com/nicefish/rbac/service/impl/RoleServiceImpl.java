@@ -114,7 +114,7 @@ public class RoleServiceImpl implements IRoleService {
      * - 0正常
      * - 1停用
      * - 2删除
-     * status =-1 的角色为系统内置角色，删除无效，数据库触发器自动保护。
+     * status =-1 的角色为系统内置角色，删除和更新操作都无效，数据库触发器自动保护。
      *
      * TODO:自动级联更新？
      * @param roleId
