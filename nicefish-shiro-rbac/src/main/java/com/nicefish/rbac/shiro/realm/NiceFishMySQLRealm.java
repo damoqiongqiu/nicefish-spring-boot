@@ -70,7 +70,9 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
     }
 
     /**
-     * 获取用户的权限信息， NiceFish 采用 Shiro 字符串形式的权限定义，权限不实现成 Java 类。
+     * 鉴权
+     * NiceFish 采用 Shiro 字符串形式的权限定义，权限不实现成 Java 类。
+     * Shiro 权限字符串的匹配模式定义参考 https://shiro.apache.org/java-authorization-guide.html
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
