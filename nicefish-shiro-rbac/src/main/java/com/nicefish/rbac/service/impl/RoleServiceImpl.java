@@ -108,6 +108,14 @@ public class RoleServiceImpl implements IRoleService {
 
     /**
      * 删除角色，同时删除此角色上的关联关系。
+     *
+     * 角色 status 定义：
+     * - -1 系统内置角色，不能删除
+     * - 0正常
+     * - 1停用
+     * - 2删除
+     * status =-1 的角色为系统内置角色，删除无效，数据库触发器自动保护。
+     *
      * TODO:自动级联更新？
      * @param roleId
      * @return
