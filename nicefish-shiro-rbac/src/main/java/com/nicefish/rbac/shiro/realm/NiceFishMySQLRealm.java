@@ -27,6 +27,7 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
 
     /**
      * 认证
+     * TODO:这里仅实现了简单的用户名+密码的验证方式，需要扩展其它认证方式，例如：扫描二维码、第三方认证。
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -35,8 +36,8 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
         String password = usernamePasswordToken.getPassword()!=null?new String(usernamePasswordToken.getPassword()):"";
 
         UserEntity userEntity = null;
+        //调用 User Service 认证用户信息，如果认证失败，抛出对应的异常。
         try {
-            //调用 User Service 认证用户信息，如果认证失败，抛出对应的异常。
             userEntity = userService.checkUser(username, password);
             logger.debug("UserName>"+username);
             logger.debug("Password>"+password);
