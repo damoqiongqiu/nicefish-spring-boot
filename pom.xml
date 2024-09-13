@@ -32,7 +32,7 @@
         <druid.version>1.1.14</druid.version>
         
         <!-- shiro 与 springboot 版本存在依赖关系-->
-        <shiro.version>1.11.0</shiro.version>
+        <shiro.version>1.12.0</shiro.version>
 
         <bitwalker.version>1.19</bitwalker.version>
         <kaptcha.version>2.3.2</kaptcha.version>
