@@ -1,17 +1,15 @@
 package com.nicefish.rbac.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 此实体类用于持久化 Session 到 MySQL 数据库。
- * 关于 Session 数据结构的注意点
- * @see com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO
+ * 此实体类用于持久化 Session 到数据库。
  */
 @Entity
 @DynamicInsert

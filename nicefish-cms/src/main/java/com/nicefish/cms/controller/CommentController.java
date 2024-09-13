@@ -1,18 +1,16 @@
 package com.nicefish.cms.controller;
 
-import com.nicefish.rbac.jpa.entity.UserEntity;
-import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import com.nicefish.cms.jpa.entity.CommentEntity;
 import com.nicefish.cms.service.ICommentService;
 import com.nicefish.core.utils.AjaxResult;
+import com.nicefish.rbac.jpa.entity.UserEntity;
+import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.HttpSession;
 
 /**
  * @author 大漠穷秋
@@ -31,7 +29,7 @@ public class CommentController {
 	}
 
 	@RequestMapping(value="/write-comment",method = RequestMethod.POST)
-	public AjaxResult writeComment(@RequestBody CommentEntity commentEntity, HttpSession session){
+	public AjaxResult writeComment(@RequestBody CommentEntity commentEntity){
         UserEntity user= NiceFishSecurityUtils.getUserEntity();
         commentEntity.setUserId(user.getUserId());
         commentEntity.setUserName(user.getUserName());

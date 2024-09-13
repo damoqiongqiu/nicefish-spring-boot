@@ -1,17 +1,15 @@
 package com.nicefish.cms.controller;
 
-import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.service.IPostService;
 import com.nicefish.core.utils.AjaxResult;
+import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.HttpSession;
 
 /**
  * @author 大漠穷秋
@@ -38,7 +36,7 @@ public class PostController {
         return postService.getOne(postId);
     }
 
-    private PostEntity setUserInfoToPostEntity(PostEntity postEntity, HttpSession session){
+    private PostEntity setUserInfoToPostEntity(PostEntity postEntity){
         Integer userId= NiceFishSecurityUtils.getUserEntity().getUserId();
         String nickName= NiceFishSecurityUtils.getUserEntity().getNickName();
         String email= NiceFishSecurityUtils.getUserEntity().getEmail();
@@ -50,14 +48,14 @@ public class PostController {
     }
 
     @RequestMapping(value = "/write-post",method = RequestMethod.POST)
-    public PostEntity writePost(@RequestBody PostEntity postEntity, HttpSession session){
-        this.setUserInfoToPostEntity(postEntity,session);
+    public PostEntity writePost(@RequestBody PostEntity postEntity){
+        this.setUserInfoToPostEntity(postEntity);
         return postService.savePost(postEntity);
     }
 
     @RequestMapping(value = "/update-post",method = RequestMethod.POST)
-    public PostEntity updatePost(@RequestBody PostEntity postEntity, HttpSession session){
-        this.setUserInfoToPostEntity(postEntity,session);
+    public PostEntity updatePost(@RequestBody PostEntity postEntity){
+        this.setUserInfoToPostEntity(postEntity);
         return postService.savePost(postEntity);
     }
 

@@ -2,7 +2,7 @@ package com.nicefish.rbac.config;
 
 import com.nicefish.rbac.shiro.filter.NiceFishCaptchaValidateFilter;
 import com.nicefish.rbac.shiro.realm.NiceFishMySQLRealm;
-import com.nicefish.rbac.shiro.session.NiceFishMySQLSessionDAO;
+import com.nicefish.rbac.shiro.session.NiceFishSessionDAO;
 import com.nicefish.rbac.shiro.session.NiceFishSessionFactory;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -23,7 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *
  * @author 大漠穷秋
  */
 @Configuration
@@ -110,24 +109,24 @@ public class ShiroConfig {
     }
 
     /**
-     * 创建自定义的 NiceFishMySQLSessionDAO 实例
+     * 创建自定义的 NiceFishSessionDAO 实例
      * @return
      */
     @Bean
-    public NiceFishMySQLSessionDAO sessionDAO() {
-        NiceFishMySQLSessionDAO sessionDAO = new NiceFishMySQLSessionDAO();
-        sessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");
-        return sessionDAO;
+    public NiceFishSessionDAO sessionDAO() {
+        NiceFishSessionDAO nfSessionDAO = new NiceFishSessionDAO();
+        nfSessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");
+        return nfSessionDAO;
     }
 
     /**
      * 创建自定义的 NiceFishSessionFactory 实例
-     * @return
+     * @return NiceFishSessionFactory
      */
     @Bean
     public NiceFishSessionFactory sessionFactory() {
-        NiceFishSessionFactory sessionFactory = new NiceFishSessionFactory();
-        return sessionFactory;
+        NiceFishSessionFactory nfSessionFactory = new NiceFishSessionFactory();
+        return nfSessionFactory;
     }
 
     /**
@@ -141,32 +140,30 @@ public class ShiroConfig {
     }
 
     /**
-     * web 应用和 spring 本身没有 SessionDAO 的概念，
-     * 这里创建 Shiro 提供的 DefaultWebSessionManager 实例，从而可以自定义 Session 的数据格式，
-     * 然后利用自定义的 NiceFishMySQLSessionDAO 对 Session 进行操作。
-     * @return
+     * 创建 DefaultWebSessionManager 实例，设置默认 SessionDAO 和 SimpleSessionFactory 。
+     * @return DefaultWebSessionManager
      */
     @Bean
     public DefaultWebSessionManager sessionManager() {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        DefaultWebSessionManager defaultWebSessionMgr = new DefaultWebSessionManager();
         
         //启用 EhCache 缓存，Shiro 默认不启用
         //启用 EhCache 缓存之后，需要在持久化的 Session 和缓存中的 Session 之间进行数据同步。
         //EhCache 实例配置位于 classpath:ehcache-shiro.xml 文件中，session 默认缓存在 "shiro-activeSessionCache" 实例中。
         //认证、授权、Session，全部使用同一个 EhCache 运行时对象。
-        sessionManager.setCacheManager(ehCacheManager());
+        defaultWebSessionMgr.setCacheManager(ehCacheManager());
 
-        sessionManager.setDeleteInvalidSessions(true);
-        sessionManager.setGlobalSessionTimeout(timeout);
-        sessionManager.setSessionIdUrlRewritingEnabled(false);
+        defaultWebSessionMgr.setDeleteInvalidSessions(true);
+        defaultWebSessionMgr.setGlobalSessionTimeout(timeout);
+        defaultWebSessionMgr.setSessionIdUrlRewritingEnabled(false);
         
         //启用定时调度器，用来清理 Session ，Shiro 默认采用内置的 ExecutorServiceSessionValidationScheduler 进行调度。
-        sessionManager.setSessionValidationSchedulerEnabled(true);
-        sessionManager.setSessionValidationInterval(validationInterval);
+        defaultWebSessionMgr.setSessionValidationSchedulerEnabled(true);
+        defaultWebSessionMgr.setSessionValidationInterval(validationInterval);
 
-        sessionManager.setSessionDAO(sessionDAO());
-        sessionManager.setSessionFactory(sessionFactory());
-        return sessionManager;
+        defaultWebSessionMgr.setSessionDAO(sessionDAO());
+        defaultWebSessionMgr.setSessionFactory(sessionFactory());
+        return defaultWebSessionMgr;
     }
 
     @Bean
@@ -211,7 +208,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") SecurityManager securityManager) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
+            @Qualifier("securityManager") SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
