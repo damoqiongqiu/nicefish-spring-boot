@@ -38,10 +38,9 @@ public class CaptchaController {
 
     /**
      * 获取验证码，有两种类型：math 或者 char 。
-     * 获取验证码的请求默认开启一个 HttpSession ，这个会话用来存储验证码结果，以便与用户输入的内容进行比对，
+     * 获取验证码的请求默认开启 Session ，这个会话用来存储验证码结果，以便与用户输入的内容进行比对，
      * 后续的 /login 和其它操作都会复用这个 HttpSession 。
      * 在与 Shiro 整合时，这里获得的 Session 实例是被 Shiro 包装过的 ShiroHttpSession 类型。
-     * TODO:这里需要重构，统一使用 Shiro 提供的 Session 接口。
      * @param request
      * @param response
      * @return

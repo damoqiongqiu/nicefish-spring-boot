@@ -77,6 +77,10 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Integer userId= NiceFishSecurityUtils.getUserId();
+
+        //TODO:首先尝试从 Session 中获取角色和权限数据，加快授权操作的速度。
+        //同时需要自己扩展 SessionListener 来同步 Session 数据。
+
         Set<String> permStrs=this.userService.getPermStringsByUserId(userId);
         logger.debug(permStrs.toString());
 

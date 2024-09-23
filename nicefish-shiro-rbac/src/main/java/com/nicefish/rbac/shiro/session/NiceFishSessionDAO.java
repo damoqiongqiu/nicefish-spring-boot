@@ -34,6 +34,29 @@ public class NiceFishSessionDAO extends EnterpriseCacheSessionDAO {
     private INiceFishSessionService sessionService;
 
     /**
+     * 该方法参数中的 session 实例实际上是由 NiceFishSessionFactory.createSession 提供的。
+     * 运行时调用轨迹：
+     * SecurityManager -> SessionManager -> SessionFactory.createSession() -> EnterpriseCacheSessionDAO.doCreate(session)
+     * @param session
+     * @return
+     */
+    @Override
+    protected Serializable doCreate(Session session) {
+        Serializable sessionId = super.doCreate(session);
+
+        NiceFishSessionEntity entity = new NiceFishSessionEntity();
+        entity.setSessionId((String) sessionId);
+        entity.setCreationTime(new Date());
+        entity.setLastAccessTime(new Date());
+        entity.setTimeout(session.getTimeout());
+
+        //TODO:把用户对应的 Role 和 Permission 存储到 Session 中。
+
+        this.sessionService.saveSession(entity);
+        return sessionId;
+    }
+
+    /**
      * 从 MySQL 数据库中读取 Session ，父层实现会保证先读取缓存，然后再调用此方法。
      * @param sessionId
      * @return
@@ -74,7 +97,8 @@ public class NiceFishSessionDAO extends EnterpriseCacheSessionDAO {
     @Override
     protected void doUpdate(Session session) {
         logger.debug("update session..."+session.toString());
-        SimpleSession simpleSession=(SimpleSession)session;
+
+        SimpleSession simpleSession=(SimpleSession)session;//Shiro 顶级 Session 接口中没有定义 isExpired() 方法，这里强转成 SimpleSession
         String sessionId=(String)simpleSession.getId();
         NiceFishSessionEntity entity=this.sessionService.findDistinctBySessionId(sessionId);
         if(ObjectUtils.isEmpty(entity)){
@@ -106,8 +130,9 @@ public class NiceFishSessionDAO extends EnterpriseCacheSessionDAO {
     @Override
     protected void doDelete(Session session) {
         logger.debug("delete session..."+session.toString());
-        NiceFishSessionEntity sessionEntity=this.sessionService.findDistinctBySessionId((String)session.getId());
-        sessionEntity.setExpired(true);
-        this.sessionService.saveSession(sessionEntity);
+
+        NiceFishSessionEntity entity=this.sessionService.findDistinctBySessionId((String)session.getId());
+        entity.setExpired(true);
+        this.sessionService.saveSession(entity);
     }
 }
