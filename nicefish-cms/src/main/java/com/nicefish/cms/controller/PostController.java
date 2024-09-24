@@ -4,6 +4,7 @@ import com.nicefish.cms.jpa.entity.PostEntity;
 import com.nicefish.cms.service.IPostService;
 import com.nicefish.core.utils.AjaxResult;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,13 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+
 /**
  * @author 大漠穷秋
  */
 @RestController
 @RequestMapping("/nicefish/cms/post")
 public class PostController {
-
     @Autowired
     private IPostService postService;
 
@@ -25,8 +26,11 @@ public class PostController {
     @RequestMapping(value = "/post-list/{page}/{rows}", method = RequestMethod.GET)
     public Page<PostEntity> getPostList(
             @PathVariable(value="page",required = false) Integer page,
-            @PathVariable(value="rows",required = false) Integer rows
+            @PathVariable(value="rows",required = false) Integer rows,
+            HttpServletRequest request
     ) {
+        //测试 request 的真实类型
+        System.out.print(request);
         Pageable pageable= PageRequest.of(page-1,rows, Sort.by(Sort.Direction.DESC,"postId"));
         return postService.getPostsPaging(pageable);
     }
