@@ -1,9 +1,5 @@
 package com.nicefish.rbac.service;
 
-import com.nicefish.rbac.exception.UserBlockedException;
-import com.nicefish.rbac.exception.UserDeleteException;
-import com.nicefish.rbac.exception.UserNotExistsException;
-import com.nicefish.rbac.exception.UserPasswordNotMatchException;
 import com.nicefish.rbac.jpa.entity.RoleEntity;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import org.springframework.data.domain.Page;
@@ -62,9 +58,7 @@ public interface IUserService {
 
     String encryptPassword(String username, String password, String salt);
 
-    UserEntity checkUser(String userName, String password)
-            throws UserNotExistsException,UserPasswordNotMatchException,
-            UserDeleteException, UserBlockedException;
+    UserEntity checkUser(String userName, String password);
 
     /**
      * 根据 userId 获取此用户持有的所有权限字符串列表

@@ -1,12 +1,19 @@
 package com.nicefish.rbac.service.impl;
 
 import com.nicefish.rbac.constant.AuthConstants;
-import com.nicefish.rbac.exception.*;
+import com.nicefish.rbac.exception.CellphoneDuplicateException;
+import com.nicefish.rbac.exception.EmailDuplicateException;
+import com.nicefish.rbac.exception.UserNameDuplicateException;
+import com.nicefish.rbac.exception.UserNotExistsException;
 import com.nicefish.rbac.jpa.entity.*;
 import com.nicefish.rbac.jpa.repository.IUserRepository;
 import com.nicefish.rbac.jpa.repository.IUserRoleRepository;
 import com.nicefish.rbac.service.IUserService;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
@@ -20,10 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -270,9 +273,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserEntity checkUser(String userName, String password) throws UserNotExistsException,
-            UserPasswordNotMatchException,UserDeleteException, UserBlockedException {
+    public UserEntity checkUser(String userName, String password){
         UserEntity userEntity = null;
+
         if(userName.matches(AuthConstants.EMAIL_PATTERN)){
             userEntity = this.getUserByEmail(userName);
         }else if(userName.matches(AuthConstants.MOBILE_PHONE_NUMBER_PATTERN)){
@@ -281,13 +284,9 @@ public class UserServiceImpl implements IUserService {
             userEntity=this.getUserByUserName(userName);
         }
 
-        if (ObjectUtils.isEmpty(userEntity)) {
-            throw new UserNotExistsException();
-        }
-
-        //校验加密后的密码
-        if(!this.matches(userEntity,password)){
-            throw new UserPasswordNotMatchException();
+        if (ObjectUtils.isEmpty(userEntity)
+                ||!this.matches(userEntity,password)) {
+            return null;
         }
 
         //FIXME:设置 session 属性之后，有时候不能同步到数据库

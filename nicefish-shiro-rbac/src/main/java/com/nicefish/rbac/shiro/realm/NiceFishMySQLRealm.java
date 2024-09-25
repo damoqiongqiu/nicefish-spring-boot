@@ -1,6 +1,5 @@
 package com.nicefish.rbac.shiro.realm;
 
-import com.nicefish.rbac.exception.*;
 import com.nicefish.rbac.jpa.entity.UserEntity;
 import com.nicefish.rbac.service.IUserService;
 import com.nicefish.rbac.shiro.util.NiceFishSecurityUtils;
@@ -35,32 +34,13 @@ public class NiceFishMySQLRealm extends AuthorizingRealm {
         String username = usernamePasswordToken.getUsername();
         String password = usernamePasswordToken.getPassword()!=null?new String(usernamePasswordToken.getPassword()):"";
 
-        UserEntity userEntity = null;
-        //调用 User Service 认证用户信息，如果认证失败，抛出对应的异常。
+        UserEntity userEntity;
         try {
             userEntity = userService.checkUser(username, password);
             logger.debug("UserName>"+username);
             logger.debug("Password>"+password);
-        } catch (CaptchaException e) {
-            logger.info(username + "登录失败{}", e.getMessage());
-            throw new AuthenticationException(e.getMessage(), e);
-        } catch (UserNotExistsException e) {
-            logger.info(username + "登录失败{}", e.getMessage());
-            throw new UnknownAccountException(e.getMessage(), e);
-        } catch (UserPasswordNotMatchException e) {
-            logger.info(username + "登录失败{}", e.getMessage());
-            throw new IncorrectCredentialsException(e.getMessage(), e);
-        } catch (UserPasswordRetryLimitExceedException e) {
-            logger.info(username + "登录失败{}", e.getMessage());
-            throw new ExcessiveAttemptsException(e.getMessage(), e);
-        } catch (UserBlockedException e) {
-            logger.info(username + "登录失败{}", e.getMessage());
-            throw new LockedAccountException(e.getMessage(), e);
-        } catch (RoleBlockedException e) {
-            logger.info(username + "登录失败{}", e.getMessage());
-            throw new LockedAccountException(e.getMessage(), e);
-        } catch (Exception e) {
-            logger.info(username + "登录失败{}", e.getMessage());
+        }catch (Exception e) {
+            logger.error(username + "登录失败{}", e.getMessage());
             throw new AuthenticationException(e.getMessage(), e);
         }
 
