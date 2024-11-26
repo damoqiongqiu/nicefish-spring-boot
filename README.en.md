@@ -16,8 +16,8 @@ NiceFish is a series of projects aimed at demonstrating the development and depl
 
 This project provides services for the front-end interface of NiceFish. The front-end of the following two versions has been configured for the interfaces:
 
--   Front-end based on the Angular framework: http://git.oschina.net/mumu-osc/NiceFish/
--   Front-end based on the React framework: https://gitee.com/mumu-osc/NiceFish-React
+- Front-end based on the Angular framework: http://git.oschina.net/mumu-osc/NiceFish/
+- Front-end based on the React framework: https://gitee.com/mumu-osc/NiceFish-React
 
 It is recommended to use the React version as it has undergone significant improvements in the past few months.
 
@@ -25,14 +25,14 @@ It is recommended to use the React version as it has undergone significant impro
 
 ## 2. Development Environment
 
-| Name                     | Version               | Description                                                                              |
-| ------------------------ | --------------------- | ---------------------------------------------------------------------------------------- |
-| Spring Boot              | 3.2                   | Released in July 2023                                                                    |
-| JDK                      | OpenJDK 20            | Spring Boot 3.2 requires at least Java 17, no longer supports Java 8                     |
-| IDEA                     | Latest version        | None                                                                                     |
-| Maven                    | 3.8                   | Spring Boot 3.2 requires Maven >= 3.6                                                    |
-| MySQL                    | >=5 (or MariaDB >=10) | Other versions have not been tested for compatibility                                    |
-| ElasticSearch (optional) | 8.9                   | 8.9 is the latest version as of August 2023, other versions not tested for compatibility |
+| Name | Version | Description |
+| --- | --- | --- |
+| Spring Boot | 3.2 | Released in July 2023 |
+| JDK | OpenJDK 20 | Spring Boot 3.2 requires at least Java 17, no longer supports Java 8 |
+| IDEA | Latest version | None |
+| Maven | 3.8 | Spring Boot 3.2 requires Maven >= 3.6 |
+| MySQL | >=5 (or MariaDB >=10) | Other versions have not been tested for compatibility |
+| ElasticSearch (optional) | 8.9 | 8.9 is the latest version as of August 2023, other versions not tested for compatibility |
 
 **Note: The compatibility of various Spring modules is complex. If you manage to start successfully, it's better not to modify the versions.**
 
@@ -77,19 +77,19 @@ The physical model .pdm file is located in the docs directory and can be opened 
 
 <h4>NiceFish Client Projects:</h4>
 
-| Name                                                             | Description                                                                                                                                                                            | Stars                                                                                                                                                                   |
-| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [NiceFish](http://git.oschina.net/mumu-osc/NiceFish/)            | The front-end interface based on the Angular framework, using the latest version of Angular with PrimeNG.                                                                              | <a href='https://gitee.com/mumu-osc/NiceFish/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish/badge/star.svg?theme=gvp' alt='star'></img></a>                  |
-| [NiceFish-React](https://gitee.com/mumu-osc/NiceFish-React)      | The front-end interface based on React 18.0.0, using PrimeReact and a customized Bootstrap version. Pure JSX, not TypeScript.                                                          | <a href='https://gitee.com/mumu-osc/NiceFish-React/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish-React/badge/star.svg?theme=dark' alt='star'></img></a>     |
-| [nicefish-ionic](http://git.oschina.net/mumu-osc/nicefish-ionic) | A mobile demo based on Ionic, and this project also supports PWA.                                                                                                                      | <a href='https://gitee.com/mumu-osc/nicefish-ionic/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-ionic/badge/star.svg?theme=dark' alt='star'></img></a>     |
-| [NiceBlogElectron](https://gitee.com/mumu-osc/NiceBlogElectron)  | A desktop project based on Electron, packaging NiceFish into a desktop application. Contributed by a friend from ZTE. If you're exploring Electron development, refer to this project. | <a href='https://gitee.com/mumu-osc/NiceBlogElectron/stargazers'><img src='https://gitee.com/mumu-osc/NiceBlogElectron/badge/star.svg?theme=dark' alt='star'></img></a> |
+| Name | Description | Stars |
+| --- | --- | --- |
+| [NiceFish](http://git.oschina.net/mumu-osc/NiceFish/) | The front-end interface based on the Angular framework, using the latest version of Angular with PrimeNG. | <a href='https://gitee.com/mumu-osc/NiceFish/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish/badge/star.svg?theme=gvp' alt='star'></img></a> |
+| [NiceFish-React](https://gitee.com/mumu-osc/NiceFish-React) | The front-end interface based on React 18.0.0, using PrimeReact and a customized Bootstrap version. Pure JSX, not TypeScript. | <a href='https://gitee.com/mumu-osc/NiceFish-React/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish-React/badge/star.svg?theme=dark' alt='star'></img></a> |
+| [nicefish-ionic](http://git.oschina.net/mumu-osc/nicefish-ionic) | A mobile demo based on Ionic, and this project also supports PWA. | <a href='https://gitee.com/mumu-osc/nicefish-ionic/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-ionic/badge/star.svg?theme=dark' alt='star'></img></a> |
+| [NiceBlogElectron](https://gitee.com/mumu-osc/NiceBlogElectron) | A desktop project based on Electron, packaging NiceFish into a desktop application. Contributed by a friend from ZTE. If you're exploring Electron development, refer to this project. | <a href='https://gitee.com/mumu-osc/NiceBlogElectron/stargazers'><img src='https://gitee.com/mumu-osc/NiceBlogElectron/badge/star.svg?theme=dark' alt='star'></img></a> |
 
 <h4>NiceFish Server Projects:</h4>
 
-| Name                                                                      | Description                                                                                                                                                                                                          | Stars                                                                                                                                                                             |
-| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [nicefish-spring-boot](https://gitee.com/mumu-osc/nicefish-spring-boot)   | Demonstrates the integration of front-end and back-end in the front-end and back-end separation mode. Completed the baseline version. Based on this, you can further develop code that suits your business scenario. | <a href='https://gitee.com/mumu-osc/nicefish-spring-boot/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-boot/badge/star.svg?theme=dark' alt='star'></img></a>   |
-| [nicefish-spring-cloud](https://gitee.com/mumu-osc/nicefish-spring-cloud) | Demonstrates the integration of front-end code with distributed back-end services in the front-end and back-end separation mode.                                                                                     | <a href='https://gitee.com/mumu-osc/nicefish-spring-cloud/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-cloud/badge/star.svg?theme=dark' alt='star'></img></a> |
+| Name | Description | Stars |
+| --- | --- | --- |
+| [nicefish-spring-boot](https://gitee.com/mumu-osc/nicefish-spring-boot) | Demonstrates the integration of front-end and back-end in the front-end and back-end separation mode. Completed the baseline version. Based on this, you can further develop code that suits your business scenario. | <a href='https://gitee.com/mumu-osc/nicefish-spring-boot/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-boot/badge/star.svg?theme=dark' alt='star'></img></a> |
+| [nicefish-spring-cloud](https://gitee.com/mumu-osc/nicefish-spring-cloud) | Demonstrates the integration of front-end code with distributed back-end services in the front-end and back-end separation mode. | <a href='https://gitee.com/mumu-osc/nicefish-spring-cloud/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-cloud/badge/star.svg?theme=dark' alt='star'></img></a> |
 
 ## 7. Front-End Interface Screenshots
 
@@ -120,3 +120,5 @@ The physical model .pdm file is located in the docs directory and can be opened 
 MIT
 
 (Note: You are free to use this project, but I am not responsible for any losses caused by its use.)
+
+**(The author of this project is currently seeking a new job opportunity. If you have a good opportunity, please contact me on WeChat: lanxinshuma.)**
