@@ -16,12 +16,14 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 此项目为 NiceFish 的前端界面提供服务，以下两个版本的前端都已经对好接口：
 
--   基于 Angular 框架的前端界面：http://git.oschina.net/mumu-osc/NiceFish/
--   基于 React 框架的前端界面：https://gitee.com/mumu-osc/NiceFish-React
+- 基于 Angular 框架的前端界面：http://git.oschina.net/mumu-osc/NiceFish/
+- 基于 React 框架的前端界面：https://gitee.com/mumu-osc/NiceFish-React
 
 推荐使用 React 版本，因为最近几个月这个版本向前改了很多。
 
 **注意：本项目与具体的前端框架无关，所有接口都是 Restful 的，可以使用任意前端框架来接入。**
+
+**关于 Apache Shiro 权限控制，这里有 14 篇文章进行了详细的解释， https://cloud.tencent.com/developer/user/8593014 。**
 
 ## 2.开发环境
 
@@ -77,19 +79,19 @@ NiceFish（美人鱼） 是一个系列项目，目标是示范前后端分离�
 
 <h4>NiceFish 的客户端项目：</h4>
 
-| 名称                                                             | 描述                                                                                                                                                                                                                                            | Stars                                                                                                                                                                   |
-| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [NiceFish（美人鱼）](http://git.oschina.net/mumu-osc/NiceFish/)  | 这是 Angular 版本的前端界面，基于最新的 Angular 版本，使用 PrimeNG 组件库。                                                                                                                                                                     | <a href='https://gitee.com/mumu-osc/NiceFish/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish/badge/star.svg?theme=gvp' alt='star'></img></a>                  |
-| [NiceFish-React](https://gitee.com/mumu-osc/NiceFish-React)      | 这是 React 版本的前端界面，基于 React 18.0.0 ，使用 PrimeReact， 定制版 Bootstrap 开发。纯 JSX ，没有使用 TypeScript 。                                                                                                                         | <a href='https://gitee.com/mumu-osc/NiceFish-React/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish-React/badge/star.svg?theme=dark' alt='star'></img></a>     |
-| [nicefish-ionic](http://git.oschina.net/mumu-osc/nicefish-ionic) | 这是一个移动端的 demo，基于 ionic，此项目已支持 PWA。                                                                                                                                                                                           | <a href='https://gitee.com/mumu-osc/nicefish-ionic/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-ionic/badge/star.svg?theme=dark' alt='star'></img></a>     |
-| [NiceBlogElectron](https://gitee.com/mumu-osc/NiceBlogElectron)  | 这是一个基于 Electron 的桌面端项目，把 NiceFish 用 Electron 打包成了一个桌面端运行的程序。这是由 ZTE 中兴通讯的前端道友提供的，我 fork 了一个，有几个 node 模块的版本号老要改，如果您正在研究如何利用 Electron 开发桌面端应用，请参考这个项目。 | <a href='https://gitee.com/mumu-osc/NiceBlogElectron/stargazers'><img src='https://gitee.com/mumu-osc/NiceBlogElectron/badge/star.svg?theme=dark' alt='star'></img></a> |
+| 名称 | 描述 | Stars |
+| --- | --- | --- |
+| [NiceFish（美人鱼）](http://git.oschina.net/mumu-osc/NiceFish/) | 这是 Angular 版本的前端界面，基于最新的 Angular 版本，使用 PrimeNG 组件库。 | <a href='https://gitee.com/mumu-osc/NiceFish/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish/badge/star.svg?theme=gvp' alt='star'></img></a> |
+| [NiceFish-React](https://gitee.com/mumu-osc/NiceFish-React) | 这是 React 版本的前端界面，基于 React 18.0.0 ，使用 PrimeReact， 定制版 Bootstrap 开发。纯 JSX ，没有使用 TypeScript 。 | <a href='https://gitee.com/mumu-osc/NiceFish-React/stargazers'><img src='https://gitee.com/mumu-osc/NiceFish-React/badge/star.svg?theme=dark' alt='star'></img></a> |
+| [nicefish-ionic](http://git.oschina.net/mumu-osc/nicefish-ionic) | 这是一个移动端的 demo，基于 ionic，此项目已支持 PWA。 | <a href='https://gitee.com/mumu-osc/nicefish-ionic/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-ionic/badge/star.svg?theme=dark' alt='star'></img></a> |
+| [NiceBlogElectron](https://gitee.com/mumu-osc/NiceBlogElectron) | 这是一个基于 Electron 的桌面端项目，把 NiceFish 用 Electron 打包成了一个桌面端运行的程序。这是由 ZTE 中兴通讯的前端道友提供的，我 fork 了一个，有几个 node 模块的版本号老要改，如果您正在研究如何利用 Electron 开发桌面端应用，请参考这个项目。 | <a href='https://gitee.com/mumu-osc/NiceBlogElectron/stargazers'><img src='https://gitee.com/mumu-osc/NiceBlogElectron/badge/star.svg?theme=dark' alt='star'></img></a> |
 
 <h4>NiceFish 的服务端项目：</h4>
 
-| 名称                                                                      | 描述                                                                                                                             | Stars                                                                                                                                                                             |
-| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [nicefish-spring-boot](https://gitee.com/mumu-osc/nicefish-spring-boot)   | 用来示范前后端分离模式下，前端代码与后端服务的对接方式，已经完成了基线版本。以此为基础，你可以继续开发出适合自己业务场景的代码。 | <a href='https://gitee.com/mumu-osc/nicefish-spring-boot/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-boot/badge/star.svg?theme=dark' alt='star'></img></a>   |
-| [nicefish-spring-cloud](https://gitee.com/mumu-osc/nicefish-spring-cloud) | 用来示范前后端分离模式下，前端代码与分布式后端服务的对接方式。                                                                   | <a href='https://gitee.com/mumu-osc/nicefish-spring-cloud/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-cloud/badge/star.svg?theme=dark' alt='star'></img></a> |
+| 名称 | 描述 | Stars |
+| --- | --- | --- |
+| [nicefish-spring-boot](https://gitee.com/mumu-osc/nicefish-spring-boot) | 用来示范前后端分离模式下，前端代码与后端服务的对接方式，已经完成了基线版本。以此为基础，你可以继续开发出适合自己业务场景的代码。 | <a href='https://gitee.com/mumu-osc/nicefish-spring-boot/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-boot/badge/star.svg?theme=dark' alt='star'></img></a> |
+| [nicefish-spring-cloud](https://gitee.com/mumu-osc/nicefish-spring-cloud) | 用来示范前后端分离模式下，前端代码与分布式后端服务的对接方式。 | <a href='https://gitee.com/mumu-osc/nicefish-spring-cloud/stargazers'><img src='https://gitee.com/mumu-osc/nicefish-spring-cloud/badge/star.svg?theme=dark' alt='star'></img></a> |
 
 ## 7.前端界面截图
 
